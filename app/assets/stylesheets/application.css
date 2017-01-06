@@ -1,0 +1,54 @@
+h1, h2 {
+  font-family: sans-serif;
+}
+
+.group:after {
+  content: "";
+  clear: both;
+  position: absolute;
+}
+.hidden {
+  display: none;
+}
+#won {
+  height: 30vh;
+  width: 60vh;
+  margin: auto;
+  background: maroon;
+}
+#cards, #welcome {
+  list-style: none;
+  padding: 4vw;
+  width: 80vw;
+  height: 80vh;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: auto;
+  display: flex;
+  background: red;
+}
+
+.card {
+  box-sizing: padding-box;
+  flex-basis: 12%;
+  border-radius: 4%;
+  padding: 3vh 4vw;
+  cursor: pointer;
+  height: 40%;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 5vh;
+  font-weight: bold;
+  background: blanchedalmond;
+  color: transparent;
+}
+.face-up, .matched {
+  color: darkgreen;
+}
+.matched {
+  background: rebeccapurple;
+}
+
+.card:active {
+  border-color: blue;
+}
