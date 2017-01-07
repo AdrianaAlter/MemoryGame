@@ -6,7 +6,7 @@ var LogIn = React.createClass({
   contextTypes: { router: React.PropTypes.object.isRequired },
 
   getInitialState: function(){
-    return {user_name: "", password: "", display: "form"};
+    return {user_name: "", password: "", display: "button"};
   },
 
   toggleDisplay: function(){

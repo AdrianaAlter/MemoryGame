@@ -48,37 +48,34 @@ h1 {
 }
 #cards {
   list-style: none;
-  padding: 4vw;
-  width: 80vw;
+  padding: 2vw;
+  width: 92vw;
   height: 80vh;
-  justify-content: space-between;
   flex-wrap: wrap;
   margin: auto;
   display: flex;
-  background: red;
+  background: cadetblue;
 }
 
 .card {
+  flex: 1;
   box-sizing: padding-box;
-  flex-basis: 12%;
+  height: 30vh;
+  margin: 0 .25vw;
   border-radius: 4%;
   padding: 3vh 4vw;
   cursor: pointer;
-  height: 40%;
   border: 1px solid black;
   text-align: center;
   font-size: 5vh;
   font-weight: bold;
   background: blanchedalmond;
-  color: transparent;
+  // color: transparent;
 }
 .face-up, .matched {
   color: darkgreen;
 }
 .matched {
-  background: rebeccapurple;
-}
-
-.card:active {
-  border-color: blue;
+  background: transparentize(dimgray, .8);
+  cursor: default;
 }

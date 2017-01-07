@@ -1,8 +1,9 @@
 class Api::GamesController < ApplicationController
 
-  def show
-    @game = current_game
-    render :show
+  def index
+    @games = current_user.games
+    debugger
+    render :index
   end
 
   def create

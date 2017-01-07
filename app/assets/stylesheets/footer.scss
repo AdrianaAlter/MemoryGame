@@ -1,0 +1,26 @@
+$main: cadetblue;
+$contrast: transparentize(darken(cadetblue, 15%), .8);
+$trim: dimgray;
+
+footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-start;
+  height: 10vh;
+  padding: 2vh;
+  background: $main;
+  width: 100%;
+  button {
+    background: $contrast;
+    padding: 1% 2%;
+    height: 100%;
+    box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
+    border: .1vw solid $trim;
+    border-radius: 3%;
+    text-align: center;
+    cursor: pointer;
+    font-size: 2vh;
+    margin-right: 1vw;
+  }
+}

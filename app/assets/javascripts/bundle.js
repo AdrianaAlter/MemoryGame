@@ -64,6 +64,10 @@
 	
 	var _welcome2 = _interopRequireDefault(_welcome);
 	
+	var _game = __webpack_require__(234);
+	
+	var _game2 = _interopRequireDefault(_game);
+	
 	var _sessionStore = __webpack_require__(265);
 	
 	var _sessionStore2 = _interopRequireDefault(_sessionStore);
@@ -76,8 +80,12 @@
 	
 	var routes = _react2.default.createElement(
 	  _reactRouter.Router,
-	  { history: _reactRouter.hashHistory },
-	  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _app2.default, onEnter: _mustLogIn }),
+	  { history: _reactRouter.browserHistory },
+	  _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: '/', component: _app2.default, onEnter: _mustLogIn },
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _game2.default })
+	  ),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _welcome2.default })
 	);
 	
@@ -26451,13 +26459,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _game = __webpack_require__(234);
+	var _footer = __webpack_require__(272);
 	
-	var _game2 = _interopRequireDefault(_game);
+	var _footer2 = _interopRequireDefault(_footer);
 	
 	var _setup = __webpack_require__(267);
 	
 	var _setup2 = _interopRequireDefault(_setup);
+	
+	var _game = __webpack_require__(234);
+	
+	var _game2 = _interopRequireDefault(_game);
 	
 	var _apiUtil = __webpack_require__(237);
 	
@@ -26489,11 +26501,6 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.listener.remove();
 	  },
-	  // newGame: function(e){
-	  //   var level = e.currentTarget.innerHTML;
-	  //   this.setState({ level: level })
-	  //   ApiUtil.createGame(level, this.state.user.id);
-	  // },
 	  contextTypes: {
 	    router: _react2.default.PropTypes.object.isRequired
 	  },
@@ -26505,12 +26512,8 @@
 	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: this.logOut },
-	        'Log Out'
-	      ),
 	      _react2.default.createElement(_setup2.default, { userId: this.state.user.id }),
+	      _react2.default.createElement(_footer2.default, { logOut: this.logOut }),
 	      this.props.children
 	    );
 	  }
@@ -26548,6 +26551,10 @@
 	
 	var _gameStore2 = _interopRequireDefault(_gameStore);
 	
+	var _cardStore = __webpack_require__(249);
+	
+	var _cardStore2 = _interopRequireDefault(_cardStore);
+	
 	var _sessionStore = __webpack_require__(265);
 	
 	var _sessionStore2 = _interopRequireDefault(_sessionStore);
@@ -26558,27 +26565,37 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// import Button from './button.jsx'
 	var Game = _react2.default.createClass({
 	  displayName: 'Game',
 	
 	  getInitialState: function getInitialState() {
-	    return { game: _gameStore2.default.all() };
+	    return { game: _gameStore2.default.all(), won: false, time: 0, score: 0 };
 	  },
-	
 	  componentDidMount: function componentDidMount() {
 	    this.listener = _gameStore2.default.addListener(this._onChange);
 	  },
-	
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.listener.remove();
 	  },
 	  _onChange: function _onChange() {
 	    this.setState({ game: _gameStore2.default.all() });
 	  },
-	
+	  isWon: function isWon() {
+	    this.setState({ won: true });
+	    this.score();
+	  },
+	  finalTime: function finalTime(time) {
+	    this.setState({ time: time });
+	  },
+	  score: function score() {
+	    var marker = (this.state.game[0].level + 1) * 30;
+	    var bonus = marker - this.state.time;
+	    this.setState({ score: bonus * 2 + 10 });
+	  },
 	  render: function render() {
 	    if (this.state.game.length > 0) {
+	      var wonStatus = this.state.won ? "" : "hidden";
+	      var timer = this.state.won ? _react2.default.createElement('div', null) : _react2.default.createElement(_timer2.default, { finalTime: this.finalTime });
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'game' },
@@ -26587,7 +26604,14 @@
 	          null,
 	          'NYT Games Code Test'
 	        ),
-	        _react2.default.createElement(_cardIndex2.default, { level: this.state.game[0].level, gameId: this.state.game[0].id }),
+	        _react2.default.createElement(_cardIndex2.default, { level: this.state.game[0].level, gameId: this.state.game[0].id, isWon: this.isWon }),
+	        timer,
+	        _react2.default.createElement(
+	          'section',
+	          { id: 'won', className: wonStatus },
+	          'Score: ',
+	          this.state.score
+	        ),
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -26674,6 +26698,7 @@
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
+	      this.props.finalTime(this.state.secondsElapsed);
 	      clearInterval(this.interval);
 	    }
 	  }, {
@@ -26721,6 +26746,10 @@
 	
 	var _card2 = _interopRequireDefault(_card);
 	
+	var _timer = __webpack_require__(235);
+	
+	var _timer2 = _interopRequireDefault(_timer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var CardIndex = _react2.default.createClass({
@@ -26765,12 +26794,11 @@
 	  },
 	  checkWon: function checkWon() {
 	    if (this.state.matched.length == this.state.cards.length - 2) {
-	      this.setState({ won: true });
+	      this.props.isWon();
 	    }
 	  },
 	  render: function render() {
 	    var self = this;
-	    var wonStatus = this.state.won ? "" : "hidden";
 	    if (this.state.cards.length > 0) {
 	      var cardLis = this.state.cards.map(function (card) {
 	        var status;
@@ -26790,16 +26818,11 @@
 	          'ul',
 	          { className: 'group', id: 'cards' },
 	          cardLis
-	        ),
-	        _react2.default.createElement('section', { id: 'won', className: wonStatus })
+	        )
 	      );
 	    }
 	    if (this.state.pictures.length > 0) {
-	      return _react2.default.createElement(
-	        'button',
-	        { onClick: this.makeCards },
-	        'GO'
-	      );
+	      this.makeCards();
 	    } else {
 	      return _react2.default.createElement('div', null);
 	    }
@@ -28863,7 +28886,9 @@
 	  displayName: 'Card',
 	
 	  select: function select() {
-	    this.props.selectCard(this.props.card.id);
+	    if (this.props.status !== "matched") {
+	      this.props.selectCard(this.props.card.id);
+	    }
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -29045,31 +29070,45 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRouter = __webpack_require__(178);
+	
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+	
 	var _game = __webpack_require__(234);
 	
 	var _game2 = _interopRequireDefault(_game);
+	
+	var _apiUtil = __webpack_require__(237);
+	
+	var _apiUtil2 = _interopRequireDefault(_apiUtil);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Setup = _react2.default.createClass({
 	  displayName: 'Setup',
 	
-	
-	  LEVELS: {
-	    "Beginner": 0,
-	    "Intermediate": 1,
-	    "Advanced": 2
+	  getInitialState: function getInitialState() {
+	    return { display: "shown" };
 	  },
-	
+	  contextTypes: {
+	    router: _react2.default.PropTypes.object.isRequired
+	  },
 	  newGame: function newGame(e) {
-	    var level = e.currentTarget.innerHTML;
-	    ApiUtil.createGame(LEVELS[level], this.props.userId);
+	    var levels = {
+	      "Beginner": 0,
+	      "Intermediate": 1,
+	      "Advanced": 2
+	    };
+	    var level = e.currentTarget.children[0].innerHTML;
+	    _apiUtil2.default.createGame(levels[level], this.props.userId);
+	    this.setState({ display: "hidden" });
+	    this.context.router.push("/");
 	  },
 	
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { id: 'setup' },
+	      { id: 'setup', className: this.state.display },
 	      _react2.default.createElement(
 	        'h1',
 	        null,
@@ -29254,7 +29293,7 @@
 	  contextTypes: { router: _react2.default.PropTypes.object.isRequired },
 	
 	  getInitialState: function getInitialState() {
-	    return { user_name: "", password: "", display: "form" };
+	    return { user_name: "", password: "", display: "button" };
 	  },
 	
 	  toggleDisplay: function toggleDisplay() {
@@ -29445,6 +29484,52 @@
 	});
 	
 	exports.default = SignUp;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Footer = _react2.default.createClass({
+	  displayName: 'Footer',
+	
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'footer',
+	      null,
+	      _react2.default.createElement(
+	        'button',
+	        { onClick: this.props.logOut },
+	        'Log Out'
+	      ),
+	      _react2.default.createElement(
+	        'button',
+	        null,
+	        'Leaderboards'
+	      ),
+	      _react2.default.createElement(
+	        'button',
+	        null,
+	        'New Game'
+	      )
+	    );
+	  }
+	
+	});
+	
+	exports.default = Footer;
 
 /***/ }
 /******/ ]);

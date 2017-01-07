@@ -1,6 +1,7 @@
 import React from 'react'
-import Game from './game.jsx'
+import Footer from './footer.jsx'
 import Setup from './setup.jsx'
+import Game from './game.jsx'
 import ApiUtil from '../util/apiUtil'
 import SessionStore from '../stores/sessionStore'
 import UserStore from '../stores/userStore'
@@ -19,11 +20,6 @@ var App = React.createClass({
   componentWillUnmount: function(){
     this.listener.remove();
   },
-  // newGame: function(e){
-  //   var level = e.currentTarget.innerHTML;
-  //   this.setState({ level: level })
-  //   ApiUtil.createGame(level, this.state.user.id);
-  // },
   contextTypes: {
 		router: React.PropTypes.object.isRequired
 	},
@@ -34,8 +30,8 @@ var App = React.createClass({
   render: function(){
     return (
       <div>
-        <button onClick={this.logOut}>Log Out</button>
         <Setup userId={this.state.user.id} />
+        <Footer logOut={this.logOut} />
         {this.props.children}
       </div>
     )

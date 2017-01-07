@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, hashHistory, IndexRoute } from 'react-router';
+import { Router, Route, browserHistory, hashHistory, IndexRoute, Link } from 'react-router';
 import App from './components/app.jsx';
 import Welcome from './components/welcome.jsx';
+import Game from './components/game.jsx';
 import SessionStore from './stores/sessionStore';
 import ApiUtil from './util/apiUtil';
 
 var routes = (
-  <Router history={hashHistory}>
-    <Route path="/" component={App} onEnter={_mustLogIn} />
+  <Router history={browserHistory}>
+    <Route path="/" component={App} onEnter={_mustLogIn}>
+      <IndexRoute component={Game} />
+    </Route>
     <Route path="/login" component={Welcome} />
   </Router>
 )

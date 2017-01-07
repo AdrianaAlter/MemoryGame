@@ -2,6 +2,7 @@ import React from 'react'
 import ApiUtil from '../util/apiUtil'
 import CardStore from '../stores/cardStore'
 import Card from './card'
+import Timer from './timer'
 
 var CardIndex = React.createClass({
   getInitialState: function(){
@@ -44,12 +45,11 @@ var CardIndex = React.createClass({
   },
   checkWon: function(){
     if (this.state.matched.length == (this.state.cards.length - 2)){
-      this.setState({ won: true });
+      this.props.isWon();
     }
   },
   render: function(){
     var self = this;
-    var wonStatus = this.state.won ? "" : "hidden";
     if (this.state.cards.length > 0){
       var cardLis = this.state.cards.map(function(card){
         var status;
@@ -66,11 +66,10 @@ var CardIndex = React.createClass({
       });
       return (<div>
                 <ul className="group" id="cards">{cardLis}</ul>
-                <section id="won" className={wonStatus}></section>
               </div>)
     }
     if (this.state.pictures.length > 0){
-      return (<button onClick={this.makeCards}>GO</button>);
+      this.makeCards();
     }
     else {
       return <div></div>
