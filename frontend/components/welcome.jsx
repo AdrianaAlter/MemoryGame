@@ -7,9 +7,14 @@ var Welcome = React.createClass({
   render: function(){
     return (
       <div id="welcome">
-        <Guest />
-        <LogIn />
-        <SignUp />
+        <h1>Welcome to Memory!</h1>
+        <div>
+          <section>
+            <LogIn />
+            <SignUp />
+          </section>
+          <Guest />
+        </div>
       </div>
     )
   }

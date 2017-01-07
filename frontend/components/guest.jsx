@@ -17,7 +17,10 @@ var Guest = React.createClass({
   },
   render: function(){
     return(
-        <button onClick={this.handleSubmit}>Play as Guest</button>
+        <form id="guest" onClick={this.handleSubmit}>
+          <h1>Play as Guest</h1>
+          <p>Sign up to save games, track your high scores, and appear on leaderboards!</p>
+        </form>
     )
   }
 
