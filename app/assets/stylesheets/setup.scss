@@ -1,0 +1,35 @@
+$main: cadetblue;
+$contrast: transparentize(darken(cadetblue, 15%), .8);
+$trim: dimgray;
+
+#setup{
+  list-style: none;
+  padding: 2vw;
+  width: 60vw;
+  height: 80vh;
+  background: $main;
+  margin: auto;
+
+  section {
+    height: 80%;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 60%;
+    margin: 5% auto;
+    display: flex;
+  }
+  button {
+    background: $contrast;
+    padding: 8%;
+    width: 100%;
+    box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
+    border: .1vw solid $trim;
+    border-radius: 3%;
+    text-align: center;
+    cursor: pointer;
+    font-size: 3vh;
+  }
+  button:hover {
+    background: darken($contrast, 15%);
+  }
+}

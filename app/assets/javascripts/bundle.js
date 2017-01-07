@@ -60,7 +60,7 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _welcome = __webpack_require__(267);
+	var _welcome = __webpack_require__(268);
 	
 	var _welcome2 = _interopRequireDefault(_welcome);
 	
@@ -26455,6 +26455,10 @@
 	
 	var _game2 = _interopRequireDefault(_game);
 	
+	var _setup = __webpack_require__(267);
+	
+	var _setup2 = _interopRequireDefault(_setup);
+	
 	var _apiUtil = __webpack_require__(237);
 	
 	var _apiUtil2 = _interopRequireDefault(_apiUtil);
@@ -26473,7 +26477,7 @@
 	  displayName: 'App',
 	
 	  getInitialState: function getInitialState() {
-	    return { level: "", user: this.getStateFromStore() };
+	    return { user: this.getStateFromStore() };
 	  },
 	  getStateFromStore: function getStateFromStore() {
 	    _apiUtil2.default.fetchCurrentUser();
@@ -26485,11 +26489,11 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.listener.remove();
 	  },
-	  newGame: function newGame(e) {
-	    var level = e.currentTarget.innerHTML;
-	    this.setState({ level: level });
-	    _apiUtil2.default.createGame(level, this.state.user.id);
-	  },
+	  // newGame: function(e){
+	  //   var level = e.currentTarget.innerHTML;
+	  //   this.setState({ level: level })
+	  //   ApiUtil.createGame(level, this.state.user.id);
+	  // },
 	  contextTypes: {
 	    router: _react2.default.PropTypes.object.isRequired
 	  },
@@ -26502,26 +26506,11 @@
 	      'div',
 	      null,
 	      _react2.default.createElement(
-	        'h1',
-	        null,
-	        'APP'
-	      ),
-	      _react2.default.createElement(
 	        'button',
 	        { onClick: this.logOut },
 	        'Log Out'
 	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: this.newGame },
-	        '0'
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: this.newGame },
-	        '1'
-	      ),
-	      _react2.default.createElement(_game2.default, null),
+	      _react2.default.createElement(_setup2.default, { userId: this.state.user.id }),
 	      this.props.children
 	    );
 	  }
@@ -26592,7 +26581,7 @@
 	    if (this.state.game.length > 0) {
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { id: 'game' },
 	        _react2.default.createElement(
 	          'h1',
 	          null,
@@ -26606,11 +26595,7 @@
 	        )
 	      );
 	    } else {
-	      return _react2.default.createElement(
-	        'h1',
-	        null,
-	        'cards loading...'
-	      );
+	      return _react2.default.createElement('div', null);
 	    }
 	  }
 	});
@@ -29060,15 +29045,97 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _guest = __webpack_require__(268);
+	var _game = __webpack_require__(234);
+	
+	var _game2 = _interopRequireDefault(_game);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Setup = _react2.default.createClass({
+	  displayName: 'Setup',
+	
+	
+	  LEVELS: {
+	    "Beginner": 0,
+	    "Intermediate": 1,
+	    "Advanced": 2
+	  },
+	
+	  newGame: function newGame(e) {
+	    var level = e.currentTarget.innerHTML;
+	    ApiUtil.createGame(LEVELS[level], this.props.userId);
+	  },
+	
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { id: 'setup' },
+	      _react2.default.createElement(
+	        'h1',
+	        null,
+	        'Choose your level to get started!'
+	      ),
+	      _react2.default.createElement(
+	        'section',
+	        { className: 'group' },
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.newGame },
+	          _react2.default.createElement(
+	            'h2',
+	            null,
+	            'Beginner'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.newGame },
+	          _react2.default.createElement(
+	            'h2',
+	            null,
+	            'Intermediate'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.newGame },
+	          _react2.default.createElement(
+	            'h2',
+	            null,
+	            'Advanced'
+	          )
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	exports.default = Setup;
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _guest = __webpack_require__(269);
 	
 	var _guest2 = _interopRequireDefault(_guest);
 	
-	var _login = __webpack_require__(269);
+	var _login = __webpack_require__(270);
 	
 	var _login2 = _interopRequireDefault(_login);
 	
-	var _signup = __webpack_require__(270);
+	var _signup = __webpack_require__(271);
 	
 	var _signup2 = _interopRequireDefault(_signup);
 	
@@ -29104,7 +29171,7 @@
 	exports.default = Welcome;
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29161,7 +29228,7 @@
 	exports.default = Guest;
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29274,7 +29341,7 @@
 	exports.default = LogIn;
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

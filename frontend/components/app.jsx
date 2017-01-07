@@ -1,12 +1,13 @@
 import React from 'react'
 import Game from './game.jsx'
+import Setup from './setup.jsx'
 import ApiUtil from '../util/apiUtil'
 import SessionStore from '../stores/sessionStore'
 import UserStore from '../stores/userStore'
 
 var App = React.createClass({
   getInitialState: function(){
-    return { level: "", user: this.getStateFromStore() }
+    return { user: this.getStateFromStore() }
   },
   getStateFromStore: function(){
     ApiUtil.fetchCurrentUser();
@@ -18,11 +19,11 @@ var App = React.createClass({
   componentWillUnmount: function(){
     this.listener.remove();
   },
-  newGame: function(e){
-    var level = e.currentTarget.innerHTML;
-    this.setState({ level: level })
-    ApiUtil.createGame(level, this.state.user.id);
-  },
+  // newGame: function(e){
+  //   var level = e.currentTarget.innerHTML;
+  //   this.setState({ level: level })
+  //   ApiUtil.createGame(level, this.state.user.id);
+  // },
   contextTypes: {
 		router: React.PropTypes.object.isRequired
 	},
@@ -33,11 +34,8 @@ var App = React.createClass({
   render: function(){
     return (
       <div>
-        <h1>APP</h1>
         <button onClick={this.logOut}>Log Out</button>
-        <button onClick={this.newGame}>0</button>
-        <button onClick={this.newGame}>1</button>
-        <Game />
+        <Setup userId={this.state.user.id} />
         {this.props.children}
       </div>
     )

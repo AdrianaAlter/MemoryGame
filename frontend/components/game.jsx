@@ -26,7 +26,7 @@ var Game = React.createClass({
   render: function(){
     if (this.state.game.length > 0){
       return (
-        <div>
+        <div id="game">
           <h1>NYT Games Code Test</h1>
           <CardIndex level={this.state.game[0].level} gameId={this.state.game[0].id} />
           <div>Let the games begin (here).</div>
@@ -34,7 +34,7 @@ var Game = React.createClass({
       )
     }
     else {
-      return <h1>cards loading...</h1>
+      return <div></div>
     }
   }
 });
