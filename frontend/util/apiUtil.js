@@ -94,6 +94,20 @@ var ApiUtil = {
     });
   },
 
+  deleteGame: function(id){
+    $.ajax({
+      type: "DELETE",
+      url: "/api/games/" + id,
+      dataType: "json",
+      success: function(){
+        window.location.href = "/";
+      },
+      error: function(){
+        console.log('Error in ApiUtil deleteGame');
+      }
+  });
+},
+
   createCard: function(picture, gameId){
     $.ajax({
       type: "POST",
@@ -117,6 +131,19 @@ var ApiUtil = {
       dataType: "json",
       success: function(card){
         CardActions.updatedCardReceived(card);
+      }
+    });
+  },
+
+  updateUser: function(userId, user){
+    $.ajax({
+      type: "PATCH",
+      url: "/api/users/" + userId,
+      data: { user: user },
+      dataType: "json",
+      success: function(user){
+        debugger
+        UserActions.updatedUserReceived(user);
       }
     });
   }

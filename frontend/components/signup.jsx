@@ -1,30 +1,33 @@
 import React from 'react'
 import ApiUtil from '../util/apiUtil'
 
-var SignUp = React.createClass({
-  contextTypes: { router: React.PropTypes.object.isRequired },
-
-  getInitialState: function(){
-    return { user_name: "", password: "", display: "button" };
-  },
-  toggleDisplay: function(){
+class SignUp extends React.Component {
+  constructor(){
+    super();
+    this.state = {user_name: "", password: "", display: "button"};
+    this.toggleDisplay = this.toggleDisplay.bind(this);
+    this.updateName = this.updateName.bind(this);
+    this.updatePassword = this.updatePassword.bind(this);
+    this.submitInfo = this.submitInfo.bind(this);
+  }
+  toggleDisplay(){
     this.state.display == "button" ? this.setState({ display: "form" }) : this.setState({ display: "button" });
-  },
-  updateName: function(e){
+  }
+  updateName(e){
     this.setState({user_name: e.currentTarget.value});
-  },
-  updatePassword: function(e){
+  }
+  updatePassword(e){
     this.setState({password: e.currentTarget.value});
-  },
-  handleSubmit: function (e) {
+  }
+  submitInfo(e) {
    e.preventDefault();
    var router = this.context.router;
    ApiUtil.signUp(this.state, function () {
      router.push("/");
    });
    this.toggleDisplay();
-  },
-  render: function(){
+  }
+  render(){
     if (this.state.display == "button"){
       return <form onClick={this.toggleDisplay}><h1>Sign Up</h1></form>
     }
@@ -48,6 +51,10 @@ var SignUp = React.createClass({
       )
     }
   }
-});
+}
+
+SignUp.contextTypes = {
+  router: React.PropTypes.func.isRequired
+}
 
 export default SignUp;

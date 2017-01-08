@@ -1,8 +1,8 @@
 import React from 'react'
 
-var Footer = React.createClass({
+class Footer extends React.Component {
 
-  render: function(){
+  render(){
     return (
       <footer>
         <button onClick={this.props.logOut}>Log Out</button>
@@ -12,6 +12,6 @@ var Footer = React.createClass({
     )
   }
 
-});
+}
 
 export default Footer

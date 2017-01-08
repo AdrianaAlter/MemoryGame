@@ -6,36 +6,38 @@ import ApiUtil from '../util/apiUtil'
 import SessionStore from '../stores/sessionStore'
 import UserStore from '../stores/userStore'
 
-var App = React.createClass({
-  getInitialState: function(){
-    return { user: this.getStateFromStore() }
-  },
-  getStateFromStore: function(){
+class App extends React.Component {
+  constructor(){
+    super();
+    this.state = { user: this.getStateFromStore() };
+  }
+  getStateFromStore(){
     ApiUtil.fetchCurrentUser();
     return SessionStore.currentUser();
-  },
-  componentDidMount: function(){
+  }
+  componentDidMount(){
     this.listener = UserStore.addListener(this._onChange);
-  },
-  componentWillUnmount: function(){
+  }
+  componentWillUnmount(){
     this.listener.remove();
-  },
-  contextTypes: {
-		router: React.PropTypes.object.isRequired
-	},
-  logOut: function () {
+  }
+  logOut(){
     ApiUtil.logOut();
     this.context.router.push("/login");
-  },
-  render: function(){
+  }
+  render(){
     return (
       <div>
         <Setup userId={this.state.user.id} />
-        <Footer logOut={this.logOut} />
+        <Footer logOut={this.logOut.bind(this)} />
         {this.props.children}
       </div>
     )
   }
-});
+}
+
+App.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
 
 export default App

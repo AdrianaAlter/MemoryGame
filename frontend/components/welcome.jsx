@@ -3,8 +3,8 @@ import Guest from './guest'
 import LogIn from './login'
 import SignUp from './signup'
 
-var Welcome = React.createClass({
-  render: function(){
+class Welcome extends React.Component {
+  render(){
     return (
       <div id="welcome">
         <h1>Welcome to Memory!</h1>
@@ -18,6 +18,6 @@ var Welcome = React.createClass({
       </div>
     )
   }
-});
+}
 
 export default Welcome

@@ -8,9 +8,16 @@ class Api::UsersController < ApplicationController
     render json: @user
   end
 
-  # def update
-  #   @user = User.find(params[:id])
-  #   render :show
-  # end
+  def update
+    @user = User.find(params[:id])
+    @user.update(user_params)
+    render :show
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:high_score)
+  end
 
 end

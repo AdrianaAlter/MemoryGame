@@ -1,36 +1,39 @@
 import React from 'react'
 import ApiUtil from '../util/apiUtil.js'
 
-var LogIn = React.createClass({
+class LogIn extends React.Component {
 
-  contextTypes: { router: React.PropTypes.object.isRequired },
+  constructor(){
+    super();
+    this.state = {user_name: "", password: "", display: "button"};
+    this.toggleDisplay = this.toggleDisplay.bind(this);
+    this.updateName = this.updateName.bind(this);
+    this.updatePassword = this.updatePassword.bind(this);
+    this.submitInfo = this.submitInfo.bind(this);
+  }
 
-  getInitialState: function(){
-    return {user_name: "", password: "", display: "button"};
-  },
-
-  toggleDisplay: function(){
+  toggleDisplay(){
     this.state.display == "button" ? this.setState({ display: "form" }) : this.setState({ display: "button" });
-  },
+  }
 
-  updateName: function(e){
+  updateName(e){
     this.setState({user_name: e.currentTarget.value});
-  },
+  }
 
-  updatePassword: function(e){
+  updatePassword(e){
     this.setState({password: e.currentTarget.value});
-  },
+  }
 
-  submitInfo: function(e){
+  submitInfo(e){
     e.preventDefault();
     var router = this.context.router;
     ApiUtil.logIn(this.state, function () {
       router.push("/");
     });
     this.toggleDisplay();
-  },
+  }
 
-  render: function(){
+  render(){
     if (this.state.display == "button"){
       return <form onClick={this.toggleDisplay}><h1>Log In</h1></form>
     }
@@ -40,7 +43,7 @@ var LogIn = React.createClass({
           <h2>Log In</h2>
           <section>
             <label>User Name</label>
-            <input type="text" onChange={this.updateName}></input>
+            <input type="text" placeholder="User Name" onChange={this.updateName}></input>
           </section>
           <section>
             <label>Password</label>
@@ -54,8 +57,10 @@ var LogIn = React.createClass({
       )
     }
   }
+}
 
-});
-
+LogIn.contextTypes = {
+  router: React.PropTypes.func.isRequired
+}
 
 export default LogIn;

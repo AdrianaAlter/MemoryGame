@@ -2,7 +2,6 @@ class Api::GamesController < ApplicationController
 
   def index
     @games = current_user.games
-    debugger
     render :index
   end
 
@@ -16,6 +15,8 @@ class Api::GamesController < ApplicationController
   def destroy
     @game = Game.find(params[:id])
     @game.destroy
+    @games = current_user.games
+    render :index
   end
 
   private

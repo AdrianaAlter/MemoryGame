@@ -1,21 +1,23 @@
 import React from 'react'
 import ApiUtil from '../util/apiUtil'
 
-var Guest = React.createClass({
-  contextTypes: { router: React.PropTypes.object.isRequired },
+class Guest extends React.Component {
+  constructor(props, context){
+    super(props);
+    context.router;
+    this.state = { user_name: "guest", password: "guest" };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-  getInitialState: function(){
-    return { user_name: "guest", password: "guest", modalIsOpen: false };
-  },
-
-  handleSubmit: function (e) {
+  handleSubmit(e){
    e.preventDefault();
    var router = this.context.router;
    ApiUtil.signUp(this.state, function(){
      router.push("/");
    });
-  },
-  render: function(){
+  }
+
+  render(){
     return(
         <form id="guest" onClick={this.handleSubmit}>
           <h1>Play as Guest</h1>
@@ -24,6 +26,9 @@ var Guest = React.createClass({
     )
   }
 
-});
+}
+Guest.contextTypes = {
+  router: React.PropTypes.func.isRequired
+}
 
 export default Guest;

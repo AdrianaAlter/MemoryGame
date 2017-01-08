@@ -1,0 +1,21 @@
+$main: cadetblue;
+$contrast: transparentize(darken(cadetblue, 15%), .8);
+$trim: dimgray;
+
+#won {
+  position: fixed;
+  height: 50vh;
+  width: 80vw;
+  top: 25vh;
+  left: 25vw;
+  button {
+    background: $trim;
+    margin: auto;
+    cursor: pointer;
+    border-radius: 3%;
+    font-size: 2.5vh;
+  }
+  button:hover {
+    background: darken($trim, 5%);
+  }
+}

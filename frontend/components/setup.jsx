@@ -3,14 +3,16 @@ import Link from 'react-router'
 import Game from './game'
 import ApiUtil from '../util/apiUtil'
 
-var Setup = React.createClass({
-  getInitialState: function(){
-    return { display: "shown" }
-  },
+class Setup extends React.Component {
+  constructor(){
+    super();
+    this.state = { display: "shown" };
+    this.newGame = this.newGame.bind(this);
+  }
   contextTypes: {
     router: React.PropTypes.object.isRequired
-  },
-  newGame: function(e){
+  }
+  newGame(e){
     var levels = {
       "Beginner": 0,
       "Intermediate": 1,
@@ -20,9 +22,8 @@ var Setup = React.createClass({
     ApiUtil.createGame(levels[level], this.props.userId);
     this.setState({ display: "hidden" });
     this.context.router.push("/");
-  },
-
-  render: function(){
+  }
+  render(){
     return (
       <div id="setup" className={this.state.display}>
         <h1>Choose your level to get started!</h1>
@@ -35,6 +36,6 @@ var Setup = React.createClass({
     )
   }
 
-});
+}
 
 export default Setup;
