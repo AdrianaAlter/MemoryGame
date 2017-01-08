@@ -3,19 +3,49 @@ $contrast: transparentize(darken(cadetblue, 15%), .8);
 $trim: dimgray;
 
 #won {
-  position: fixed;
-  height: 50vh;
-  width: 80vw;
-  top: 25vh;
-  left: 25vw;
-  button {
-    background: $trim;
+  position: absolute;
+  height: 80vh;
+  width: 92vw;
+  background: $contrast;
+  border: .5vw solid $trim;
+  top: 6.5vh;
+  left: 4vw;
+  section {
     margin: auto;
-    cursor: pointer;
-    border-radius: 3%;
-    font-size: 2.5vh;
-  }
-  button:hover {
-    background: darken($trim, 5%);
+    height: 100%;
+    width: 33%;
+    background: lighten($trim, 20%);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    h1 {
+      flex: 1.5;
+      padding-top: 25%;
+      font-size: 6vh;
+    }
+    h2 {
+      text-align: center;
+      flex: 1;
+      font-size: 5vh;
+    }
+    h3 {
+      text-align: center;
+      flex: 1;
+      font-size: 4vh;
+    }
+    button {
+      flex: 1;
+      background: $contrast;
+      padding: 1%;
+      width: 100%;
+      margin: auto;
+      border-radius: 3%;
+      text-align: center;
+      cursor: pointer;
+      font-size: 4vh;
+    }
+    button:hover {
+      background: darken($trim, 5%);
+    }
   }
 }

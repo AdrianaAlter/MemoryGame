@@ -11,18 +11,16 @@ import UserStore from '../stores/userStore.js'
 class Game extends React.Component {
   constructor(){
     super();
-    this.state = { game: GameStore.all(), won: false, time: 0, score: 0, user: UserStore.all() };
+    this.state = { game: GameStore.all(), won: false, time: 0, score: 0, user: UserStore.current() };
     this.isWon = this.isWon.bind(this);
     this.finalTime = this.finalTime.bind(this);
     this.score = this.score.bind(this);
   }
   componentDidMount(){
-    this.listener1 = GameStore.addListener(this._onChange.bind(this));
-    // this.listener2 = UserStore.addListener(this._onChange.bind(this));
+    this.listener = GameStore.addListener(this._onChange.bind(this));
   }
   componentWillUnmount(){
-    this.listener1.remove();
-    // this.listener2.remove();
+    this.listener.remove();
   }
   _onChange(){
     this.setState({ game: GameStore.all() });
@@ -51,11 +49,9 @@ class Game extends React.Component {
       var timer = this.state.won ? <div></div> : <Timer finalTime={this.finalTime}/>
       return (
         <div id="game">
-          <h1>NYT Games Code Test</h1>
-          <CardIndex level={this.state.game[0].level} gameId={this.state.game[0].id} isWon={this.isWon} />
           {timer}
+          <CardIndex level={this.state.game[0].level} gameId={this.state.game[0].id} isWon={this.isWon} />
           <Won className={wonStatus} highScore={this.state.user.high_score} score={this.state.score} gameId={this.state.game[0].id} />
-          <div>Let the games begin (here).</div>
         </div>
       )
     }

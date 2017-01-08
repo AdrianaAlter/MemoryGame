@@ -4,27 +4,40 @@ import UserConstants from '../constants/userConstants.js';
 
 var UserStore = new Store(Dispatcher);
 var _users = [];
+var _current;
 
-UserStore.all = function () {
+UserStore.current = function() {
+  return _current;
+};
+
+UserStore.all = function(){
   return _users;
 };
 
-UserStore.find = function (id) {
-  for (var i = 0; i < _users.length; i++) {
-    if (_users[i].id == id) {
-      return _users[i];
-    }
-  }
+UserStore.resetCurrent = function(user) {
+  _current = user;
 };
 
-UserStore.resetUsers = function (user) {
-  _users = user;
+UserStore.resetUsers = function(users){
+  _users = users;
+};
+
+UserStore.highScores = function(){
+  var scores = {};
+  _users.map(function(user){
+    scores[user.user_name] = user.high_score;
+  });
+  return _.invert(scores);
 };
 
 UserStore.__onDispatch = function (payload) {
   switch (payload.actionType) {
     case UserConstants.SINGLE_USER_RECEIVED:
-      UserStore.resetUsers(payload.user);
+      UserStore.resetCurrent(payload.user);
+      UserStore.__emitChange();
+      break;
+    case UserConstants.ALL_USERS_RECEIVED:
+      UserStore.resetUsers(payload.users);
       UserStore.__emitChange();
       break;
     }

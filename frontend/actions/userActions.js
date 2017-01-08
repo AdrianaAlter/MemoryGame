@@ -3,10 +3,17 @@ import Dispatcher from '../dispatcher/dispatcher.js';
 
 var UserActions = {
 
-  singleUserReceived: function (user) {
+  singleUserReceived: function(user) {
     Dispatcher.dispatch({
       actionType: UserConstants.SINGLE_USER_RECEIVED,
       user: user
+    });
+  },
+
+  allUsersReceived: function(users) {
+    Dispatcher.dispatch({
+      actionType: UserConstants.ALL_USERS_RECEIVED,
+      users: users
     });
   }
 

@@ -24,3 +24,42 @@ footer {
     margin-right: 1vw;
   }
 }
+
+#leaderboard {
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  button {
+    background: $contrast;
+    padding: 1% 2%;
+    width: 20%;
+    border-radius: 3%;
+    text-align: center;
+    cursor: pointer;
+    font-size: 4vh;
+    flex: 1;
+    margin: 3% auto 0 auto;
+  }
+  h1 {
+    flex: 1;
+  }
+  ul {
+    background: $main;
+    border: 1vw double $trim;
+    flex: 4;
+    width: 70%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    li {
+      border-bottom: .1vw solid $trim;
+      font-size: 4vh;
+      width: 95%;
+      margin: 0 auto;
+      padding: 2%;
+      text-align: center;
+    }
+  }
+
+}

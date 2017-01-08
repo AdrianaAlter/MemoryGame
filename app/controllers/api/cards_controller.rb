@@ -17,13 +17,6 @@ class Api::CardsController < ApplicationController
     @card.update(card_params)
     render :show
   end
-  #
-  # def destroy
-    # @todo = Todo.find(params[:id])
-  #   @todo.destroy
-  #   @todos = Todo.all
-  #   render :index
-  # end
 
   private
 

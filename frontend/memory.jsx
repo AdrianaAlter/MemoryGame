@@ -6,6 +6,7 @@ import Welcome from './components/welcome.jsx';
 import Game from './components/game.jsx';
 import SessionStore from './stores/sessionStore';
 import ApiUtil from './util/apiUtil';
+import Modal from 'react-modal';
 
 var routes = (
   <Router history={browserHistory}>
@@ -17,7 +18,7 @@ var routes = (
 )
 
 document.addEventListener('DOMContentLoaded', () => {
-  var header = <h1>purring...?</h1>
+  Modal.setAppElement(root);
   const root = document.getElementById('root');
   ReactDOM.render(routes, root);
 });

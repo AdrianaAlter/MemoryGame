@@ -1,5 +1,8 @@
 class Api::UsersController < ApplicationController
-
+  def index
+    @users = User.all
+    render :index
+  end
   def create
     @user = User.new(user_name: params[:user_name], password: params[:password], high_score: '0')
     if @user.save
@@ -17,7 +20,7 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:high_score)
+    params.require(:user).permit(:high_score, :games)
   end
 
 end

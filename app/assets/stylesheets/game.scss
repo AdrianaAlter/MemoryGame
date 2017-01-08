@@ -1,0 +1,37 @@
+$main: cadetblue;
+$contrast: transparentize(darken(cadetblue, 15%), .8);
+$trim: dimgray;
+
+#cards {
+  list-style: none;
+  padding: 2vw;
+  width: 92vw;
+  height: 80vh;
+  flex-wrap: wrap;
+  margin: auto;
+  display: flex;
+  background: cadetblue;
+}
+
+.card {
+  flex: 1;
+  box-sizing: padding-box;
+  height: 30vh;
+  margin: 0 .25vw;
+  border-radius: 4%;
+  padding: 3vh 4vw;
+  cursor: pointer;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 5vh;
+  font-weight: bold;
+  background: blanchedalmond;
+  color: blue;
+}
+.face-up, .matched {
+  color: darkgreen;
+}
+.matched {
+  background: transparentize(dimgray, .8);
+  cursor: default;
+}
