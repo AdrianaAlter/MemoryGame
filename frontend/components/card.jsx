@@ -8,7 +8,7 @@ class Card extends React.Component {
     }
   }
   render() {
-    return <li className={"card " + this.props.status} onClick={this.select.bind(this)}>{this.props.card.picture}</li>
+    return <li className={"card " + this.props.theme + " " + this.props.status} onClick={this.select.bind(this)}>{this.props.card.picture}</li>
   }
 }
 

@@ -24,6 +24,10 @@ GameStore.__onDispatch = function(payload) {
       GameStore.resetGames(payload.game);
       GameStore.__emitChange();
       break;
+    case GameConstants.GAME_RECEIVED:
+      GameStore.resetGames(payload.game);
+      GameStore.__emitChange();
+      break;
   }
 };
 

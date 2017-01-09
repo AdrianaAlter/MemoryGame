@@ -49,7 +49,7 @@ class CardIndex extends React.Component {
         setTimeout(function(){
           ApiUtil.updateCard(self.props.gameId, self.state.selected[0].id, card);
           ApiUtil.updateCard(self.props.gameId, self.state.selected[1].id, card);
-        }, 1500);
+        }, 750);
       }
   }
   checkWon() {
@@ -71,7 +71,7 @@ class CardIndex extends React.Component {
         else {
           status = "";
         }
-        return <Card key={card.id} card={card} status={status} selectCard={self.selectCard} />
+        return <Card key={card.id} card={card} theme={self.props.theme} status={status} selectCard={self.selectCard} />
       });
       return (<div>
                 <ul className="group" id="cards">{cardLis}</ul>

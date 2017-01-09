@@ -6,7 +6,16 @@ class Won extends React.Component{
     ApiUtil.deleteGame(this.props.gameId);
   }
   render(){
-    var highScore = this.props.score > this.props.highScore ? <h3>Congratulations!  You have a new high score.</h3> : <h3>Your high score is {this.props.highScore}.</h3>;
+    var highScore;
+    if (this.props.highScore && this.props.score > this.props.highScore){
+      highScore = <h3>Congratulations!  You have a new high score.</h3>;
+    }
+    else if (this.props.highScore){
+      highScore = <h3>Your high score is {this.props.highScore}.</h3>;
+    }
+    else {
+      highScore = <h3>To track your high score, sign up or log in!</h3>;
+    }
     return (
       <div id="won" className={this.props.className}>
         <section>

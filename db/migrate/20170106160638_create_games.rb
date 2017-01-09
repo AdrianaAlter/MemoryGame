@@ -3,6 +3,7 @@ class CreateGames < ActiveRecord::Migration
     create_table :games do |t|
       t.integer :user_id
       t.integer :level
+      t.string :theme
     end
   end
 end

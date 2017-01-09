@@ -6,7 +6,7 @@ import UserStore from '../stores/userStore'
 class Leaderboard extends React.Component {
   constructor(){
     super();
-    this.state = { modalIsOpen: true, scores: UserStore.highScores() };
+    this.state = { modalIsOpen: false, scores: UserStore.highScores() };
     this.toggle = this.toggle.bind(this);
   }
   componentWillMount() {

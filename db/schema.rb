@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170106165003) do
   create_table "games", force: :cascade do |t|
     t.integer "user_id"
     t.integer "level"
+    t.string  "theme"
   end
 
   create_table "users", force: :cascade do |t|

@@ -22,6 +22,21 @@ var ApiUtil = {
         }
       });
   },
+
+  loadUserInfo: function(id){
+    $.ajax({
+        type: "GET",
+        url: "/api/users/" + id,
+        dataType: "json",
+        success: function(user) {
+          UserActions.singleUserReceived(user);
+        },
+        error: function () {
+          console.log('Error fetching user info');
+        }
+      });
+  },
+
   fetchAllUsers: function() {
     $.ajax({
         type: "GET",
@@ -106,14 +121,27 @@ var ApiUtil = {
       }
     });
   },
-  updateGame: function(gameId, game){
+  updateGame: function(id, game){
     $.ajax({
       type: "PATCH",
-      url: "/api/games/" + gameId ,
+      url: "/api/games/" + id,
       dataType: "json",
       data: { game: game },
       success: function(game){
-        GameActions.gameUpdated(game);
+        GameActions.gameReceived(game);
+      },
+      error: function(){
+        console.log("util updateGame problem");
+      }
+    });
+  },
+  fetchGame: function(gameId){
+    $.ajax({
+      type: "GET",
+      url: "/api/games/" + gameId,
+      dataType: "json",
+      success: function(game){
+        GameActions.gameReceived(game);
       },
       error: function(){
         console.log("util updateGame problem");

@@ -28,7 +28,7 @@ class Guest extends React.Component {
 
 }
 Guest.contextTypes = {
-  router: React.PropTypes.func.isRequired
+  router: React.PropTypes.object.isRequired
 }
 
 export default Guest;

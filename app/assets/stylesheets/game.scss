@@ -35,3 +35,23 @@ $trim: dimgray;
   background: transparentize(dimgray, .8);
   cursor: default;
 }
+
+.theme1 {
+
+}
+.theme2 {
+  background: maroon;
+}
+
+#timer {
+  height: 6vh;
+  margin-left: 4vw;
+  width: 12vw;
+  background: $contrast;
+  font-size: 2.5vh;
+  padding-top: 1.5vh;
+  text-align: center;
+  border-top: .1vw solid $main;
+  border-left: .1vw solid $main;
+  border-right: .1vw solid $main;
+}

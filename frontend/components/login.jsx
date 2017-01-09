@@ -60,7 +60,7 @@ class LogIn extends React.Component {
 }
 
 LogIn.contextTypes = {
-  router: React.PropTypes.func.isRequired
+  router: React.PropTypes.object.isRequired
 }
 
 export default LogIn;

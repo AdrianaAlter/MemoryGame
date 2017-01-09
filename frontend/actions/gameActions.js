@@ -7,6 +7,12 @@ var GameActions = {
       actionType: GameConstants.GAME_STARTED,
       game: game
     });
+  },
+  gameReceived: function(game){
+    Dispatcher.dispatch({
+      actionType: GameConstants.GAME_RECEIVED,
+      game: game
+    });
   }
 };
 
