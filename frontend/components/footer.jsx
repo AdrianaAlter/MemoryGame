@@ -9,7 +9,7 @@ import Leaderboard from './leaderboard'
 class Footer extends React.Component {
   constructor(){
     super();
-    this.state = { game: GameStore.all(), user: UserStore.current(), menu: "menu" };
+    this.state = { game: GameStore.all(), user: UserStore.current(), menu: "hidden" };
     this.clearGame = this.clearGame.bind(this);
     this.saveGame = this.saveGame.bind(this);
     this.openMenu = this.openMenu.bind(this);
@@ -55,8 +55,8 @@ class Footer extends React.Component {
       var save = this.state.user.user_name == "guest" ? null : <button onClick={this.saveGame}>Save Game</button>;
     }
     if (this.state.game.length > 0){
-      var customize =   (
-        <button onMouseOver={this.openMenu} onMouseLeave={this.closeMenu}>Customize
+      var themes =   (
+        <button onMouseOver={this.openMenu} onMouseLeave={this.closeMenu}>Themes
           <ul className={this.state.menu}>
             <li onClick={this.setTheme}>Theme 1</li>
             <li onClick={this.setTheme}>Theme 2</li>
@@ -64,13 +64,14 @@ class Footer extends React.Component {
           </ul>
         </button>
       )
+      var newGame =   <button onClick={this.clearGame}>New Game</button>;
     }
     return (
       <footer>
         <button onClick={this.props.logOut}>{buttonText}</button>
         <Leaderboard />
-        <button onClick={this.clearGame}>New Game</button>
-        {customize}
+        {newGame}
+        {themes}
       </footer>
     )
   }

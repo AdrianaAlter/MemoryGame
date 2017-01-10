@@ -27,14 +27,29 @@ class Leaderboard extends React.Component {
   }
   render(){
     var self = this;
+    var style = {
+        overlay : {
+          backgroundColor: '(105, 105, 105, 0.8)'
+        },
+        content : {
+          background: 'blanchedalmond',
+          boxShadow: '.25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray',
+          margin: 'auto',
+          width: '40%',
+          borderColor: 'transparent',
+          borderRadius: '2%'
+        }
+      };
     var scoreNums = Object.keys(this.state.scores).sort().reverse();
     var scores = scoreNums.map(function(score){
-      return <li key={scoreNums.indexOf(score)}>{self.state.scores[score]}: {score}</li>
+      if (self.state.scores[score] !== "guest"){
+        return <li key={scoreNums.indexOf(score)}>{self.state.scores[score]}:   {score}</li>
+      }
     });
     return (
-      <div>
-        <button onClick={this.toggle}>Leaderboard</button>
-        <Modal contentLabel="Modal" isOpen={this.state.modalIsOpen} onRequestClose={this.toggle}>
+      <button>
+        <section onClick={this.toggle}>Leaderboard</section>
+        <Modal contentLabel="Modal" style={style} isOpen={this.state.modalIsOpen} onRequestClose={this.toggle}>
           <div id="leaderboard" className="group">
             <h1>High Scores</h1>
             <ul>
@@ -43,7 +58,7 @@ class Leaderboard extends React.Component {
             <button onClick={this.toggle}>Ok</button>
           </div>
         </Modal>
-      </div>
+      </button>
     )
   }
 }

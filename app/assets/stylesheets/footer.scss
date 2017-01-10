@@ -1,12 +1,11 @@
 $main: cadetblue;
-$contrast: transparentize(darken(cadetblue, 15%), .8);
+$contrast: transparentize(darken(cadetblue, 25%), .5);
 $trim: dimgray;
 
 footer {
   position: fixed;
   bottom: 0;
   display: flex;
-  justify-content: flex-start;
   height: 10vh;
   padding: 2vh;
   background: $main;
@@ -14,22 +13,42 @@ footer {
   button {
     background: $contrast;
     padding: 0 2%;
+    flex-basis: 15%;
     height: 100%;
-    box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
-    border: .1vw solid $trim;
+    color: floralwhite;
+    border-radius: 3%;
+    text-align: center;
+    cursor: pointer;
+    font-size: 3vh;
+    margin-right: .5%;
+    position: relative;
+  }
+  button:hover {
+    background: darken($contrast, 20%);
+  }
+  div {
+    background: $contrast;
+    padding: 0 2%;
+    flex-basis: 15%;
+    height: 100%;
+    color: floralwhite;
     border-radius: 3%;
     text-align: center;
     cursor: pointer;
     font-size: 3vh;
     margin-right: 1vw;
     position: relative;
+    button {
+      width: 100%;
+      padding: 0 2%;
+    }
   }
   .menu {
     position: absolute;
     display: flex;
     flex-direction: column;
-    top: -220%;
-    left: 0;
+    top: -235%;
+    left: -.5%;
     width: 200%;
     background: $main;
     box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
@@ -38,7 +57,7 @@ footer {
       flex: 1;
       font-size: 2.5vh;
       padding: 1% 0;
-      border-bottom: .1vw solid $trim;
+      border-bottom: .1vw solid $contrast;
     }
     li:hover {
       background: $contrast;
@@ -51,39 +70,48 @@ footer {
 }
 
 #leaderboard {
-  height: 95%;
+  height: 100%;
   display: flex;
+  background: $main;
   flex-direction: column;
   justify-content: space-between;
   button {
-    background: $contrast;
+    background: $trim;
     padding: 1% 2%;
     width: 20%;
     border-radius: 3%;
     text-align: center;
     cursor: pointer;
     font-size: 4vh;
-    flex: 1;
-    margin: 3% auto 0 auto;
+    flex: .5;
+    margin: 0 auto 1% auto;
+  }
+  button:hover {
+    background: darken($trim, 20%);
   }
   h1 {
-    flex: 1;
+    flex: .5;
+    background: $contrast;
   }
   ul {
-    background: $main;
-    border: 1vw double $trim;
-    flex: 4;
-    width: 70%;
-    margin: auto;
+    background: blanchedalmond;
+    flex: 6;
+    padding: 1% 0;
+    width: 60%;
+    margin: 1% auto;
     display: flex;
     flex-direction: column;
     li {
       border-bottom: .1vw solid $trim;
-      font-size: 4vh;
+      color: darken($trim, 35%);
+      font-size: 3vh;
       width: 95%;
       margin: 0 auto;
-      padding: 2%;
+      padding: 1%;
       text-align: center;
+    }
+    li:first-child {
+      padding-top: 0;
     }
   }
 

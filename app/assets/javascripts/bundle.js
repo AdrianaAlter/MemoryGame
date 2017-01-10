@@ -64,11 +64,11 @@
 	
 	var _welcome2 = _interopRequireDefault(_welcome);
 	
-	var _game = __webpack_require__(275);
+	var _game = __webpack_require__(276);
 	
 	var _game2 = _interopRequireDefault(_game);
 	
-	var _sessionStore = __webpack_require__(261);
+	var _sessionStore = __webpack_require__(263);
 	
 	var _sessionStore2 = _interopRequireDefault(_sessionStore);
 	
@@ -76,7 +76,7 @@
 	
 	var _apiUtil2 = _interopRequireDefault(_apiUtil);
 	
-	var _reactModal = __webpack_require__(263);
+	var _reactModal = __webpack_require__(265);
 	
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 	
@@ -26465,11 +26465,11 @@
 	
 	var _footer2 = _interopRequireDefault(_footer);
 	
-	var _setup = __webpack_require__(274);
+	var _setup = __webpack_require__(275);
 	
 	var _setup2 = _interopRequireDefault(_setup);
 	
-	var _game = __webpack_require__(275);
+	var _game = __webpack_require__(276);
 	
 	var _game2 = _interopRequireDefault(_game);
 	
@@ -26477,11 +26477,11 @@
 	
 	var _apiUtil2 = _interopRequireDefault(_apiUtil);
 	
-	var _sessionStore = __webpack_require__(261);
+	var _sessionStore = __webpack_require__(263);
 	
 	var _sessionStore2 = _interopRequireDefault(_sessionStore);
 	
-	var _userStore = __webpack_require__(273);
+	var _userStore = __webpack_require__(262);
 	
 	var _userStore2 = _interopRequireDefault(_userStore);
 	
@@ -26573,19 +26573,19 @@
 	
 	var _gameStore2 = _interopRequireDefault(_gameStore);
 	
-	var _cardStore = __webpack_require__(278);
+	var _cardStore = __webpack_require__(261);
 	
 	var _cardStore2 = _interopRequireDefault(_cardStore);
 	
-	var _userStore = __webpack_require__(273);
+	var _userStore = __webpack_require__(262);
 	
 	var _userStore2 = _interopRequireDefault(_userStore);
 	
-	var _sessionStore = __webpack_require__(261);
+	var _sessionStore = __webpack_require__(263);
 	
 	var _sessionStore2 = _interopRequireDefault(_sessionStore);
 	
-	var _leaderboard = __webpack_require__(262);
+	var _leaderboard = __webpack_require__(264);
 	
 	var _leaderboard2 = _interopRequireDefault(_leaderboard);
 	
@@ -26605,7 +26605,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this));
 	
-	    _this.state = { game: _gameStore2.default.all(), user: _userStore2.default.current(), menu: "menu" };
+	    _this.state = { game: _gameStore2.default.all(), user: _userStore2.default.current(), menu: "hidden" };
 	    _this.clearGame = _this.clearGame.bind(_this);
 	    _this.saveGame = _this.saveGame.bind(_this);
 	    _this.openMenu = _this.openMenu.bind(_this);
@@ -26675,10 +26675,10 @@
 	        );
 	      }
 	      if (this.state.game.length > 0) {
-	        var customize = _react2.default.createElement(
+	        var themes = _react2.default.createElement(
 	          'button',
 	          { onMouseOver: this.openMenu, onMouseLeave: this.closeMenu },
-	          'Customize',
+	          'Themes',
 	          _react2.default.createElement(
 	            'ul',
 	            { className: this.state.menu },
@@ -26699,6 +26699,11 @@
 	            )
 	          )
 	        );
+	        var newGame = _react2.default.createElement(
+	          'button',
+	          { onClick: this.clearGame },
+	          'New Game'
+	        );
 	      }
 	      return _react2.default.createElement(
 	        'footer',
@@ -26709,12 +26714,8 @@
 	          buttonText
 	        ),
 	        _react2.default.createElement(_leaderboard2.default, null),
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.clearGame },
-	          'New Game'
-	        ),
-	        customize
+	        newGame,
+	        themes
 	      );
 	    }
 	  }]);
@@ -28829,6 +28830,149 @@
 
 	'use strict';
 	
+	var _dispatcher = __webpack_require__(238);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	var _cardConstants = __webpack_require__(237);
+	
+	var _cardConstants2 = _interopRequireDefault(_cardConstants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Store = __webpack_require__(248).Store;
+	
+	
+	var CardStore = new Store(_dispatcher2.default);
+	
+	var _pictures = [];
+	var _cards = [];
+	
+	CardStore.all = function () {
+	  return _cards;
+	};
+	CardStore.allPictures = function () {
+	  return _pictures;
+	};
+	CardStore.selected = function () {
+	  return _.where(_cards, { flipped: true });
+	};
+	CardStore.matched = function () {
+	  return _.where(_cards, { matched: true });
+	};
+	CardStore.resetPictures = function (pictures) {
+	  _pictures = pictures;
+	};
+	CardStore.addCard = function (card) {
+	  _cards.push(card);
+	};
+	CardStore.resetCard = function (card) {
+	  for (var i = 0; i < _cards.length; i++) {
+	    if (_cards[i].id == card.id) {
+	      _cards[i] = card;
+	    }
+	  }
+	};
+	
+	CardStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case _cardConstants2.default.PICTURES_RECEIVED:
+	      CardStore.resetPictures(payload.pictures);
+	      CardStore.__emitChange();
+	      break;
+	    case _cardConstants2.default.CARD_ADDED:
+	      CardStore.addCard(payload.card);
+	      CardStore.__emitChange();
+	      break;
+	    case _cardConstants2.default.UPDATED_CARD_RECEIVED:
+	      CardStore.resetCard(payload.card);
+	      CardStore.__emitChange();
+	      break;
+	    case _cardConstants2.default.CARDS_RECEIVED:
+	      CardStore.resetCards(payload.cards);
+	      CardStore.__emitChange();
+	      break;
+	    case _cardConstants2.default.CARD_SELECTED:
+	      CardStore.selectCard(payload.card);
+	      CardStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = CardStore;
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _dispatcher = __webpack_require__(238);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	var _userConstants = __webpack_require__(246);
+	
+	var _userConstants2 = _interopRequireDefault(_userConstants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Store = __webpack_require__(248).Store;
+	
+	
+	var UserStore = new Store(_dispatcher2.default);
+	var _users = [];
+	var _current;
+	
+	UserStore.current = function () {
+	  return _current;
+	};
+	
+	UserStore.all = function () {
+	  return _users;
+	};
+	
+	UserStore.resetCurrent = function (user) {
+	  _current = user;
+	};
+	
+	UserStore.resetUsers = function (users) {
+	  _users = users;
+	};
+	
+	UserStore.highScores = function () {
+	  var scores = {};
+	  _users.map(function (user) {
+	    scores[user.user_name] = user.high_score;
+	  });
+	  return _.invert(scores);
+	};
+	
+	UserStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case _userConstants2.default.SINGLE_USER_RECEIVED:
+	      UserStore.resetCurrent(payload.user);
+	      UserStore.__emitChange();
+	      break;
+	    case _userConstants2.default.ALL_USERS_RECEIVED:
+	      UserStore.resetUsers(payload.users);
+	      UserStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	exports.default = UserStore;
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -28880,7 +29024,7 @@
 	exports.default = SessionStore;
 
 /***/ },
-/* 262 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28895,7 +29039,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactModal = __webpack_require__(263);
+	var _reactModal = __webpack_require__(265);
 	
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 	
@@ -28903,7 +29047,7 @@
 	
 	var _apiUtil2 = _interopRequireDefault(_apiUtil);
 	
-	var _userStore = __webpack_require__(273);
+	var _userStore = __webpack_require__(262);
 	
 	var _userStore2 = _interopRequireDefault(_userStore);
 	
@@ -28958,27 +29102,42 @@
 	    key: 'render',
 	    value: function render() {
 	      var self = this;
+	      var style = {
+	        overlay: {
+	          backgroundColor: '(105, 105, 105, 0.8)'
+	        },
+	        content: {
+	          background: 'blanchedalmond',
+	          boxShadow: '.25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray',
+	          margin: 'auto',
+	          width: '40%',
+	          borderColor: 'transparent',
+	          borderRadius: '2%'
+	        }
+	      };
 	      var scoreNums = Object.keys(this.state.scores).sort().reverse();
 	      var scores = scoreNums.map(function (score) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: scoreNums.indexOf(score) },
-	          self.state.scores[score],
-	          ': ',
-	          score
-	        );
+	        if (self.state.scores[score] !== "guest") {
+	          return _react2.default.createElement(
+	            'li',
+	            { key: scoreNums.indexOf(score) },
+	            self.state.scores[score],
+	            ':   ',
+	            score
+	          );
+	        }
 	      });
 	      return _react2.default.createElement(
-	        'div',
+	        'button',
 	        null,
 	        _react2.default.createElement(
-	          'button',
+	          'section',
 	          { onClick: this.toggle },
 	          'Leaderboard'
 	        ),
 	        _react2.default.createElement(
 	          _reactModal2.default,
-	          { contentLabel: 'Modal', isOpen: this.state.modalIsOpen, onRequestClose: this.toggle },
+	          { contentLabel: 'Modal', style: style, isOpen: this.state.modalIsOpen, onRequestClose: this.toggle },
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'leaderboard', className: 'group' },
@@ -29009,25 +29168,25 @@
 	exports.default = Leaderboard;
 
 /***/ },
-/* 263 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(264);
+	module.exports = __webpack_require__(266);
 	
 
 
 /***/ },
-/* 264 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(32);
-	var ExecutionEnvironment = __webpack_require__(265);
-	var ModalPortal = React.createFactory(__webpack_require__(266));
-	var ariaAppHider = __webpack_require__(271);
-	var elementClass = __webpack_require__(272);
+	var ExecutionEnvironment = __webpack_require__(267);
+	var ModalPortal = React.createFactory(__webpack_require__(268));
+	var ariaAppHider = __webpack_require__(273);
+	var elementClass = __webpack_require__(274);
 	var renderSubtreeIntoContainer = __webpack_require__(32).unstable_renderSubtreeIntoContainer;
-	var Assign = __webpack_require__(270);
+	var Assign = __webpack_require__(272);
 	
 	var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
 	var AppElement = ExecutionEnvironment.canUseDOM ? document.body : {appendChild: function() {}};
@@ -29160,7 +29319,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 265 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -29205,14 +29364,14 @@
 
 
 /***/ },
-/* 266 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var div = React.DOM.div;
-	var focusManager = __webpack_require__(267);
-	var scopeTab = __webpack_require__(269);
-	var Assign = __webpack_require__(270);
+	var focusManager = __webpack_require__(269);
+	var scopeTab = __webpack_require__(271);
+	var Assign = __webpack_require__(272);
 	
 	// so that our CSS is statically analyzable
 	var CLASS_NAMES = {
@@ -29422,10 +29581,10 @@
 
 
 /***/ },
-/* 267 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(268);
+	var findTabbable = __webpack_require__(270);
 	var modalElement = null;
 	var focusLaterElement = null;
 	var needToFocus = false;
@@ -29496,7 +29655,7 @@
 
 
 /***/ },
-/* 268 */
+/* 270 */
 /***/ function(module, exports) {
 
 	/*!
@@ -29552,10 +29711,10 @@
 
 
 /***/ },
-/* 269 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(268);
+	var findTabbable = __webpack_require__(270);
 	
 	module.exports = function(node, event) {
 	  var tabbable = findTabbable(node);
@@ -29577,7 +29736,7 @@
 
 
 /***/ },
-/* 270 */
+/* 272 */
 /***/ function(module, exports) {
 
 	/**
@@ -30220,7 +30379,7 @@
 
 
 /***/ },
-/* 271 */
+/* 273 */
 /***/ function(module, exports) {
 
 	var _element = typeof document !== 'undefined' ? document.body : null;
@@ -30268,7 +30427,7 @@
 
 
 /***/ },
-/* 272 */
+/* 274 */
 /***/ function(module, exports) {
 
 	module.exports = function(opts) {
@@ -30333,73 +30492,7 @@
 
 
 /***/ },
-/* 273 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _dispatcher = __webpack_require__(238);
-	
-	var _dispatcher2 = _interopRequireDefault(_dispatcher);
-	
-	var _userConstants = __webpack_require__(246);
-	
-	var _userConstants2 = _interopRequireDefault(_userConstants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Store = __webpack_require__(248).Store;
-	
-	
-	var UserStore = new Store(_dispatcher2.default);
-	var _users = [];
-	var _current;
-	
-	UserStore.current = function () {
-	  return _current;
-	};
-	
-	UserStore.all = function () {
-	  return _users;
-	};
-	
-	UserStore.resetCurrent = function (user) {
-	  _current = user;
-	};
-	
-	UserStore.resetUsers = function (users) {
-	  _users = users;
-	};
-	
-	UserStore.highScores = function () {
-	  var scores = {};
-	  _users.map(function (user) {
-	    scores[user.user_name] = user.high_score;
-	  });
-	  return _.invert(scores);
-	};
-	
-	UserStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case _userConstants2.default.SINGLE_USER_RECEIVED:
-	      UserStore.resetCurrent(payload.user);
-	      UserStore.__emitChange();
-	      break;
-	    case _userConstants2.default.ALL_USERS_RECEIVED:
-	      UserStore.resetUsers(payload.users);
-	      UserStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	exports.default = UserStore;
-
-/***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30418,7 +30511,7 @@
 	
 	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 	
-	var _game = __webpack_require__(275);
+	var _game = __webpack_require__(276);
 	
 	var _game2 = _interopRequireDefault(_game);
 	
@@ -30426,7 +30519,7 @@
 	
 	var _apiUtil2 = _interopRequireDefault(_apiUtil);
 	
-	var _userStore = __webpack_require__(273);
+	var _userStore = __webpack_require__(262);
 	
 	var _userStore2 = _interopRequireDefault(_userStore);
 	
@@ -30544,7 +30637,7 @@
 	exports.default = Setup;
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30559,11 +30652,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _timer = __webpack_require__(276);
+	var _timer = __webpack_require__(277);
 	
 	var _timer2 = _interopRequireDefault(_timer);
 	
-	var _cardIndex = __webpack_require__(277);
+	var _cardIndex = __webpack_require__(278);
 	
 	var _cardIndex2 = _interopRequireDefault(_cardIndex);
 	
@@ -30579,15 +30672,15 @@
 	
 	var _gameStore2 = _interopRequireDefault(_gameStore);
 	
-	var _cardStore = __webpack_require__(278);
+	var _cardStore = __webpack_require__(261);
 	
 	var _cardStore2 = _interopRequireDefault(_cardStore);
 	
-	var _sessionStore = __webpack_require__(261);
+	var _sessionStore = __webpack_require__(263);
 	
 	var _sessionStore2 = _interopRequireDefault(_sessionStore);
 	
-	var _userStore = __webpack_require__(273);
+	var _userStore = __webpack_require__(262);
 	
 	var _userStore2 = _interopRequireDefault(_userStore);
 	
@@ -30661,14 +30754,18 @@
 	      }
 	      if (this.state.game.length > 0) {
 	        // var isNew = this.state.game[0].cards.length > 0 ? false : true;
-	        var wonStatus = this.state.won ? "" : "hidden";
-	        var timer = this.state.won ? _react2.default.createElement('div', null) : _react2.default.createElement(_timer2.default, { finalTime: this.finalTime });
+	        var wonStatus = this.state.won ? true : false;
+	        var timer = this.state.won ? _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Done!'
+	        ) : _react2.default.createElement(_timer2.default, { finalTime: this.finalTime });
 	        return _react2.default.createElement(
 	          'div',
 	          { id: 'game' },
 	          timer,
 	          _react2.default.createElement(_cardIndex2.default, { theme: this.state.game[0].theme, level: this.state.game[0].level, gameId: this.state.game[0].id, isWon: this.isWon }),
-	          _react2.default.createElement(_won2.default, { className: wonStatus, highScore: highScore, score: this.state.score, gameId: this.state.game[0].id })
+	          _react2.default.createElement(_won2.default, { won: wonStatus, highScore: highScore, score: this.state.score, gameId: this.state.game[0].id })
 	        );
 	      } else {
 	        return _react2.default.createElement('div', null);
@@ -30682,7 +30779,7 @@
 	exports.default = Game;
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30776,7 +30873,7 @@
 	exports.default = TimerContainer;
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30795,7 +30892,7 @@
 	
 	var _apiUtil2 = _interopRequireDefault(_apiUtil);
 	
-	var _cardStore = __webpack_require__(278);
+	var _cardStore = __webpack_require__(261);
 	
 	var _cardStore2 = _interopRequireDefault(_cardStore);
 	
@@ -30803,7 +30900,7 @@
 	
 	var _card2 = _interopRequireDefault(_card);
 	
-	var _timer = __webpack_require__(276);
+	var _timer = __webpack_require__(277);
 	
 	var _timer2 = _interopRequireDefault(_timer);
 	
@@ -30929,83 +31026,6 @@
 	exports.default = CardIndex;
 
 /***/ },
-/* 278 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _dispatcher = __webpack_require__(238);
-	
-	var _dispatcher2 = _interopRequireDefault(_dispatcher);
-	
-	var _cardConstants = __webpack_require__(237);
-	
-	var _cardConstants2 = _interopRequireDefault(_cardConstants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Store = __webpack_require__(248).Store;
-	
-	
-	var CardStore = new Store(_dispatcher2.default);
-	
-	var _pictures = [];
-	var _cards = [];
-	
-	CardStore.all = function () {
-	  return _cards;
-	};
-	CardStore.allPictures = function () {
-	  return _pictures;
-	};
-	CardStore.selected = function () {
-	  return _.where(_cards, { flipped: true });
-	};
-	CardStore.matched = function () {
-	  return _.where(_cards, { matched: true });
-	};
-	CardStore.resetPictures = function (pictures) {
-	  _pictures = pictures;
-	};
-	CardStore.addCard = function (card) {
-	  _cards.push(card);
-	};
-	CardStore.resetCard = function (card) {
-	  for (var i = 0; i < _cards.length; i++) {
-	    if (_cards[i].id == card.id) {
-	      _cards[i] = card;
-	    }
-	  }
-	};
-	
-	CardStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case _cardConstants2.default.PICTURES_RECEIVED:
-	      CardStore.resetPictures(payload.pictures);
-	      CardStore.__emitChange();
-	      break;
-	    case _cardConstants2.default.CARD_ADDED:
-	      CardStore.addCard(payload.card);
-	      CardStore.__emitChange();
-	      break;
-	    case _cardConstants2.default.UPDATED_CARD_RECEIVED:
-	      CardStore.resetCard(payload.card);
-	      CardStore.__emitChange();
-	      break;
-	    case _cardConstants2.default.CARDS_RECEIVED:
-	      CardStore.resetCards(payload.cards);
-	      CardStore.__emitChange();
-	      break;
-	    case _cardConstants2.default.CARD_SELECTED:
-	      CardStore.selectCard(payload.card);
-	      CardStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = CardStore;
-
-/***/ },
 /* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31081,6 +31101,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactModal = __webpack_require__(265);
+	
+	var _reactModal2 = _interopRequireDefault(_reactModal);
+	
 	var _apiUtil = __webpack_require__(235);
 	
 	var _apiUtil2 = _interopRequireDefault(_apiUtil);
@@ -31099,17 +31123,59 @@
 	  function Won() {
 	    _classCallCheck(this, Won);
 	
-	    return _possibleConstructorReturn(this, (Won.__proto__ || Object.getPrototypeOf(Won)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (Won.__proto__ || Object.getPrototypeOf(Won)).call(this));
+	
+	    _this.state = { open: true };
+	    _this.toggle = _this.toggle.bind(_this);
+	    _this.clearGame = _this.clearGame.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(Won, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      _reactModal2.default.setAppElement('body');
+	    }
+	  }, {
 	    key: 'clearGame',
 	    value: function clearGame() {
+	      this.toggle();
 	      _apiUtil2.default.deleteGame(this.props.gameId);
+	    }
+	  }, {
+	    key: 'toggle',
+	    value: function toggle() {
+	      this.state.open ? this.setState({ open: false }) : this.setState({ open: true });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var style;
+	      if (!this.state.open) {
+	        style = {
+	          overlay: {
+	            display: 'none'
+	          },
+	          content: {
+	            display: 'none'
+	          }
+	        };
+	      } else {
+	        style = {
+	          overlay: {
+	            backgroundColor: '(105, 105, 105, 0.8)'
+	          },
+	          content: {
+	            background: 'blanchedalmond',
+	            boxShadow: '.25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray',
+	            width: '50%',
+	            height: '60%',
+	            margin: 'auto',
+	            borderColor: 'transparent',
+	            borderRadius: '2%'
+	          }
+	        };
+	      }
 	      var highScore;
 	      if (this.props.highScore && this.props.score > this.props.highScore) {
 	        highScore = _react2.default.createElement(
@@ -31134,26 +31200,39 @@
 	      }
 	      return _react2.default.createElement(
 	        'div',
-	        { id: 'won', className: this.props.className },
+	        null,
 	        _react2.default.createElement(
-	          'section',
-	          null,
+	          _reactModal2.default,
+	          { style: style, contentLabel: 'Modal', className: this.state.display, isOpen: this.props.won, onRequestClose: this.toggle },
 	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            'You won!'
-	          ),
-	          _react2.default.createElement(
-	            'h2',
-	            null,
-	            'Score: ',
-	            this.props.score
-	          ),
-	          highScore,
-	          _react2.default.createElement(
-	            'button',
-	            { onClick: this.clearGame.bind(this) },
-	            'Play Again'
+	            'section',
+	            { id: 'won' },
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'You won!'
+	            ),
+	            _react2.default.createElement(
+	              'h2',
+	              null,
+	              'Score: ',
+	              this.props.score
+	            ),
+	            highScore,
+	            _react2.default.createElement(
+	              'section',
+	              null,
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.clearGame },
+	                'Play Again'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.toggle },
+	                'Ok'
+	              )
+	            )
 	          )
 	        )
 	      );

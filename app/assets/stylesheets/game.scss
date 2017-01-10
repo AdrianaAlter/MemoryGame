@@ -8,39 +8,81 @@ $trim: dimgray;
   width: 92vw;
   height: 80vh;
   flex-wrap: wrap;
+  justify-content: space-between;
   margin: auto;
   display: flex;
   background: cadetblue;
 }
 
 .card {
-  flex: 1;
-  box-sizing: padding-box;
+  flex-basis: 11%;
+  box-sizing: border-box;
   height: 30vh;
   margin: 0 .25vw;
   border-radius: 4%;
-  padding: 3vh 4vw;
+  padding: 6vh 1vw 1vh 1vw;
   cursor: pointer;
-  border: 1px solid black;
   text-align: center;
-  font-size: 5vh;
+  font-size: 9vh;
   font-weight: bold;
-  background: blanchedalmond;
-  color: blue;
+  background-color: #ffebcd;
+  background-image: url("https://www.transparenttextures.com/patterns/vichy.png");
+  color: transparent;
+}
+.card:hover {
+  box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
 }
 .face-up, .matched {
-  color: darkgreen;
+  border: .75vw double #AE0202;
+  color: #AE0202;
+  background-image: none !important;
+  box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
 }
 .matched {
-  background: transparentize(dimgray, .8);
+  background: transparentize(darken(#ffebcd, 10%), .2);
   cursor: default;
+  box-shadow: none;
 }
-
+.matched:hover {
+  box-shadow: none;
+}
 .theme1 {
-
+  background-color: #003407;
+  background-image: url("https://www.transparenttextures.com/patterns/light-wool.png");
 }
+.face-up.theme1 {
+  color: #B1B1B1;
+  border-color: #B1B1B1;
+}
+.theme1.matched {
+  @extend .face-up.theme1;
+  background-color: transparentize(darken(#003407, 10%), .2);
+}
+
 .theme2 {
-  background: maroon;
+  background-color: #740001;
+  background-image: url("https://www.transparenttextures.com/patterns/swirl.png");
+}
+.face-up.theme2 {
+  color: #93730E;
+  border-color: #93730E;
+}
+.theme2.matched {
+  @extend .face-up.theme2;
+  background-color: transparentize(darken(#740001, 10%), .2);
+}
+
+.theme3 {
+  background-color: #0E1A40;
+  background-image: url("https://www.transparenttextures.com/patterns/washi.png");
+}
+.theme3.face-up {
+  color: #8D6B2B;
+  border-color: #8D6B2B;
+}
+.theme3.matched {
+  @extend .face-up.theme3;
+  background-color: transparentize(darken(#0E1A40, 10%), .2);
 }
 
 #timer {

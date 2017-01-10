@@ -1,5 +1,5 @@
 $main: cadetblue;
-$contrast: transparentize(darken(cadetblue, 15%), .8);
+$contrast: transparentize(darken(cadetblue, 25%), .8);
 $trim: dimgray;
 
 #setup{
@@ -13,26 +13,28 @@ $trim: dimgray;
     background: $main;
     margin: auto;
     height: 70vh;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
     width: 60vw;
     display: flex;
   }
   button {
     background: $contrast;
-    padding: 6%;
-    flex-basis: 25%;
-    width: 50%;
-    margin: auto;
+    padding: 4%;
+    flex-basis: 33%;
+    color: darken($trim, 35%);
+    width: 66%;
+    margin: .5% auto;
     box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
     border: .1vw solid $trim;
     border-radius: 3%;
     text-align: center;
     cursor: pointer;
-    font-size: 2vh;
+    font-size: 4vh;
+    font-weight: normal;
   }
   button:hover {
-    background: darken($contrast, 15%);
+    background: darken($contrast, 80%);
   }
 }
 

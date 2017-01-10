@@ -49,13 +49,13 @@ class Game extends React.Component {
     }
     if (this.state.game.length > 0){
       // var isNew = this.state.game[0].cards.length > 0 ? false : true;
-      var wonStatus = this.state.won ? "" : "hidden";
-      var timer = this.state.won ? <div></div> : <Timer finalTime={this.finalTime}/>
+      var wonStatus = this.state.won ? true : false;
+      var timer = this.state.won ? <h1>Done!</h1> : <Timer finalTime={this.finalTime}/>
       return (
         <div id="game">
           {timer}
           <CardIndex theme={this.state.game[0].theme} level={this.state.game[0].level} gameId={this.state.game[0].id} isWon={this.isWon} />
-          <Won className={wonStatus} highScore={highScore} score={this.state.score} gameId={this.state.game[0].id} />
+          <Won won={wonStatus} highScore={highScore} score={this.state.score} gameId={this.state.game[0].id} />
         </div>
       )
     }
