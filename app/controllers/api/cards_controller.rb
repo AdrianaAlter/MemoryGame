@@ -1,7 +1,7 @@
 class Api::CardsController < ApplicationController
 
   def index
-    @cards = Card.all
+    @cards = current_user.cards
     render :index
   end
 
@@ -16,6 +16,13 @@ class Api::CardsController < ApplicationController
     @card = Card.find(params[:id])
     @card.update(card_params)
     render :show
+  end
+
+  def destroy
+    @card = Card.find(params[:id])
+    @card.destroy
+    @cards = Card.all
+    render :index
   end
 
   private

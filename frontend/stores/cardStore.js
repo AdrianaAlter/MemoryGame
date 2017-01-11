@@ -4,15 +4,16 @@ import CardConstants from '../constants/cardConstants.js';
 
 var CardStore = new Store(Dispatcher);
 
-var _pictures = [];
+// var _pictures = [];
 var _cards = [];
 
 CardStore.all = function(){
+  // debugger
   return _cards;
 };
-CardStore.allPictures = function(){
-  return _pictures;
-};
+// CardStore.allPictures = function(){
+//   return _pictures;
+// };
 CardStore.selected = function(){
   return _.where(_cards, {flipped: true});
 };
@@ -32,13 +33,16 @@ CardStore.resetCard = function(card){
     }
   }
 };
+CardStore.clear = function(){
+  _cards = [];
+};
 
 CardStore.__onDispatch = function(payload) {
   switch (payload.actionType) {
-    case CardConstants.PICTURES_RECEIVED:
-      CardStore.resetPictures(payload.pictures);
-      CardStore.__emitChange();
-      break;
+    // case CardConstants.PICTURES_RECEIVED:
+    //   CardStore.resetPictures(payload.pictures);
+    //   CardStore.__emitChange();
+    //   break;
     case CardConstants.CARD_ADDED:
       CardStore.addCard(payload.card);
       CardStore.__emitChange();

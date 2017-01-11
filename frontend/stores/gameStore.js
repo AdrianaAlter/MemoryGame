@@ -4,28 +4,44 @@ import GameConstants from '../constants/gameConstants.js';
 
 var GameStore = new Store(Dispatcher);
 
-var _games = [];
+var _game;
+var _pictures = [];
 
 GameStore.all = function(){
-  return _games;
+  // debugger
+  return _game;
 };
 
-GameStore.resetGames = function(game){
-  _games = [game];
+GameStore.allPictures = function(){
+  return _pictures;
+};
+
+GameStore.resetGame = function(game){
+  // debugger
+  _game = game;
+};
+
+GameStore.resetPictures = function(pictures){
+  // debugger
+  _pictures = _.shuffle(pictures);
 };
 
 GameStore.clear = function(){
-  _games = [];
+  _game = [];
 };
 
 GameStore.__onDispatch = function(payload) {
   switch (payload.actionType) {
+    case GameConstants.PICTURES_RECEIVED:
+      GameStore.resetPictures(payload.pictures);
+      GameStore.__emitChange();
+      break;
     case GameConstants.GAME_STARTED:
-      GameStore.resetGames(payload.game);
+      GameStore.resetGame(payload.game);
       GameStore.__emitChange();
       break;
     case GameConstants.GAME_RECEIVED:
-      GameStore.resetGames(payload.game);
+      GameStore.resetGame(payload.game);
       GameStore.__emitChange();
       break;
   }

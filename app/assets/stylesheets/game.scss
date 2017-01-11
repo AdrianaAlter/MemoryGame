@@ -27,7 +27,7 @@ $trim: dimgray;
   font-weight: bold;
   background-color: #ffebcd;
   background-image: url("https://www.transparenttextures.com/patterns/vichy.png");
-  color: transparent;
+  color: black;
 }
 .card:hover {
   box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
@@ -84,16 +84,18 @@ $trim: dimgray;
   @extend .face-up.theme3;
   background-color: transparentize(darken(#0E1A40, 10%), .2);
 }
-
+.saved {
+  border: 3px solid blue;
+}
 #timer {
-  height: 6vh;
-  margin-left: 4vw;
-  width: 12vw;
-  background: $contrast;
-  font-size: 2.5vh;
-  padding-top: 1.5vh;
-  text-align: center;
-  border-top: .1vw solid $main;
-  border-left: .1vw solid $main;
-  border-right: .1vw solid $main;
+  // height: 6vh;
+  // margin-left: 4vw;
+  // width: 12vw;
+  // background: $contrast;
+  // font-size: 2.5vh;
+  // padding-top: 1.5vh;
+  // text-align: center;
+  // border-top: .1vw solid $main;
+  // border-left: .1vw solid $main;
+  // border-right: .1vw solid $main;
 }

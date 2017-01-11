@@ -7,23 +7,27 @@ var SessionStore = new Store(Dispatcher);
 var _currentUser;
 var _currentUserFetched = false;
 
-SessionStore.currentUser = function () {
+SessionStore.currentUser = function(){
   return _currentUser;
 };
 
-SessionStore.currentUserFetched = function () {
+SessionStore.currentUserFetched = function(){
   return _currentUserFetched;
 };
 
-SessionStore.isLoggedIn = function () {
+SessionStore.isLoggedIn = function(){
   return !!_currentUser;
+};
+
+SessionStore.receiveCurrentUser = function(currentUser){
+  _currentUser = currentUser;
+  _currentUserFetched = true;
 };
 
 SessionStore.__onDispatch = function (payload) {
   switch (payload.actionType) {
     case SessionConstants.CURRENT_USER_RECEIVED:
-      _currentUser = payload.currentUser;
-      _currentUserFetched = true;
+      SessionStore.receiveCurrentUser(payload.currentUser);
 			SessionStore.__emitChange();
       break;
     case SessionConstants.LOGOUT:

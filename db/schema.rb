@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(version: 20170106165003) do
     t.integer "user_id"
     t.integer "level"
     t.string  "theme"
+    t.boolean "saved",      default: false
+    t.boolean "started",    default: false
+    t.integer "final_time"
   end
 
   create_table "users", force: :cascade do |t|

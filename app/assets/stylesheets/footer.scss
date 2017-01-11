@@ -26,6 +26,16 @@ footer {
   button:hover {
     background: darken($contrast, 20%);
   }
+  a {
+    @extend button;
+  }
+  #name-display {
+    background: transparent;
+    flex: 3;
+  }
+  #name-display:hover {
+    background: transparent;
+  }
   div {
     background: $contrast;
     padding: 0 2%;

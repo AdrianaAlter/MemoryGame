@@ -35,18 +35,12 @@ class SignUp extends React.Component {
       return(
         <form>
           <h2>Sign Up</h2>
-            <section>
-              <label>User Name</label>
-              <input type="text" onChange={this.updateName}></input>
-            </section>
-            <section>
-              <label>Password</label>
-              <input type="password" onChange={this.updatePassword}></input>
-            </section>
-            <section>
-              <button onClick={this.submitInfo}>Submit</button>
-              <button onClick={this.toggleDisplay}>Cancel</button>
-            </section>
+          <input type="text" placeholder="User Name" onChange={this.updateName}></input>
+          <input type="password" placeholder="Password" onChange={this.updatePassword}></input>
+          <section>
+            <button onClick={this.submitInfo}>Submit</button>
+            <button onClick={this.toggleDisplay}>Cancel</button>
+          </section>
         </form>
       )
     }

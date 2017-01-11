@@ -4,6 +4,9 @@ class CreateGames < ActiveRecord::Migration
       t.integer :user_id
       t.integer :level
       t.string :theme
+      t.boolean :saved, default: false
+      t.boolean :started, default: false
+      t.integer :final_time
     end
   end
 end

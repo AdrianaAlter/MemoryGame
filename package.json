@@ -19,6 +19,7 @@
     "babel-preset-react": "^6.11.1",
     "flux": "^3.1.2",
     "react": "^15.3.0",
+    "react-audio-player": "^0.3.1",
     "react-dom": "^15.3.0",
     "react-modal": "^1.6.5",
     "react-router": "^3.0.0",

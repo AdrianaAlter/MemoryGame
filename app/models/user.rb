@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   validates :session_token, presence: true, uniqueness: true
 
   has_many :games
+  has_many :cards, through: :games
 
   def self.find_by_user_name(user_name, password)
     user = User.find_by(user_name: user_name)

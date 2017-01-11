@@ -16,6 +16,11 @@ UserStore.all = function(){
 
 UserStore.resetCurrent = function(user) {
   _current = user;
+  for (var i = 0; i < _users.length; i++){
+    if (_users[i].id == user.id){
+      _users[i] = user;
+    }
+  }
 };
 
 UserStore.resetUsers = function(users){

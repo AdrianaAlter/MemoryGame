@@ -2,6 +2,12 @@ import GameConstants from '../constants/gameConstants.js';
 import Dispatcher from '../dispatcher/dispatcher.js';
 
 var GameActions = {
+  picturesReceived: function(pictures){
+    Dispatcher.dispatch({
+      actionType: GameConstants.PICTURES_RECEIVED,
+      pictures: pictures
+    });
+  },
   gameStarted: function(game){
     Dispatcher.dispatch({
       actionType: GameConstants.GAME_STARTED,

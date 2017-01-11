@@ -30,6 +30,7 @@ var ApiUtil = {
         dataType: "json",
         success: function(user) {
           UserActions.singleUserReceived(user);
+          SessionActions.currentUserReceived(user)
         },
         error: function () {
           console.log('Error fetching user info');
@@ -59,6 +60,7 @@ var ApiUtil = {
       data: userInfo,
       success: function (currentUser) {
         SessionActions.currentUserReceived(currentUser);
+        UserActions.singleUserReceived(currentUser);
         callback && callback();
       },
       error: function () {
@@ -66,13 +68,13 @@ var ApiUtil = {
     });
   },
 
-  signUp: function (userInfo, callback) {
+  signUp: function(userInfo, callback){
     $.ajax({
       type: "POST",
       url: "/api/users",
       dataType: "json",
       data: userInfo,
-      success: function (currentUser) {
+      success: function(currentUser){
         SessionActions.currentUserReceived(currentUser);
         callback && callback();
       },
@@ -88,7 +90,8 @@ var ApiUtil = {
       url: "/api/session",
       dataType: "json",
       success: function () {
-          SessionActions.logOut();
+        SessionActions.logOut();
+        // GameActions.gameReceived([]);
       },
       error: function(){
         console.log('Error in ApiUtil logout');
@@ -102,17 +105,16 @@ var ApiUtil = {
       url: "https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json",
       dataType: "json",
       success: function(pictures){
-        CardActions.picturesReceived(_.shuffle(pictures.levels[level].cards));
+        GameActions.picturesReceived(pictures.levels[level].cards);
       }
     });
   },
-
-  createGame: function(level, userId){
+  createGame: function(game){
     $.ajax({
       type: "POST",
       url: "/api/games",
       dataType: "json",
-      data: { level: level, user_id: userId },
+      data: { game: game },
       success: function(game){
         GameActions.gameStarted(game);
       },
@@ -150,6 +152,7 @@ var ApiUtil = {
   },
 
   deleteGame: function(id){
+    debugger
     $.ajax({
       type: "DELETE",
       url: "/api/games/" + id,
@@ -170,6 +173,7 @@ var ApiUtil = {
       dataType: "json",
       data: { picture: picture, gameId: gameId },
       success: function(card){
+        // debugger
         CardActions.cardAdded(card);
       },
       error: function(){
@@ -190,6 +194,19 @@ var ApiUtil = {
     });
   },
 
+  deleteCard: function(gameId, id){
+    $.ajax({
+      url: "api/games/" + gameId + "/cards/" + id,
+      type: "DELETE",
+      success: function(){
+        // CardActions.receiveList(list);
+      },
+      error: function () {
+        console.log("Error in ApiUtil deleteCard function");
+      }
+    });
+  },
+
   updateUser: function(userId, user){
     $.ajax({
       type: "PATCH",
@@ -197,6 +214,7 @@ var ApiUtil = {
       data: { user: user },
       dataType: "json",
       success: function(user){
+        SessionActions.currentUserReceived(user)
         UserActions.singleUserReceived(user);
       }
     });

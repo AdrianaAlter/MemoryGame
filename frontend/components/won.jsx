@@ -54,7 +54,7 @@ class Won extends React.Component{
     else if (this.props.highScore){
       highScore = <h3>Your high score is {this.props.highScore}.</h3>;
     }
-    else {
+    else if (this.props.name == "guest"){
       highScore = <h3>To track your high score, sign up or log in!</h3>;
     }
     return (

@@ -6,7 +6,7 @@ class Api::GamesController < ApplicationController
   end
 
   def create
-    @game = Game.new(level: params[:level], user_id: params[:user_id])
+    @game = Game.new(game_params)
     if @game.save
       render :show
     end
@@ -26,14 +26,14 @@ class Api::GamesController < ApplicationController
   def destroy
     @game = Game.find(params[:id])
     @game.destroy
-    @games = current_user.games
+    @games = Game.all
     render :index
   end
 
   private
 
   def game_params
-    params.require(:game).permit(:level, :user_id, :theme)
+    params.require(:game).permit(:level, :user_id, :theme, :saved, :started, :final_time)
   end
 
 end

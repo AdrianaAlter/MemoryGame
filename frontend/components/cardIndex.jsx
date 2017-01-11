@@ -1,35 +1,50 @@
 import React from 'react'
 import ApiUtil from '../util/apiUtil'
 import CardStore from '../stores/cardStore'
+import GameStore from '../stores/gameStore'
 import Card from './card'
-import Timer from './timer'
 
 class CardIndex extends React.Component {
   constructor() {
     super();
-    this.state = { pictures: CardStore.allPictures(), cards: CardStore.all(), selected: CardStore.selected(), matched: CardStore.matched(), won: false };
+    this.state = { cards: CardStore.all(), selected: CardStore.selected(), matched: CardStore.matched(), won: false };
     this.selectCard = this.selectCard.bind(this);
+    this.makeCards = this.makeCards.bind(this);
   }
   componentDidMount() {
-    ApiUtil.getPictures(this.props.level);
+    this.makeCards();
     this.listener = CardStore.addListener(this._onChange.bind(this));
+    // this.listener2 = GameStore.addListener(this.makeCards);
   }
   componentWillUnmount() {
     this.listener.remove();
+
+    // this.listener2.remove();
   }
   makeCards() {
-    var gameId = this.props.gameId;
-    this.state.pictures.map(function(picture){
-      ApiUtil.createCard(picture, gameId);
-    });
+    // debugger
+    if (this.state.cards.length === 0){
+    //   debugger
+      var gameId = this.props.gameId;
+      this.props.pics.map(function(picture){
+        ApiUtil.createCard(picture, gameId);
+      });
+    }
+    // else {
+    //   debugger
+    //   CardStore.clear();
+
+      //  ApiUtil.deleteGame(this.props.gameId);
+    // }
   }
   _onChange() {
-    this.setState({ pictures: CardStore.allPictures(), cards: CardStore.all(), selected: CardStore.selected(), matched: CardStore.matched() });
+    this.setState({ cards: CardStore.all(), selected: CardStore.selected(), matched: CardStore.matched() });
     if (this.state.selected.length == 2){
       this.checkSelected();
     }
   }
   selectCard(cardId) {
+    this.props.isStarted();
     var card = {};
     card.flipped = true;
     ApiUtil.updateCard(this.props.gameId, cardId, card);
@@ -71,19 +86,23 @@ class CardIndex extends React.Component {
         else {
           status = "";
         }
-        return <Card key={card.id} card={card} theme={self.props.theme} status={status} selectCard={self.selectCard} />
+        return <Card key={card.id} card={card} saved={self.props.saved} theme={self.props.theme} status={status} selectCard={self.selectCard} />
       });
       return (<div>
                 <ul className="group" id="cards">{cardLis}</ul>
               </div>)
     }
-    if (this.state.pictures.length > 0){
-      this.makeCards();
-      return <div></div>
-    }
     else {
-      return <div></div>
+      return <div>Loading...</div>
     }
+
+    // if (this.props.pics.length > 0){
+    //   this.makeCards();
+    //   return <div></div>
+    // }
+    // else {
+    //   return <div></div>
+    // }
   }
 
 }

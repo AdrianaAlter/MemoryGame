@@ -68,6 +68,10 @@
 	
 	var _game2 = _interopRequireDefault(_game);
 	
+	var _setup = __webpack_require__(275);
+	
+	var _setup2 = _interopRequireDefault(_setup);
+	
 	var _sessionStore = __webpack_require__(263);
 	
 	var _sessionStore2 = _interopRequireDefault(_sessionStore);
@@ -84,11 +88,12 @@
 	
 	var routes = _react2.default.createElement(
 	  _reactRouter.Router,
-	  { history: _reactRouter.browserHistory },
+	  { history: _reactRouter.hashHistory },
 	  _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: _app2.default, onEnter: _mustLogIn },
-	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _game2.default })
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _setup2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'game', component: _game2.default })
 	  ),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _welcome2.default })
 	);
@@ -105,6 +110,7 @@
 	  } else {
 	    _redirectToLogIn();
 	  }
+	
 	  function _redirectToLogIn() {
 	    if (!_sessionStore2.default.isLoggedIn()) {
 	      replace("/login");
@@ -26499,53 +26505,23 @@
 	  function App() {
 	    _classCallCheck(this, App);
 	
-	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
-	
-	    _this.state = { user: _this.getStateFromStore() };
-	    return _this;
+	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
 	  }
 	
 	  _createClass(App, [{
-	    key: 'getStateFromStore',
-	    value: function getStateFromStore() {
-	      _apiUtil2.default.fetchCurrentUser();
-	      return _sessionStore2.default.currentUser();
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.listener = _userStore2.default.addListener(this._onChange);
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.listener.remove();
-	    }
-	  }, {
-	    key: 'logOut',
-	    value: function logOut() {
-	      _apiUtil2.default.logOut();
-	      this.context.router.push("/login");
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_setup2.default, { userId: this.state.user.id }),
-	        _react2.default.createElement(_footer2.default, { logOut: this.logOut.bind(this) }),
-	        this.props.children
+	        this.props.children,
+	        _react2.default.createElement(_footer2.default, null)
 	      );
 	    }
 	  }]);
 	
 	  return App;
 	}(_react2.default.Component);
-	
-	App.contextTypes = {
-	  router: _react2.default.PropTypes.object.isRequired
-	};
 	
 	exports.default = App;
 
@@ -26589,6 +26565,12 @@
 	
 	var _leaderboard2 = _interopRequireDefault(_leaderboard);
 	
+	var _setup = __webpack_require__(275);
+	
+	var _setup2 = _interopRequireDefault(_setup);
+	
+	var _reactRouter = __webpack_require__(178);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26605,20 +26587,24 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this));
 	
-	    _this.state = { game: _gameStore2.default.all(), user: _userStore2.default.current(), menu: "hidden" };
+	    _this.state = { game: _gameStore2.default.all(), user: _sessionStore2.default.currentUser(), menu: "hidden" };
 	    _this.clearGame = _this.clearGame.bind(_this);
 	    _this.saveGame = _this.saveGame.bind(_this);
 	    _this.openMenu = _this.openMenu.bind(_this);
 	    _this.closeMenu = _this.closeMenu.bind(_this);
 	    _this.setTheme = _this.setTheme.bind(_this);
+	    _this.logOut = _this.logOut.bind(_this);
+	    _this.goToSetup = _this.goToSetup.bind(_this);
+	
 	    return _this;
 	  }
 	
 	  _createClass(Footer, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      _apiUtil2.default.fetchCurrentUser();
 	      this.listener1 = _gameStore2.default.addListener(this._onChange.bind(this));
-	      this.listener2 = _userStore2.default.addListener(this._onChange.bind(this));
+	      this.listener2 = _sessionStore2.default.addListener(this._onChange.bind(this));
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -26629,22 +26615,37 @@
 	  }, {
 	    key: '_onChange',
 	    value: function _onChange() {
-	      this.setState({ game: _gameStore2.default.all(), user: _userStore2.default.current() });
+	      this.setState({ game: _gameStore2.default.all(), user: _sessionStore2.default.currentUser() });
+	    }
+	  }, {
+	    key: 'logOut',
+	    value: function logOut() {
+	      // GameStore.clear();
+	      // if (this.state.game && !this.state.game.saved){
+	      this.clearGame();
+	      // }
+	      _apiUtil2.default.logOut();
+	      this.context.router.push("/login");
 	    }
 	  }, {
 	    key: 'clearGame',
 	    value: function clearGame() {
-	      if (this.state.game[0]) {
-	        _apiUtil2.default.deleteGame(this.state.game[0].id);
+	      if (this.state.game) {
+	        _apiUtil2.default.deleteGame(this.state.game.id);
 	      }
+	    }
+	  }, {
+	    key: 'goToSetup',
+	    value: function goToSetup() {
+	      this.clearGame();
+	      this.context.router.push("/");
 	    }
 	  }, {
 	    key: 'saveGame',
 	    value: function saveGame() {
-	      var cards = _cardStore2.default.all();
 	      var game = {};
-	      game.cards = cards;
-	      _apiUtil2.default.updateGame(this.state.game[0].id);
+	      game.saved = true;
+	      _apiUtil2.default.updateGame(this.state.game.id, game);
 	    }
 	  }, {
 	    key: 'openMenu',
@@ -26661,11 +26662,12 @@
 	    value: function setTheme(e) {
 	      var game = {};
 	      game.theme = e.currentTarget.innerHTML.toLowerCase().split(" ").join("");
-	      _apiUtil2.default.updateGame(this.state.game[0].id, game);
+	      _apiUtil2.default.updateGame(this.state.game.id, game);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	
 	      if (this.state.user) {
 	        var buttonText = this.state.user.user_name == "guest" ? "Sign Up" : "Log Out";
 	        var save = this.state.user.user_name == "guest" ? null : _react2.default.createElement(
@@ -26673,8 +26675,15 @@
 	          { onClick: this.saveGame },
 	          'Save Game'
 	        );
+	        var welcome = this.state.user.user_name == "guest" ? null : _react2.default.createElement(
+	          'button',
+	          { id: 'name-display' },
+	          'Welcome, ',
+	          this.state.user.user_name,
+	          '!'
+	        );
 	      }
-	      if (this.state.game.length > 0) {
+	      if (this.state.game) {
 	        var themes = _react2.default.createElement(
 	          'button',
 	          { onMouseOver: this.openMenu, onMouseLeave: this.closeMenu },
@@ -26699,29 +26708,33 @@
 	            )
 	          )
 	        );
-	        var newGame = _react2.default.createElement(
-	          'button',
-	          { onClick: this.clearGame },
-	          'New Game'
-	        );
 	      }
 	      return _react2.default.createElement(
 	        'footer',
 	        null,
 	        _react2.default.createElement(
 	          'button',
-	          { onClick: this.props.logOut },
+	          { onClick: this.logOut },
 	          buttonText
 	        ),
 	        _react2.default.createElement(_leaderboard2.default, null),
-	        newGame,
-	        themes
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.goToSetup },
+	          'New Game'
+	        ),
+	        themes,
+	        welcome
 	      );
 	    }
 	  }]);
 	
 	  return Footer;
 	}(_react2.default.Component);
+	
+	Footer.contextTypes = {
+	  router: _react2.default.PropTypes.object.isRequired
+	};
 	
 	exports.default = Footer;
 
@@ -26780,6 +26793,7 @@
 	      dataType: "json",
 	      success: function success(user) {
 	        _userActions2.default.singleUserReceived(user);
+	        _sessionActions2.default.currentUserReceived(user);
 	      },
 	      error: function error() {
 	        console.log('Error fetching user info');
@@ -26809,6 +26823,7 @@
 	      data: userInfo,
 	      success: function success(currentUser) {
 	        _sessionActions2.default.currentUserReceived(currentUser);
+	        _userActions2.default.singleUserReceived(currentUser);
 	        callback && callback();
 	      },
 	      error: function error() {}
@@ -26838,6 +26853,7 @@
 	      dataType: "json",
 	      success: function success() {
 	        _sessionActions2.default.logOut();
+	        // GameActions.gameReceived([]);
 	      },
 	      error: function error() {
 	        console.log('Error in ApiUtil logout');
@@ -26851,17 +26867,16 @@
 	      url: "https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json",
 	      dataType: "json",
 	      success: function success(pictures) {
-	        _cardActions2.default.picturesReceived(_.shuffle(pictures.levels[level].cards));
+	        _gameActions2.default.picturesReceived(pictures.levels[level].cards);
 	      }
 	    });
 	  },
-	
-	  createGame: function createGame(level, userId) {
+	  createGame: function createGame(game) {
 	    $.ajax({
 	      type: "POST",
 	      url: "/api/games",
 	      dataType: "json",
-	      data: { level: level, user_id: userId },
+	      data: { game: game },
 	      success: function success(game) {
 	        _gameActions2.default.gameStarted(game);
 	      },
@@ -26899,6 +26914,7 @@
 	  },
 	
 	  deleteGame: function deleteGame(id) {
+	    debugger;
 	    $.ajax({
 	      type: "DELETE",
 	      url: "/api/games/" + id,
@@ -26919,6 +26935,7 @@
 	      dataType: "json",
 	      data: { picture: picture, gameId: gameId },
 	      success: function success(card) {
+	        // debugger
 	        _cardActions2.default.cardAdded(card);
 	      },
 	      error: function error() {
@@ -26939,6 +26956,19 @@
 	    });
 	  },
 	
+	  deleteCard: function deleteCard(gameId, id) {
+	    $.ajax({
+	      url: "api/games/" + gameId + "/cards/" + id,
+	      type: "DELETE",
+	      success: function success() {
+	        // CardActions.receiveList(list);
+	      },
+	      error: function error() {
+	        console.log("Error in ApiUtil deleteCard function");
+	      }
+	    });
+	  },
+	
 	  updateUser: function updateUser(userId, user) {
 	    $.ajax({
 	      type: "PATCH",
@@ -26946,6 +26976,7 @@
 	      data: { user: user },
 	      dataType: "json",
 	      success: function success(user) {
+	        _sessionActions2.default.currentUserReceived(user);
 	        _userActions2.default.singleUserReceived(user);
 	      }
 	    });
@@ -27324,6 +27355,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var GameActions = {
+	  picturesReceived: function picturesReceived(pictures) {
+	    _dispatcher2.default.dispatch({
+	      actionType: _gameConstants2.default.PICTURES_RECEIVED,
+	      pictures: pictures
+	    });
+	  },
 	  gameStarted: function gameStarted(game) {
 	    _dispatcher2.default.dispatch({
 	      actionType: _gameConstants2.default.GAME_STARTED,
@@ -27350,6 +27387,7 @@
 	  value: true
 	});
 	var GameConstants = {
+	  PICTURES_RECEIVED: "PICTURES_RECEIVED",
 	  GAME_STARTED: "GAME_STARTED",
 	  GAME_RECEIVED: "GAME_RECEIVED"
 	};
@@ -27487,28 +27525,44 @@
 	
 	var GameStore = new Store(_dispatcher2.default);
 	
-	var _games = [];
+	var _game;
+	var _pictures = [];
 	
 	GameStore.all = function () {
-	  return _games;
+	  // debugger
+	  return _game;
 	};
 	
-	GameStore.resetGames = function (game) {
-	  _games = [game];
+	GameStore.allPictures = function () {
+	  return _pictures;
+	};
+	
+	GameStore.resetGame = function (game) {
+	  // debugger
+	  _game = game;
+	};
+	
+	GameStore.resetPictures = function (pictures) {
+	  // debugger
+	  _pictures = _.shuffle(pictures);
 	};
 	
 	GameStore.clear = function () {
-	  _games = [];
+	  _game = [];
 	};
 	
 	GameStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
+	    case _gameConstants2.default.PICTURES_RECEIVED:
+	      GameStore.resetPictures(payload.pictures);
+	      GameStore.__emitChange();
+	      break;
 	    case _gameConstants2.default.GAME_STARTED:
-	      GameStore.resetGames(payload.game);
+	      GameStore.resetGame(payload.game);
 	      GameStore.__emitChange();
 	      break;
 	    case _gameConstants2.default.GAME_RECEIVED:
-	      GameStore.resetGames(payload.game);
+	      GameStore.resetGame(payload.game);
 	      GameStore.__emitChange();
 	      break;
 	  }
@@ -28845,15 +28899,16 @@
 	
 	var CardStore = new Store(_dispatcher2.default);
 	
-	var _pictures = [];
+	// var _pictures = [];
 	var _cards = [];
 	
 	CardStore.all = function () {
+	  // debugger
 	  return _cards;
 	};
-	CardStore.allPictures = function () {
-	  return _pictures;
-	};
+	// CardStore.allPictures = function(){
+	//   return _pictures;
+	// };
 	CardStore.selected = function () {
 	  return _.where(_cards, { flipped: true });
 	};
@@ -28873,13 +28928,16 @@
 	    }
 	  }
 	};
+	CardStore.clear = function () {
+	  _cards = [];
+	};
 	
 	CardStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    case _cardConstants2.default.PICTURES_RECEIVED:
-	      CardStore.resetPictures(payload.pictures);
-	      CardStore.__emitChange();
-	      break;
+	    // case CardConstants.PICTURES_RECEIVED:
+	    //   CardStore.resetPictures(payload.pictures);
+	    //   CardStore.__emitChange();
+	    //   break;
 	    case _cardConstants2.default.CARD_ADDED:
 	      CardStore.addCard(payload.card);
 	      CardStore.__emitChange();
@@ -28938,6 +28996,11 @@
 	
 	UserStore.resetCurrent = function (user) {
 	  _current = user;
+	  for (var i = 0; i < _users.length; i++) {
+	    if (_users[i].id == user.id) {
+	      _users[i] = user;
+	    }
+	  }
 	};
 	
 	UserStore.resetUsers = function (users) {
@@ -29007,11 +29070,15 @@
 	  return !!_currentUser;
 	};
 	
+	SessionStore.receiveCurrentUser = function (currentUser) {
+	  _currentUser = currentUser;
+	  _currentUserFetched = true;
+	};
+	
 	SessionStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
 	    case _sessionConstants2.default.CURRENT_USER_RECEIVED:
-	      _currentUser = payload.currentUser;
-	      _currentUserFetched = true;
+	      SessionStore.receiveCurrentUser(payload.currentUser);
 	      SessionStore.__emitChange();
 	      break;
 	    case _sessionConstants2.default.LOGOUT:
@@ -30527,6 +30594,18 @@
 	
 	var _gameStore2 = _interopRequireDefault(_gameStore);
 	
+	var _cardStore = __webpack_require__(261);
+	
+	var _cardStore2 = _interopRequireDefault(_cardStore);
+	
+	var _sessionStore = __webpack_require__(263);
+	
+	var _sessionStore2 = _interopRequireDefault(_sessionStore);
+	
+	var _reactModal = __webpack_require__(265);
+	
+	var _reactModal2 = _interopRequireDefault(_reactModal);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30543,8 +30622,9 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Setup.__proto__ || Object.getPrototypeOf(Setup)).call(this));
 	
-	    _this.state = { display: "shown", user: _userStore2.default.current() };
+	    _this.state = { user: _sessionStore2.default.currentUser(), game: _gameStore2.default.all() };
 	    _this.newGame = _this.newGame.bind(_this);
+	    _this.setLevel = _this.setLevel.bind(_this);
 	    _this.loadGame = _this.loadGame.bind(_this);
 	    return _this;
 	  }
@@ -30552,48 +30632,59 @@
 	  _createClass(Setup, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.listener = _userStore2.default.addListener(this._onChange.bind(this));
-	      if (this.state.user && this.state.user.user_name !== "guest") {
-	        _apiUtil2.default.loadUserInfo(this.state.user.id);
-	      }
+	      // if (this.state.game){
+	      //   ApiUtil.loadUserInfo(this.state.user.id);
+	      // }
+	
+	      this.listener1 = _sessionStore2.default.addListener(this._onChange.bind(this));
+	      this.listener2 = _gameStore2.default.addListener(this._onChange.bind(this));
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      this.listener.remove();
+	      this.listener1.remove();
+	      this.listener2.remove();
 	    }
 	  }, {
 	    key: '_onChange',
 	    value: function _onChange() {
-	      this.setState({ user: _userStore2.default.current() });
+	      this.setState({ user: _userStore2.default.current(), game: _gameStore2.default.all() });
 	    }
 	  }, {
-	    key: 'newGame',
-	    value: function newGame(e) {
+	    key: 'setLevel',
+	    value: function setLevel(e) {
 	      var levels = {
 	        "Easy": 0,
 	        "Hard": 1
 	      };
 	      var level = e.currentTarget.children[0].innerHTML;
-	      _apiUtil2.default.createGame(levels[level], this.props.userId);
-	      this.setState({ display: "hidden" });
-	      this.context.router.push("/");
+	
+	      // if (levels[level]){
+	      _apiUtil2.default.getPictures(levels[level]);
+	      this.newGame(levels[level]);
+	      // }
+	      // this.loadGame();
 	    }
 	  }, {
 	    key: 'loadGame',
 	    value: function loadGame() {
-	      _apiUtil2.default.fetchGame(this.state.user.games[0].id);
+	      debugger;
+	    }
+	  }, {
+	    key: 'newGame',
+	    value: function newGame(level) {
+	      var game = {};
+	      game.level = level;
+	      game.user_id = this.state.user.id;
+	      _apiUtil2.default.createGame(game);
+	      this.context.router.push("/game");
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (this.state.user && this.state.user.user_name !== "guest" && this.state.user.games) {
-	        var saved = _react2.default.createElement(
-	          'button',
-	          { onClick: this.loadGame },
-	          'Resume Saved Game'
-	        );
-	      }
+	      // if ((this.state.user) && (this.state.user.user_name !== "guest") && (this.state.user.games) && (this.state.user.games.length > 0) && (this.state.user.games.cards)){
+	      //   var saved = <button onClick={this.setLevel}><h2>Resume Saved Game</h2></button>;
+	      // }
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'setup', className: this.state.display },
@@ -30607,7 +30698,7 @@
 	          { className: 'group' },
 	          _react2.default.createElement(
 	            'button',
-	            { onClick: this.newGame },
+	            { onClick: this.setLevel },
 	            _react2.default.createElement(
 	              'h2',
 	              null,
@@ -30616,7 +30707,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'button',
-	            { onClick: this.newGame },
+	            { onClick: this.setLevel },
 	            _react2.default.createElement(
 	              'h2',
 	              null,
@@ -30664,6 +30755,10 @@
 	
 	var _won2 = _interopRequireDefault(_won);
 	
+	var _setup = __webpack_require__(275);
+	
+	var _setup2 = _interopRequireDefault(_setup);
+	
 	var _apiUtil = __webpack_require__(235);
 	
 	var _apiUtil2 = _interopRequireDefault(_apiUtil);
@@ -30700,8 +30795,9 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this));
 	
-	    _this.state = { game: _gameStore2.default.all(), won: false, time: 0, score: 0, user: _userStore2.default.current() };
+	    _this.state = { game: _gameStore2.default.all(), pics: _gameStore2.default.allPictures(), won: false, started: false, time: 0, score: 0, user: _sessionStore2.default.currentUser() };
 	    _this.isWon = _this.isWon.bind(_this);
+	    _this.isStarted = _this.isStarted.bind(_this);
 	    _this.finalTime = _this.finalTime.bind(_this);
 	    _this.score = _this.score.bind(_this);
 	    return _this;
@@ -30710,17 +30806,28 @@
 	  _createClass(Game, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	
+	      // ApiUtil.getPictures(this.state.game[0].level);
 	      this.listener = _gameStore2.default.addListener(this._onChange.bind(this));
+	
+	      // if (!this.state.game){
+	      //   this.context.router.push("/");
+	      // }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
+	      // if (this.state.game[0] && !this.state.game[0].saved){
+	      //   ApiUtil.deleteGame(this.state.game[0].id);
+	      // }
+	
 	      this.listener.remove();
 	    }
 	  }, {
 	    key: '_onChange',
 	    value: function _onChange() {
-	      this.setState({ game: _gameStore2.default.all() });
+	
+	      this.setState({ game: _gameStore2.default.all(), user: _sessionStore2.default.currentUser(), pics: _gameStore2.default.allPictures() });
 	    }
 	  }, {
 	    key: 'isWon',
@@ -30729,14 +30836,27 @@
 	      this.score();
 	    }
 	  }, {
+	    key: 'isStarted',
+	    value: function isStarted() {
+	      if (!this.state.started) {
+	        this.setState({ started: true });
+	        var game = {};
+	        game.started = true;
+	        _apiUtil2.default.updateGame(this.state.game.id, game);
+	      }
+	    }
+	  }, {
 	    key: 'finalTime',
 	    value: function finalTime(time) {
 	      this.setState({ time: time });
+	      var game = {};
+	      game.final_time = time;
+	      _apiUtil2.default.updateGame(this.state.game.id, game);
 	    }
 	  }, {
 	    key: 'score',
 	    value: function score() {
-	      var marker = (this.state.game[0].level + 1) * 60;
+	      var marker = (this.state.game.level + 1) * 60;
 	      var bonus = marker - this.state.time >= 0 ? marker - this.state.time : 0;
 	      var score = bonus * 2 + 10;
 	      this.setState({ score: score });
@@ -30749,32 +30869,53 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (this.state.user) {
-	        var highScore = this.state.user.user_name == "guest" ? null : this.state.user.high_score;
+	
+	      if (this.state.user && this.state.user.user_name !== "guest") {
+	        var highScore = this.state.user.high_score;
 	      }
-	      if (this.state.game.length > 0) {
-	        // var isNew = this.state.game[0].cards.length > 0 ? false : true;
+	      var name = this.state.user.user_name;
+	      if (this.state.game && this.state.pics.length > 0) {
+	        var saved = this.state.game.saved ? "saved" : "";
 	        var wonStatus = this.state.won ? true : false;
-	        var timer = this.state.won ? _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Done!'
-	        ) : _react2.default.createElement(_timer2.default, { finalTime: this.finalTime });
+	        var timer;
+	        if (!this.state.started) {
+	          timer = _react2.default.createElement(
+	            'h1',
+	            null,
+	            'Pick a card...'
+	          );
+	        } else if (this.state.won) {
+	          timer = _react2.default.createElement(
+	            'h1',
+	            null,
+	            'Done!'
+	          );
+	        } else {
+	          timer = _react2.default.createElement(_timer2.default, { finalTime: this.finalTime });
+	        }
 	        return _react2.default.createElement(
 	          'div',
 	          { id: 'game' },
 	          timer,
-	          _react2.default.createElement(_cardIndex2.default, { theme: this.state.game[0].theme, level: this.state.game[0].level, gameId: this.state.game[0].id, isWon: this.isWon }),
-	          _react2.default.createElement(_won2.default, { won: wonStatus, highScore: highScore, score: this.state.score, gameId: this.state.game[0].id })
+	          _react2.default.createElement(_cardIndex2.default, { pics: this.state.pics, theme: this.state.game.theme, saved: saved, level: this.state.game.level, gameId: this.state.game.id, isWon: this.isWon, isStarted: this.isStarted }),
+	          _react2.default.createElement(_won2.default, { won: wonStatus, name: name, highScore: highScore, score: this.state.score, gameId: this.state.game.id })
 	        );
 	      } else {
-	        return _react2.default.createElement('div', null);
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          'HISS'
+	        );
 	      }
 	    }
 	  }]);
 	
 	  return Game;
 	}(_react2.default.Component);
+	
+	Game.contextTypes = {
+	  router: _react2.default.PropTypes.object.isRequired
+	};
 	
 	exports.default = Game;
 
@@ -30820,7 +30961,11 @@
 	  return _react2.default.createElement(
 	    'div',
 	    { id: 'timer', className: true },
-	    formatTime(time)
+	    _react2.default.createElement(
+	      'h1',
+	      null,
+	      formatTime(time)
+	    )
 	  );
 	};
 	
@@ -30896,13 +31041,13 @@
 	
 	var _cardStore2 = _interopRequireDefault(_cardStore);
 	
+	var _gameStore = __webpack_require__(247);
+	
+	var _gameStore2 = _interopRequireDefault(_gameStore);
+	
 	var _card = __webpack_require__(279);
 	
 	var _card2 = _interopRequireDefault(_card);
-	
-	var _timer = __webpack_require__(277);
-	
-	var _timer2 = _interopRequireDefault(_timer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30920,34 +31065,48 @@
 	
 	    var _this = _possibleConstructorReturn(this, (CardIndex.__proto__ || Object.getPrototypeOf(CardIndex)).call(this));
 	
-	    _this.state = { pictures: _cardStore2.default.allPictures(), cards: _cardStore2.default.all(), selected: _cardStore2.default.selected(), matched: _cardStore2.default.matched(), won: false };
+	    _this.state = { cards: _cardStore2.default.all(), selected: _cardStore2.default.selected(), matched: _cardStore2.default.matched(), won: false };
 	    _this.selectCard = _this.selectCard.bind(_this);
+	    _this.makeCards = _this.makeCards.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(CardIndex, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      _apiUtil2.default.getPictures(this.props.level);
+	      this.makeCards();
 	      this.listener = _cardStore2.default.addListener(this._onChange.bind(this));
+	      // this.listener2 = GameStore.addListener(this.makeCards);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this.listener.remove();
+	
+	      // this.listener2.remove();
 	    }
 	  }, {
 	    key: 'makeCards',
 	    value: function makeCards() {
-	      var gameId = this.props.gameId;
-	      this.state.pictures.map(function (picture) {
-	        _apiUtil2.default.createCard(picture, gameId);
-	      });
+	      // debugger
+	      if (this.state.cards.length === 0) {
+	        //   debugger
+	        var gameId = this.props.gameId;
+	        this.props.pics.map(function (picture) {
+	          _apiUtil2.default.createCard(picture, gameId);
+	        });
+	      }
+	      // else {
+	      //   debugger
+	      //   CardStore.clear();
+	
+	      //  ApiUtil.deleteGame(this.props.gameId);
+	      // }
 	    }
 	  }, {
 	    key: '_onChange',
 	    value: function _onChange() {
-	      this.setState({ pictures: _cardStore2.default.allPictures(), cards: _cardStore2.default.all(), selected: _cardStore2.default.selected(), matched: _cardStore2.default.matched() });
+	      this.setState({ cards: _cardStore2.default.all(), selected: _cardStore2.default.selected(), matched: _cardStore2.default.matched() });
 	      if (this.state.selected.length == 2) {
 	        this.checkSelected();
 	      }
@@ -30955,6 +31114,7 @@
 	  }, {
 	    key: 'selectCard',
 	    value: function selectCard(cardId) {
+	      this.props.isStarted();
 	      var card = {};
 	      card.flipped = true;
 	      _apiUtil2.default.updateCard(this.props.gameId, cardId, card);
@@ -30999,7 +31159,7 @@
 	          } else {
 	            status = "";
 	          }
-	          return _react2.default.createElement(_card2.default, { key: card.id, card: card, theme: self.props.theme, status: status, selectCard: self.selectCard });
+	          return _react2.default.createElement(_card2.default, { key: card.id, card: card, saved: self.props.saved, theme: self.props.theme, status: status, selectCard: self.selectCard });
 	        });
 	        return _react2.default.createElement(
 	          'div',
@@ -31010,13 +31170,21 @@
 	            cardLis
 	          )
 	        );
-	      }
-	      if (this.state.pictures.length > 0) {
-	        this.makeCards();
-	        return _react2.default.createElement('div', null);
 	      } else {
-	        return _react2.default.createElement('div', null);
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          'Loading...'
+	        );
 	      }
+	
+	      // if (this.props.pics.length > 0){
+	      //   this.makeCards();
+	      //   return <div></div>
+	      // }
+	      // else {
+	      //   return <div></div>
+	      // }
 	    }
 	  }]);
 	
@@ -31074,7 +31242,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'li',
-	        { className: "card " + this.props.theme + " " + this.props.status, onClick: this.select.bind(this) },
+	        { className: "card " + this.props.theme + " " + this.props.status + " " + this.props.saved, onClick: this.select.bind(this) },
 	        this.props.card.picture
 	      );
 	    }
@@ -31191,7 +31359,7 @@
 	          this.props.highScore,
 	          '.'
 	        );
-	      } else {
+	      } else if (this.props.name == "guest") {
 	        highScore = _react2.default.createElement(
 	          'h3',
 	          null,
@@ -31367,7 +31535,7 @@
 	    value: function handleSubmit(e) {
 	      e.preventDefault();
 	      var router = this.context.router;
-	      _apiUtil2.default.signUp(this.state, function () {
+	      _apiUtil2.default.logIn(this.state, function () {
 	        router.push("/");
 	      });
 	    }
@@ -31385,7 +31553,7 @@
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          'Sign up to save games, track your high scores, and appear on leaderboards!'
+	          'Sign up to save your game, track your high scores, and appear on leaderboards!'
 	        )
 	      );
 	    }
@@ -31491,26 +31659,8 @@
 	            null,
 	            'Log In'
 	          ),
-	          _react2.default.createElement(
-	            'section',
-	            null,
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'User Name'
-	            ),
-	            _react2.default.createElement('input', { type: 'text', placeholder: 'User Name', onChange: this.updateName })
-	          ),
-	          _react2.default.createElement(
-	            'section',
-	            null,
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Password'
-	            ),
-	            _react2.default.createElement('input', { type: 'password', onChange: this.updatePassword })
-	          ),
+	          _react2.default.createElement('input', { type: 'text', placeholder: 'User Name', onChange: this.updateName }),
+	          _react2.default.createElement('input', { type: 'password', placeholder: 'Password', onChange: this.updatePassword }),
 	          _react2.default.createElement(
 	            'section',
 	            null,
@@ -31630,26 +31780,8 @@
 	            null,
 	            'Sign Up'
 	          ),
-	          _react2.default.createElement(
-	            'section',
-	            null,
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'User Name'
-	            ),
-	            _react2.default.createElement('input', { type: 'text', onChange: this.updateName })
-	          ),
-	          _react2.default.createElement(
-	            'section',
-	            null,
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Password'
-	            ),
-	            _react2.default.createElement('input', { type: 'password', onChange: this.updatePassword })
-	          ),
+	          _react2.default.createElement('input', { type: 'text', placeholder: 'User Name', onChange: this.updateName }),
+	          _react2.default.createElement('input', { type: 'password', placeholder: 'Password', onChange: this.updatePassword }),
 	          _react2.default.createElement(
 	            'section',
 	            null,

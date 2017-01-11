@@ -12,7 +12,7 @@ class Guest extends React.Component {
   handleSubmit(e){
    e.preventDefault();
    var router = this.context.router;
-   ApiUtil.signUp(this.state, function(){
+   ApiUtil.logIn(this.state, function(){
      router.push("/");
    });
   }
@@ -21,7 +21,7 @@ class Guest extends React.Component {
     return(
         <form id="guest" onClick={this.handleSubmit}>
           <h1>Play as Guest</h1>
-          <p>Sign up to save games, track your high scores, and appear on leaderboards!</p>
+          <p>Sign up to save your game, track your high scores, and appear on leaderboards!</p>
         </form>
     )
   }
