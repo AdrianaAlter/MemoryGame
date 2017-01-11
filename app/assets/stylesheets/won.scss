@@ -48,6 +48,7 @@ $trim: dimgray;
       font-size: 3vh;
       height: 100%;
       background-color: $trim;
+      cursor: pointer;
     }
     button:first-child {
       border-right: .1vh solid darken($trim, 30%);

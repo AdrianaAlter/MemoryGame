@@ -16,6 +16,7 @@ class Api::UsersController < ApplicationController
     @user.update(user_params)
     render :show
   end
+  
   def show
     @user = User.find(params[:id])
     render :show

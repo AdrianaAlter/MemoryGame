@@ -2,11 +2,40 @@ $main: cadetblue;
 $contrast: transparentize(darken(cadetblue, 15%), .8);
 $trim: dimgray;
 
+#game {
+  width: 92vw;
+  height: 80vh;
+  margin: 2vh auto;
+  background: cadetblue;
+  color: #262626;
+  border-radius: 1%;
+  section {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    width: 100%;
+    height: 10%;
+    margin: auto;
+    border-bottom: .5vh solid $trim;
+    h1 {
+      box-sizing: padding-box;
+      padding-top: 1%;
+      flex-basis: 32%;
+      background: cadetblue;
+    }
+    div {
+      @extend h1;
+    }
+    i {
+      cursor: pointer;
+    }
+  }
+}
 #cards {
   list-style: none;
   padding: 2vw;
-  width: 92vw;
-  height: 80vh;
+  width: 100%;
+  height: 90%;
   flex-wrap: wrap;
   justify-content: space-between;
   margin: auto;
@@ -14,11 +43,31 @@ $trim: dimgray;
   background: cadetblue;
 }
 
+#placeholder {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  h1 {
+    box-sizing: padding-box;
+    cursor: pointer;
+    border-radius: 4%;
+    text-align: center;
+    width: 45%;
+    margin: auto;
+    padding: 16% 1%;
+    font-size: 5vh;
+    background: darken($contrast, 20%);
+    box-shadow: inset .5vh .5vh .5vh darkslategray;
+  }
+}
+
 .card {
   flex-basis: 11%;
   box-sizing: border-box;
   height: 30vh;
-  margin: 0 .25vw;
+  margin: 0 .25vw 1.5vw .25vw;
   border-radius: 4%;
   padding: 6vh 1vw 1vh 1vw;
   cursor: pointer;
@@ -33,8 +82,8 @@ $trim: dimgray;
   box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
 }
 .face-up, .matched {
-  border: .75vw double #AE0202;
-  color: #AE0202;
+  border: .75vw double #262626;
+  color: #262626;
   background-image: none !important;
   box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
 }

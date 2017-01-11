@@ -26471,26 +26471,6 @@
 	
 	var _footer2 = _interopRequireDefault(_footer);
 	
-	var _setup = __webpack_require__(275);
-	
-	var _setup2 = _interopRequireDefault(_setup);
-	
-	var _game = __webpack_require__(276);
-	
-	var _game2 = _interopRequireDefault(_game);
-	
-	var _apiUtil = __webpack_require__(235);
-	
-	var _apiUtil2 = _interopRequireDefault(_apiUtil);
-	
-	var _sessionStore = __webpack_require__(263);
-	
-	var _sessionStore2 = _interopRequireDefault(_sessionStore);
-	
-	var _userStore = __webpack_require__(262);
-	
-	var _userStore2 = _interopRequireDefault(_userStore);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26549,10 +26529,6 @@
 	
 	var _gameStore2 = _interopRequireDefault(_gameStore);
 	
-	var _cardStore = __webpack_require__(261);
-	
-	var _cardStore2 = _interopRequireDefault(_cardStore);
-	
 	var _userStore = __webpack_require__(262);
 	
 	var _userStore2 = _interopRequireDefault(_userStore);
@@ -26564,12 +26540,6 @@
 	var _leaderboard = __webpack_require__(264);
 	
 	var _leaderboard2 = _interopRequireDefault(_leaderboard);
-	
-	var _setup = __webpack_require__(275);
-	
-	var _setup2 = _interopRequireDefault(_setup);
-	
-	var _reactRouter = __webpack_require__(178);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26594,8 +26564,6 @@
 	    _this.closeMenu = _this.closeMenu.bind(_this);
 	    _this.setTheme = _this.setTheme.bind(_this);
 	    _this.logOut = _this.logOut.bind(_this);
-	    _this.goToSetup = _this.goToSetup.bind(_this);
-	
 	    return _this;
 	  }
 	
@@ -26632,13 +26600,9 @@
 	    value: function clearGame() {
 	      if (this.state.game) {
 	        _apiUtil2.default.deleteGame(this.state.game.id);
+	      } else {
+	        this.context.router.push("/");
 	      }
-	    }
-	  }, {
-	    key: 'goToSetup',
-	    value: function goToSetup() {
-	      this.clearGame();
-	      this.context.router.push("/");
 	    }
 	  }, {
 	    key: 'saveGame',
@@ -26660,6 +26624,8 @@
 	  }, {
 	    key: 'setTheme',
 	    value: function setTheme(e) {
+	      var changed = new Audio('assets/changed.ogg');
+	      changed.play();
 	      var game = {};
 	      game.theme = e.currentTarget.innerHTML.toLowerCase().split(" ").join("");
 	      _apiUtil2.default.updateGame(this.state.game.id, game);
@@ -26667,7 +26633,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	
 	      if (this.state.user) {
 	        var buttonText = this.state.user.user_name == "guest" ? "Sign Up" : "Log Out";
 	        var save = this.state.user.user_name == "guest" ? null : _react2.default.createElement(
@@ -26720,7 +26685,7 @@
 	        _react2.default.createElement(_leaderboard2.default, null),
 	        _react2.default.createElement(
 	          'button',
-	          { onClick: this.goToSetup },
+	          { onClick: this.clearGame },
 	          'New Game'
 	        ),
 	        themes,
@@ -26792,6 +26757,7 @@
 	      url: "/api/users/" + id,
 	      dataType: "json",
 	      success: function success(user) {
+	        // debugger
 	        _userActions2.default.singleUserReceived(user);
 	        _sessionActions2.default.currentUserReceived(user);
 	      },
@@ -26914,7 +26880,7 @@
 	  },
 	
 	  deleteGame: function deleteGame(id) {
-	    debugger;
+	    // debugger
 	    $.ajax({
 	      type: "DELETE",
 	      url: "/api/games/" + id,
@@ -29008,11 +28974,11 @@
 	};
 	
 	UserStore.highScores = function () {
-	  var scores = {};
+	  var scores = [];
 	  _users.map(function (user) {
-	    scores[user.user_name] = user.high_score;
+	    scores.push({ name: user.user_name, score: user.high_score });
 	  });
-	  return _.invert(scores);
+	  return _.sortBy(scores, 'score').reverse();
 	};
 	
 	UserStore.__onDispatch = function (payload) {
@@ -29182,15 +29148,14 @@
 	          borderRadius: '2%'
 	        }
 	      };
-	      var scoreNums = Object.keys(this.state.scores).sort().reverse();
-	      var scores = scoreNums.map(function (score) {
-	        if (self.state.scores[score] !== "guest") {
+	      var scores = this.state.scores.map(function (scoreObject) {
+	        if (scoreObject.name !== "guest") {
 	          return _react2.default.createElement(
 	            'li',
-	            { key: scoreNums.indexOf(score) },
-	            self.state.scores[score],
+	            { key: self.state.scores.indexOf(scoreObject) },
+	            scoreObject.name,
 	            ':   ',
-	            score
+	            scoreObject.score
 	          );
 	        }
 	      });
@@ -29204,7 +29169,7 @@
 	        ),
 	        _react2.default.createElement(
 	          _reactModal2.default,
-	          { contentLabel: 'Modal', style: style, isOpen: this.state.modalIsOpen, onRequestClose: this.toggle },
+	          { contentLabel: 'Modal', style: style, isOpen: this.state.modalIsOpen },
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'leaderboard', className: 'group' },
@@ -30574,14 +30539,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRouter = __webpack_require__(178);
-	
-	var _reactRouter2 = _interopRequireDefault(_reactRouter);
-	
-	var _game = __webpack_require__(276);
-	
-	var _game2 = _interopRequireDefault(_game);
-	
 	var _apiUtil = __webpack_require__(235);
 	
 	var _apiUtil2 = _interopRequireDefault(_apiUtil);
@@ -30594,17 +30551,9 @@
 	
 	var _gameStore2 = _interopRequireDefault(_gameStore);
 	
-	var _cardStore = __webpack_require__(261);
-	
-	var _cardStore2 = _interopRequireDefault(_cardStore);
-	
 	var _sessionStore = __webpack_require__(263);
 	
 	var _sessionStore2 = _interopRequireDefault(_sessionStore);
-	
-	var _reactModal = __webpack_require__(265);
-	
-	var _reactModal2 = _interopRequireDefault(_reactModal);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30625,7 +30574,8 @@
 	    _this.state = { user: _sessionStore2.default.currentUser(), game: _gameStore2.default.all() };
 	    _this.newGame = _this.newGame.bind(_this);
 	    _this.setLevel = _this.setLevel.bind(_this);
-	    _this.loadGame = _this.loadGame.bind(_this);
+	    // this.loadGame = this.loadGame.bind(this);
+	    _this.updateGame = _this.updateGame.bind(_this);
 	    return _this;
 	  }
 	
@@ -30660,16 +30610,31 @@
 	      var level = e.currentTarget.children[0].innerHTML;
 	
 	      // if (levels[level]){
+	      // if(!this.state.user.game){
 	      _apiUtil2.default.getPictures(levels[level]);
 	      this.newGame(levels[level]);
+	      // }
+	      // else {
+	      //   ApiUtil.getPictures(levels[level]);
+	      //   this.updateGame(levels[level]);
+	      // }
 	      // }
 	      // this.loadGame();
 	    }
 	  }, {
-	    key: 'loadGame',
-	    value: function loadGame() {
-	      debugger;
+	    key: 'updateGame',
+	    value: function updateGame(level) {
+	      var game = {};
+	      game.level = level;
+	      game.started = false;
+	      game.won = false;
+	      _apiUtil2.default.updateGame(this.state.users.game.id, game);
 	    }
+	
+	    // loadGame(){
+	    //   debugger
+	    // }
+	
 	  }, {
 	    key: 'newGame',
 	    value: function newGame(level) {
@@ -30725,6 +30690,7 @@
 	Setup.contextTypes = {
 	  router: _react2.default.PropTypes.object.isRequired
 	};
+	
 	exports.default = Setup;
 
 /***/ },
@@ -30755,10 +30721,6 @@
 	
 	var _won2 = _interopRequireDefault(_won);
 	
-	var _setup = __webpack_require__(275);
-	
-	var _setup2 = _interopRequireDefault(_setup);
-	
 	var _apiUtil = __webpack_require__(235);
 	
 	var _apiUtil2 = _interopRequireDefault(_apiUtil);
@@ -30767,17 +30729,11 @@
 	
 	var _gameStore2 = _interopRequireDefault(_gameStore);
 	
-	var _cardStore = __webpack_require__(261);
-	
-	var _cardStore2 = _interopRequireDefault(_cardStore);
-	
 	var _sessionStore = __webpack_require__(263);
 	
 	var _sessionStore2 = _interopRequireDefault(_sessionStore);
 	
-	var _userStore = __webpack_require__(262);
-	
-	var _userStore2 = _interopRequireDefault(_userStore);
+	var _reactRouter = __webpack_require__(178);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30795,18 +30751,24 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this));
 	
-	    _this.state = { game: _gameStore2.default.all(), pics: _gameStore2.default.allPictures(), won: false, started: false, time: 0, score: 0, user: _sessionStore2.default.currentUser() };
+	    _this.state = { game: _gameStore2.default.all(), pics: _gameStore2.default.allPictures(), won: false, started: false, time: 0, score: 0, tries: 0, user: _sessionStore2.default.currentUser() };
 	    _this.isWon = _this.isWon.bind(_this);
 	    _this.isStarted = _this.isStarted.bind(_this);
 	    _this.finalTime = _this.finalTime.bind(_this);
 	    _this.score = _this.score.bind(_this);
+	    _this.tried = _this.tried.bind(_this);
+	    _this.toggleMute = _this.toggleMute.bind(_this);
+	    _this.clearGame = _this.clearGame.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Game, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	
+	      _apiUtil2.default.loadUserInfo(this.state.user.id);
+	      // if (this.state.user.cards){
+	      //   this.setState({ cards: this.state.user.cards })
+	      // }
 	      // ApiUtil.getPictures(this.state.game[0].level);
 	      this.listener = _gameStore2.default.addListener(this._onChange.bind(this));
 	
@@ -30820,18 +30782,21 @@
 	      // if (this.state.game[0] && !this.state.game[0].saved){
 	      //   ApiUtil.deleteGame(this.state.game[0].id);
 	      // }
-	
+	      // ApiUtil.deleteGame(this.state.game.id);
 	      this.listener.remove();
 	    }
 	  }, {
 	    key: '_onChange',
 	    value: function _onChange() {
-	
-	      this.setState({ game: _gameStore2.default.all(), user: _sessionStore2.default.currentUser(), pics: _gameStore2.default.allPictures() });
+	      this.setState({ game: _gameStore2.default.all(), user: _sessionStore2.default.currentUser(), pics: _gameStore2.default.allPictures(), mute: false });
 	    }
 	  }, {
 	    key: 'isWon',
 	    value: function isWon() {
+	      if (!this.state.mute) {
+	        var wonSound = new Audio('assets/won.wav');
+	        wonSound.play();
+	      }
 	      this.setState({ won: true });
 	      this.score();
 	    }
@@ -30846,6 +30811,11 @@
 	      }
 	    }
 	  }, {
+	    key: 'toggleMute',
+	    value: function toggleMute() {
+	      this.state.mute ? this.setState({ mute: false }) : this.setState({ mute: true });
+	    }
+	  }, {
 	    key: 'finalTime',
 	    value: function finalTime(time) {
 	      this.setState({ time: time });
@@ -30858,7 +30828,8 @@
 	    value: function score() {
 	      var marker = (this.state.game.level + 1) * 60;
 	      var bonus = marker - this.state.time >= 0 ? marker - this.state.time : 0;
-	      var score = bonus * 2 + 10;
+	      var extraTries = this.state.tries - this.state.pics.length / 2;
+	      var score = bonus * 2 + 10 - extraTries;
 	      this.setState({ score: score });
 	      if (this.state.user.user_name !== "guest" && score > this.state.user.high_score) {
 	        var user = {};
@@ -30867,13 +30838,30 @@
 	      }
 	    }
 	  }, {
+	    key: 'tried',
+	    value: function tried() {
+	      var tries = this.state.tries + 1;
+	      this.setState({ tries: tries });
+	      this.setState({ tries: tries });
+	    }
+	  }, {
+	    key: 'clearGame',
+	    value: function clearGame() {
+	      if (this.state.game) {
+	        _apiUtil2.default.deleteGame(this.state.game.id);
+	      } else {
+	        this.context.router.push("/");
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	
 	      if (this.state.user && this.state.user.user_name !== "guest") {
 	        var highScore = this.state.user.high_score;
 	      }
+	      var gameContent;
 	      var name = this.state.user.user_name;
+	      var muteIcon = this.state.mute ? "fa fa-volume-up fa-lg" : "fa fa-volume-off fa-lg";
 	      if (this.state.game && this.state.pics.length > 0) {
 	        var saved = this.state.game.saved ? "saved" : "";
 	        var wonStatus = this.state.won ? true : false;
@@ -30893,20 +30881,44 @@
 	        } else {
 	          timer = _react2.default.createElement(_timer2.default, { finalTime: this.finalTime });
 	        }
-	        return _react2.default.createElement(
+	        gameContent = _react2.default.createElement(
 	          'div',
 	          { id: 'game' },
-	          timer,
-	          _react2.default.createElement(_cardIndex2.default, { pics: this.state.pics, theme: this.state.game.theme, saved: saved, level: this.state.game.level, gameId: this.state.game.id, isWon: this.isWon, isStarted: this.isStarted }),
+	          _react2.default.createElement(
+	            'section',
+	            null,
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'Tries: ',
+	              this.state.tries
+	            ),
+	            timer,
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              _react2.default.createElement('i', { className: muteIcon, onClick: this.toggleMute })
+	            )
+	          ),
+	          _react2.default.createElement(_cardIndex2.default, { mute: this.state.mute, cards: this.state.cards, pics: this.state.pics, theme: this.state.game.theme, saved: saved, level: this.state.game.level, gameId: this.state.game.id, isWon: this.isWon, isStarted: this.isStarted, tried: this.tried }),
 	          _react2.default.createElement(_won2.default, { won: wonStatus, name: name, highScore: highScore, score: this.state.score, gameId: this.state.game.id })
 	        );
 	      } else {
-	        return _react2.default.createElement(
+	        gameContent = _react2.default.createElement(
 	          'div',
-	          null,
-	          'HISS'
+	          { id: 'game' },
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'placeholder', onClick: this.clearGame },
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'Click here to start playing!'
+	            )
+	          )
 	        );
 	      }
+	      return gameContent;
 	    }
 	  }]);
 	
@@ -31074,7 +31086,12 @@
 	  _createClass(CardIndex, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      // if (!this.props.cards){
 	      this.makeCards();
+	      // }
+	      // else {
+	      //   this.setState({ cards: this.props.cards });
+	      // }
 	      this.listener = _cardStore2.default.addListener(this._onChange.bind(this));
 	      // this.listener2 = GameStore.addListener(this.makeCards);
 	    }
@@ -31082,7 +31099,6 @@
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this.listener.remove();
-	
 	      // this.listener2.remove();
 	    }
 	  }, {
@@ -31092,6 +31108,7 @@
 	      if (this.state.cards.length === 0) {
 	        //   debugger
 	        var gameId = this.props.gameId;
+	        // debugger
 	        this.props.pics.map(function (picture) {
 	          _apiUtil2.default.createCard(picture, gameId);
 	        });
@@ -31108,12 +31125,17 @@
 	    value: function _onChange() {
 	      this.setState({ cards: _cardStore2.default.all(), selected: _cardStore2.default.selected(), matched: _cardStore2.default.matched() });
 	      if (this.state.selected.length == 2) {
+	        this.props.tried();
 	        this.checkSelected();
 	      }
 	    }
 	  }, {
 	    key: 'selectCard',
 	    value: function selectCard(cardId) {
+	      if (!this.props.mute) {
+	        var flip = new Audio('assets/flip.wav');
+	        flip.play();
+	      }
 	      this.props.isStarted();
 	      var card = {};
 	      card.flipped = true;
@@ -31124,18 +31146,26 @@
 	    value: function checkSelected() {
 	      var card = {};
 	      var self = this;
+	      var match = new Audio('assets/match.mp3');
+	      var wrong = new Audio('assets/wrong.wav');
 	      if (this.state.selected[0].picture == this.state.selected[1].picture) {
+	        if (!this.props.mute) {
+	          match.play();
+	        }
 	        card.matched = true;
 	        card.flipped = false;
 	        _apiUtil2.default.updateCard(self.props.gameId, self.state.selected[0].id, card);
 	        _apiUtil2.default.updateCard(self.props.gameId, self.state.selected[1].id, card);
 	        this.checkWon();
 	      } else {
+	        if (!this.props.mute) {
+	          wrong.play();
+	        }
 	        card.flipped = false;
 	        setTimeout(function () {
 	          _apiUtil2.default.updateCard(self.props.gameId, self.state.selected[0].id, card);
 	          _apiUtil2.default.updateCard(self.props.gameId, self.state.selected[1].id, card);
-	        }, 750);
+	        }, 500);
 	      }
 	    }
 	  }, {
@@ -31197,7 +31227,7 @@
 /* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -31208,10 +31238,6 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _apiUtil = __webpack_require__(235);
-	
-	var _apiUtil2 = _interopRequireDefault(_apiUtil);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -31231,17 +31257,17 @@
 	  }
 	
 	  _createClass(Card, [{
-	    key: 'select',
+	    key: "select",
 	    value: function select() {
 	      if (this.props.status !== "matched") {
 	        this.props.selectCard(this.props.card.id);
 	      }
 	    }
 	  }, {
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'li',
+	        "li",
 	        { className: "card " + this.props.theme + " " + this.props.status + " " + this.props.saved, onClick: this.select.bind(this) },
 	        this.props.card.picture
 	      );
@@ -31371,7 +31397,7 @@
 	        null,
 	        _react2.default.createElement(
 	          _reactModal2.default,
-	          { style: style, contentLabel: 'Modal', className: this.state.display, isOpen: this.props.won, onRequestClose: this.toggle },
+	          { style: style, contentLabel: 'Modal', className: this.state.display, isOpen: this.props.won },
 	          _react2.default.createElement(
 	            'section',
 	            { id: 'won' },
@@ -31519,21 +31545,19 @@
 	var Guest = function (_React$Component) {
 	  _inherits(Guest, _React$Component);
 	
-	  function Guest(props, context) {
+	  function Guest() {
 	    _classCallCheck(this, Guest);
 	
-	    var _this = _possibleConstructorReturn(this, (Guest.__proto__ || Object.getPrototypeOf(Guest)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Guest.__proto__ || Object.getPrototypeOf(Guest)).call(this));
 	
-	    context.router;
 	    _this.state = { user_name: "guest", password: "guest" };
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.submitInfo = _this.submitInfo.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Guest, [{
-	    key: 'handleSubmit',
-	    value: function handleSubmit(e) {
-	      e.preventDefault();
+	    key: 'submitInfo',
+	    value: function submitInfo() {
 	      var router = this.context.router;
 	      _apiUtil2.default.logIn(this.state, function () {
 	        router.push("/");
@@ -31544,7 +31568,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'form',
-	        { id: 'guest', onClick: this.handleSubmit },
+	        { id: 'guest', onClick: this.submitInfo },
 	        _react2.default.createElement(
 	          'h1',
 	          null,
@@ -31553,7 +31577,7 @@
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          'Sign up to save your game, track your high scores, and appear on leaderboards!'
+	          'Sign up to track your high scores and appear on leaderboards!'
 	        )
 	      );
 	    }
@@ -31629,8 +31653,7 @@
 	    }
 	  }, {
 	    key: 'submitInfo',
-	    value: function submitInfo(e) {
-	      e.preventDefault();
+	    value: function submitInfo() {
 	      var router = this.context.router;
 	      _apiUtil2.default.logIn(this.state, function () {
 	        router.push("/");
@@ -31750,8 +31773,7 @@
 	    }
 	  }, {
 	    key: 'submitInfo',
-	    value: function submitInfo(e) {
-	      e.preventDefault();
+	    value: function submitInfo() {
 	      var router = this.context.router;
 	      _apiUtil2.default.signUp(this.state, function () {
 	        router.push("/");

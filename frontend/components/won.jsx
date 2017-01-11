@@ -9,16 +9,20 @@ class Won extends React.Component{
     this.toggle = this.toggle.bind(this);
     this.clearGame = this.clearGame.bind(this);
   }
+
   componentWillMount() {
     Modal.setAppElement('body');
   }
+
   clearGame(){
     this.toggle();
     ApiUtil.deleteGame(this.props.gameId);
   }
+
   toggle(){
     this.state.open ? this.setState({ open: false }) : this.setState({ open: true });
   }
+
   render(){
     var style;
     if (!this.state.open){
@@ -59,7 +63,7 @@ class Won extends React.Component{
     }
     return (
       <div>
-        <Modal style={style} contentLabel="Modal" className={this.state.display} isOpen={this.props.won} onRequestClose={this.toggle}>
+        <Modal style={style} contentLabel="Modal" className={this.state.display} isOpen={this.props.won}>
           <section id="won">
             <h1>You won!</h1>
             <h2>Score: {this.props.score}</h2>

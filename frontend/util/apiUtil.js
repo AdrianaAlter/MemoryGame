@@ -29,6 +29,7 @@ var ApiUtil = {
         url: "/api/users/" + id,
         dataType: "json",
         success: function(user) {
+          // debugger
           UserActions.singleUserReceived(user);
           SessionActions.currentUserReceived(user)
         },
@@ -152,7 +153,7 @@ var ApiUtil = {
   },
 
   deleteGame: function(id){
-    debugger
+    // debugger
     $.ajax({
       type: "DELETE",
       url: "/api/games/" + id,

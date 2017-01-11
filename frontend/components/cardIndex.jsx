@@ -5,27 +5,36 @@ import GameStore from '../stores/gameStore'
 import Card from './card'
 
 class CardIndex extends React.Component {
-  constructor() {
+
+  constructor(){
     super();
     this.state = { cards: CardStore.all(), selected: CardStore.selected(), matched: CardStore.matched(), won: false };
     this.selectCard = this.selectCard.bind(this);
     this.makeCards = this.makeCards.bind(this);
   }
-  componentDidMount() {
-    this.makeCards();
+
+  componentDidMount(){
+    // if (!this.props.cards){
+      this.makeCards();
+    // }
+    // else {
+    //   this.setState({ cards: this.props.cards });
+    // }
     this.listener = CardStore.addListener(this._onChange.bind(this));
     // this.listener2 = GameStore.addListener(this.makeCards);
   }
-  componentWillUnmount() {
-    this.listener.remove();
 
+  componentWillUnmount(){
+    this.listener.remove();
     // this.listener2.remove();
   }
-  makeCards() {
+
+  makeCards(){
     // debugger
     if (this.state.cards.length === 0){
     //   debugger
       var gameId = this.props.gameId;
+      // debugger
       this.props.pics.map(function(picture){
         ApiUtil.createCard(picture, gameId);
       });
@@ -37,22 +46,35 @@ class CardIndex extends React.Component {
       //  ApiUtil.deleteGame(this.props.gameId);
     // }
   }
-  _onChange() {
+
+  _onChange(){
     this.setState({ cards: CardStore.all(), selected: CardStore.selected(), matched: CardStore.matched() });
     if (this.state.selected.length == 2){
+      this.props.tried();
       this.checkSelected();
     }
   }
-  selectCard(cardId) {
+
+  selectCard(cardId){
+    if (!this.props.mute){
+      var flip = new Audio('assets/flip.wav');
+      flip.play();
+    }
     this.props.isStarted();
     var card = {};
     card.flipped = true;
     ApiUtil.updateCard(this.props.gameId, cardId, card);
   }
-  checkSelected() {
+
+  checkSelected(){
       var card = {};
       var self = this;
+      var match = new Audio('assets/match.mp3');
+      var wrong = new Audio('assets/wrong.wav');
       if (this.state.selected[0].picture == this.state.selected[1].picture){
+        if (!this.props.mute){
+          match.play();
+        }
         card.matched = true;
         card.flipped = false;
         ApiUtil.updateCard(self.props.gameId, self.state.selected[0].id, card);
@@ -60,19 +82,24 @@ class CardIndex extends React.Component {
         this.checkWon();
       }
       else {
+        if (!this.props.mute){
+          wrong.play();
+        }
         card.flipped = false;
         setTimeout(function(){
           ApiUtil.updateCard(self.props.gameId, self.state.selected[0].id, card);
           ApiUtil.updateCard(self.props.gameId, self.state.selected[1].id, card);
-        }, 750);
+        }, 500);
       }
   }
-  checkWon() {
+
+  checkWon(){
     if (this.state.matched.length == (this.state.cards.length - 2)){
       this.props.isWon();
     }
   }
-  render() {
+
+  render(){
     var self = this;
     if (this.state.cards.length > 0){
       var cardLis = this.state.cards.map(function(card){

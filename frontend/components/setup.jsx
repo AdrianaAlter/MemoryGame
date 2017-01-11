@@ -1,20 +1,18 @@
 import React from 'react'
-import Link from 'react-router'
-import Game from './game'
 import ApiUtil from '../util/apiUtil'
 import UserStore from '../stores/userStore'
 import GameStore from '../stores/gameStore'
-import CardStore from '../stores/cardStore'
 import SessionStore from '../stores/sessionStore'
-import Modal from 'react-modal'
 
 class Setup extends React.Component {
+
   constructor(){
     super();
     this.state = { user: SessionStore.currentUser(), game: GameStore.all() };
     this.newGame = this.newGame.bind(this);
     this.setLevel = this.setLevel.bind(this);
-    this.loadGame = this.loadGame.bind(this);
+    // this.loadGame = this.loadGame.bind(this);
+    this.updateGame = this.updateGame.bind(this);
   }
 
   componentDidMount(){
@@ -25,13 +23,16 @@ class Setup extends React.Component {
     this.listener1 = SessionStore.addListener(this._onChange.bind(this));
     this.listener2 = GameStore.addListener(this._onChange.bind(this));
   }
+
   componentWillUnmount(){
     this.listener1.remove();
     this.listener2.remove();
   }
+
   _onChange(){
     this.setState({ user: UserStore.current(), game: GameStore.all() });
   }
+
   setLevel(e){
     var levels = {
       "Easy": 0,
@@ -40,15 +41,30 @@ class Setup extends React.Component {
     var level = e.currentTarget.children[0].innerHTML;
 
     // if (levels[level]){
+    // if(!this.state.user.game){
       ApiUtil.getPictures(levels[level]);
       this.newGame(levels[level]);
     // }
+    // else {
+    //   ApiUtil.getPictures(levels[level]);
+    //   this.updateGame(levels[level]);
+    // }
+    // }
     // this.loadGame();
+  }
 
+  updateGame(level){
+    var game = {};
+    game.level = level;
+    game.started = false;
+    game.won = false;
+    ApiUtil.updateGame(this.state.users.game.id, game);
   }
-  loadGame(){
-    debugger
-  }
+
+  // loadGame(){
+  //   debugger
+  // }
+
   newGame(level){
     var game = {};
     game.level = level;
@@ -62,20 +78,20 @@ class Setup extends React.Component {
     //   var saved = <button onClick={this.setLevel}><h2>Resume Saved Game</h2></button>;
     // }
     return (
-
-          <div id="setup" className={this.state.display}>
-            <h1>Choose your level to get started!</h1>
-            <section className="group">
-              <button onClick={this.setLevel}><h2>Easy</h2></button>
-              <button onClick={this.setLevel}><h2>Hard</h2></button>
-            </section>
-          </div>
-
+      <div id="setup" className={this.state.display}>
+        <h1>Choose your level to get started!</h1>
+        <section className="group">
+          <button onClick={this.setLevel}><h2>Easy</h2></button>
+          <button onClick={this.setLevel}><h2>Hard</h2></button>
+        </section>
+      </div>
     )
   }
 
 }
+
 Setup.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
-export default Setup;
+
+export default Setup

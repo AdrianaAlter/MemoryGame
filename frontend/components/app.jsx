@@ -1,10 +1,5 @@
 import React from 'react'
-import Footer from './footer.jsx'
-import Setup from './setup.jsx'
-import Game from './game.jsx'
-import ApiUtil from '../util/apiUtil'
-import SessionStore from '../stores/sessionStore'
-import UserStore from '../stores/userStore'
+import Footer from './footer'
 
 class App extends React.Component {
 
@@ -16,7 +11,7 @@ class App extends React.Component {
       </div>
     )
   }
-}
 
+}
 
 export default App

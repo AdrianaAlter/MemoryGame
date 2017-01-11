@@ -2,6 +2,7 @@ import React from 'react'
 import ApiUtil from '../util/apiUtil'
 
 class SignUp extends React.Component {
+
   constructor(){
     super();
     this.state = {user_name: "", password: "", display: "button"};
@@ -10,23 +11,27 @@ class SignUp extends React.Component {
     this.updatePassword = this.updatePassword.bind(this);
     this.submitInfo = this.submitInfo.bind(this);
   }
+
   toggleDisplay(){
     this.state.display == "button" ? this.setState({ display: "form" }) : this.setState({ display: "button" });
   }
+
   updateName(e){
     this.setState({user_name: e.currentTarget.value});
   }
+
   updatePassword(e){
     this.setState({password: e.currentTarget.value});
   }
-  submitInfo(e) {
-   e.preventDefault();
+
+  submitInfo(){
    var router = this.context.router;
    ApiUtil.signUp(this.state, function () {
      router.push("/");
    });
    this.toggleDisplay();
   }
+
   render(){
     if (this.state.display == "button"){
       return <form onClick={this.toggleDisplay}><h1>Sign Up</h1></form>
@@ -45,10 +50,11 @@ class SignUp extends React.Component {
       )
     }
   }
+
 }
 
 SignUp.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default SignUp;
+export default SignUp

@@ -24,10 +24,9 @@ class LogIn extends React.Component {
     this.setState({password: e.currentTarget.value});
   }
 
-  submitInfo(e){
-    e.preventDefault();
+  submitInfo(){
     var router = this.context.router;
-    ApiUtil.logIn(this.state, function () {
+    ApiUtil.logIn(this.state, function(){
       router.push("/");
     });
     this.toggleDisplay();
@@ -51,10 +50,11 @@ class LogIn extends React.Component {
       )
     }
   }
+
 }
 
 LogIn.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default LogIn;
+export default LogIn

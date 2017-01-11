@@ -28,11 +28,11 @@ UserStore.resetUsers = function(users){
 };
 
 UserStore.highScores = function(){
-  var scores = {};
+  var scores = [];
   _users.map(function(user){
-    scores[user.user_name] = user.high_score;
+    scores.push({ name: user.user_name, score: user.high_score });
   });
-  return _.invert(scores);
+  return _.sortBy(scores, 'score').reverse();
 };
 
 UserStore.__onDispatch = function (payload) {

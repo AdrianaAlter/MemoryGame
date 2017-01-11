@@ -4,6 +4,7 @@ import LogIn from './login'
 import SignUp from './signup'
 
 class Welcome extends React.Component {
+
   render(){
     return (
       <div id="welcome">
@@ -18,6 +19,7 @@ class Welcome extends React.Component {
       </div>
     )
   }
+
 }
 
 export default Welcome
