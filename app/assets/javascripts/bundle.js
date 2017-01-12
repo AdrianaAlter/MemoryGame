@@ -31143,8 +31143,8 @@
 	            timer,
 	            _react2.default.createElement(
 	              'h1',
-	              null,
-	              _react2.default.createElement('i', { className: muteIcon, onClick: this.toggleMute })
+	              { onClick: this.toggleMute },
+	              _react2.default.createElement('i', { className: muteIcon })
 	            )
 	          ),
 	          _react2.default.createElement(_cardIndex2.default, { playSound: this.playSound, mute: this.state.mute, cards: this.state.cards, pics: this.state.pics, theme: this.state.game.theme, saved: saved, level: this.state.game.level, gameId: this.state.game.id, isWon: this.isWon, isStarted: this.isStarted, tried: this.tried }),
@@ -31160,7 +31160,7 @@
 	            _react2.default.createElement(
 	              'h1',
 	              null,
-	              'Click here to start playing!'
+	              'New Game'
 	            )
 	          )
 	        );
@@ -31973,7 +31973,7 @@
 	        _react2.default.createElement(
 	          'h1',
 	          null,
-	          'Choose your level to get started!'
+	          'Choose a level to get started!'
 	        ),
 	        _react2.default.createElement(
 	          'section',

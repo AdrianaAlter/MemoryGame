@@ -1,9 +1,6 @@
-$main: cadetblue;
-$contrast: transparentize(darken(cadetblue, 25%), .8);
-$trim: dimgray;
+@import 'variables';
 
 #setup{
-
   h1 {
     padding: 3vh;
   }
@@ -19,22 +16,23 @@ $trim: dimgray;
     display: flex;
   }
   button {
-    background: $contrast;
+    background: transparentize(darken($main, 15%), .5);
     padding: 4%;
     flex-basis: 33%;
-    color: darken($trim, 35%);
+    color: $dark;
     width: 66%;
     margin: .5% auto;
-    box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
+    box-shadow: .2vw .2vw .2vw darkslategray, -.1vw -.1vw .1vw darkslategray;
     border: .1vw solid $trim;
     border-radius: 3%;
     text-align: center;
     cursor: pointer;
     font-size: 4vh;
     font-weight: normal;
-  }
-  button:hover {
-    background: darken($contrast, 80%);
+    transition: background 1s;
+    &:hover {
+      background: $contrast;
+    }
   }
 }
 

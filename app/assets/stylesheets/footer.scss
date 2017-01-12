@@ -10,20 +10,16 @@ footer {
   background: $main;
   width: 100%;
   button {
+    @include button;
     background: $contrast;
     padding: 0 2%;
     flex-basis: 15%;
     height: 100%;
-    color: $neutral;
-    border-radius: 3%;
-    text-align: center;
-    cursor: pointer;
-    font-size: 3vh;
-    margin-right: .5%;
+    margin: 0 .5% 0 0;
     position: relative;
-  }
-  button:hover {
-    background: $darkcontrast;
+    &:hover {
+      background: $darkcontrast;
+    }
   }
   a {
     @extend button;
@@ -31,52 +27,52 @@ footer {
   #name-display {
     background: transparent;
     flex: 3;
+    color: $dark;
+    box-shadow: inset .1vw .1vw .2vw $shadow, inset -.1vw -.1vw .2vw $shadow;
     cursor: default;
-  }
-  #name-display:hover {
-    background: transparent;
+    &:hover {
+      background: transparent;
+    }
   }
   div {
-    background: $contrast;
-    padding: 0 2%;
-    flex-basis: 15%;
-    height: 100%;
-    color: $neutral;
-    border-radius: 3%;
-    text-align: center;
-    cursor: pointer;
-    font-size: 3vh;
-    margin-right: 1vw;
-    position: relative;
+    @extend button;
     button {
       width: 100%;
       padding: 0 2%;
     }
   }
+
   .menu {
     position: absolute;
     display: flex;
     flex-direction: column;
-    top: -235%;
-    left: -.5%;
-    width: 200%;
+    left: 0;
+    width: 100%;
+    top: -200%;
     background: $main;
     box-shadow: .25vw .25vw .3vw $shadow, -.1vw -.1vw .1vw $shadow;
     li {
       width: 100%;
       flex: 1;
       font-size: 2.5vh;
+      font-weight: bold;
       padding: 1% 0;
       border-bottom: .1vw solid $contrast;
+      background: $main;
     }
-    li:hover {
-      background: $contrast;
+    li:first-child:hover {
+      color: #003407;
+      background: #B1B1B1;
+    }
+    li:nth-child(2):hover {
+      color: #0E1A40;
+      background: #8D6B2B;
+    }
+    li:last-child:hover {
+      color: #740001;
+      background: #93730E;
     }
   }
-  .hidden {
-    display: none;
-  }
-
 }
 
 #leaderboard {
@@ -137,5 +133,4 @@ footer {
       padding-top: 0;
     }
   }
-
 }

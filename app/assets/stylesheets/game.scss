@@ -5,30 +5,32 @@
   height: 80vh;
   margin: 2vh auto;
   background: $main;
-  color: $dark;
   border-radius: 1%;
+  color: $neutral;
   section {
     display: flex;
     justify-content: space-between;
-    background: $neutral;
+    background: white;
     width: 100%;
     height: 10%;
     margin: auto;
-    border-bottom: .5vh solid $trim;
+    border-bottom: .1vh solid $darktrim;
     h1 {
       box-sizing: padding-box;
       padding-top: 1%;
       flex-basis: 32%;
-      background: $main;
+      background: #487779;
+    }
+    h1:last-child:hover {
+      cursor: pointer;
+      text-shadow: .3vw .3vw .2vw $shadow;
     }
     div {
       @extend h1;
     }
-    i {
-      cursor: pointer;
-    }
   }
 }
+
 #cards {
   list-style: none;
   padding: 2vw;
@@ -40,7 +42,6 @@
   display: flex;
   background: $main;
 }
-
 #placeholder {
   width: 100%;
   height: 100%;
@@ -50,13 +51,12 @@
   h1 {
     box-sizing: padding-box;
     cursor: pointer;
-    border-radius: 4%;
     text-align: center;
-    width: 45%;
+    width: 35%;
     margin: auto;
-    padding: 16% 1%;
+    padding: 15% 1%;
     font-size: 5vh;
-    background: $darkcontrast;
+    background: #487779;
     box-shadow: inset .5vh .5vh .5vh $shadow;
   }
 }
@@ -81,8 +81,8 @@
   box-shadow: .25vw .25vw .3vw $shadow, -.1vw -.1vw .1vw $shadow;
 }
 .flipped, .matched {
-  border: .75vw double #262626;
-  color: #262626;
+  border: .75vw double $dark;
+  color: $dark;
   background-image: none !important;
   box-shadow: .25vw .25vw .3vw $shadow, -.1vw -.1vw .1vw $shadow;
 }
@@ -119,7 +119,6 @@
   @extend .flipped.theme2;
   background-color: desaturate(#0E1A40, 50%);
 }
-
 .theme3 {
   background-color: #740001;
   background-image: url("https://www.transparenttextures.com/patterns/swirl.png");
@@ -131,17 +130,4 @@
 .theme3.matched {
   @extend .flipped.theme3;
   background-color: desaturate(#740001, 50%);
-}
-
-#timer {
-  // height: 6vh;
-  // margin-left: 4vw;
-  // width: 12vw;
-  // background: $contrast;
-  // font-size: 2.5vh;
-  // padding-top: 1.5vh;
-  // text-align: center;
-  // border-top: .1vw solid $main;
-  // border-left: .1vw solid $main;
-  // border-right: .1vw solid $main;
 }

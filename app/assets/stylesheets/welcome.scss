@@ -1,8 +1,8 @@
-$main: cadetblue;
-$contrast: transparentize(darken(cadetblue, 15%), .8);
-$trim: dimgray;
+@import 'variables';
+@import 'button';
 
 #welcome {
+  color: #191919;
   h1 {
     text-align: center;
     padding: 3vh;
@@ -20,7 +20,7 @@ $trim: dimgray;
 
     form {
       flex-basis: 48.5%;
-      background: $contrast;
+      background: transparentize(darken($main, 15%), .5);
       padding: 3%;
       height: 100%;
       display: flex;
@@ -30,10 +30,12 @@ $trim: dimgray;
       border: .1vw solid $trim;
       border-radius: 3%;
       text-align: center;
+      transition: background 1s, color 1s;
       h1 {
         width: 100%;
         font-size: 6vh;
-        margin-top: 12%;
+        padding-top: 10%;
+        line-height: 255%;
         font-weight: normal;
         cursor: pointer;
       }
@@ -45,7 +47,7 @@ $trim: dimgray;
       p {
         cursor: pointer;
         flex: 1.5;
-        margin-top: 10%;
+        margin-top: 5%;
       }
       input {
         font-size: 3vh;
@@ -69,20 +71,14 @@ $trim: dimgray;
         flex-direction: row;
         justify-content: space-between;
         button {
-          background: $trim;
-          flex-basis: 48%;
-          height: 100%;
-          cursor: pointer;
-          border-radius: 3%;
-          font-size: 3vh;
-        }
-        button:hover {
-          background: darken($trim, 5%);
+          @include button;
+          flex-basis: 49%;
+          margin: 0;
         }
       }
-    }
-    form:hover {
-      background: darken($contrast, 12.5%);
+      &:hover {
+        background: $contrast;
+      }
     }
     section {
       display: flex;

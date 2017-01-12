@@ -76,7 +76,7 @@ class Setup extends React.Component {
     // }
     return (
       <div id="setup" className={this.state.display}>
-        <h1>Choose your level to get started!</h1>
+        <h1>Choose a level to get started!</h1>
         <section className="group">
           <button onClick={this.setLevel}><h2>Easy</h2></button>
           <button onClick={this.setLevel}><h2>Hard</h2></button>

@@ -139,7 +139,7 @@ class Game extends React.Component {
           <section>
             <h1>Tries: {this.state.tries}</h1>
             {timer}
-            <h1><i className={muteIcon} onClick={this.toggleMute}></i></h1>
+            <h1 onClick={this.toggleMute}><i className={muteIcon}></i></h1>
           </section>
           <CardIndex playSound={this.playSound} mute={this.state.mute} cards={this.state.cards} pics={this.state.pics} theme={this.state.game.theme} saved={saved} level={this.state.game.level} gameId={this.state.game.id} isWon={this.isWon} isStarted={this.isStarted} tried={this.tried} />
           <Won won={wonStatus} name={name} highScore={highScore} score={this.state.score} gameId={this.state.game.id} />
@@ -147,7 +147,7 @@ class Game extends React.Component {
       )
     }
     else {
-      gameContent = <div id="game"><div id="placeholder" onClick={this.clearGame}><h1>Click here to start playing!</h1></div></div>
+      gameContent = <div id="game"><div id="placeholder" onClick={this.clearGame}><h1>New Game</h1></div></div>
     }
     return gameContent;
 
