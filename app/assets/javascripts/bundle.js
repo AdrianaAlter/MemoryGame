@@ -31131,8 +31131,8 @@
 	        }
 	        card.matched = true;
 	        card.flipped = false;
-	        _apiUtil2.default.updateCard(self.props.gameId, self.state.selected[0].id, card);
-	        _apiUtil2.default.updateCard(self.props.gameId, self.state.selected[1].id, card);
+	        _apiUtil2.default.updateCard(this.props.gameId, this.state.selected[0].id, card);
+	        _apiUtil2.default.updateCard(this.props.gameId, this.state.selected[1].id, card);
 	        this.checkWon();
 	      } else {
 	        if (!this.props.mute) {

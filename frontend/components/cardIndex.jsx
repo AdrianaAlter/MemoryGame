@@ -76,8 +76,8 @@ class CardIndex extends React.Component {
         }
         card.matched = true;
         card.flipped = false;
-        ApiUtil.updateCard(self.props.gameId, self.state.selected[0].id, card);
-        ApiUtil.updateCard(self.props.gameId, self.state.selected[1].id, card);
+        ApiUtil.updateCard(this.props.gameId, this.state.selected[0].id, card);
+        ApiUtil.updateCard(this.props.gameId, this.state.selected[1].id, card);
         this.checkWon();
       }
       else {
