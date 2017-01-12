@@ -21,6 +21,7 @@ class Game extends React.Component {
     this.toggleMute = this.toggleMute.bind(this);
     this.clearGame = this.clearGame.bind(this);
     this.notGuest = this.notGuest.bind(this);
+    this.playSound = this.playSound.bind(this);
   }
 
   componentDidMount(){
@@ -52,10 +53,7 @@ class Game extends React.Component {
   }
 
   isWon(){
-    if (!this.state.mute){
-      const wonSound = new Audio('assets/won.wav');
-      wonSound.play();
-    }
+    this.playSound('won.wav');
     this.setState({ won: true });
     this.score();
   }
@@ -108,6 +106,12 @@ class Game extends React.Component {
   notGuest(){
     return (this.state.user && this.state.user.user_name !== "guest");
   }
+  playSound(sound){
+    if (!this.state.mute){
+      let audio = new Audio(`assets/${sound}`);
+      audio.play();
+    }
+  }
   render(){
     if (this.notGuest()){
       var highScore = this.state.user.high_score;
@@ -135,7 +139,7 @@ class Game extends React.Component {
             {timer}
             <h1><i className={muteIcon} onClick={this.toggleMute}></i></h1>
           </section>
-          <CardIndex mute={this.state.mute} cards={this.state.cards} pics={this.state.pics} theme={this.state.game.theme} saved={saved} level={this.state.game.level} gameId={this.state.game.id} isWon={this.isWon} isStarted={this.isStarted} tried={this.tried} />
+          <CardIndex playSound={this.playSound} mute={this.state.mute} cards={this.state.cards} pics={this.state.pics} theme={this.state.game.theme} saved={saved} level={this.state.game.level} gameId={this.state.game.id} isWon={this.isWon} isStarted={this.isStarted} tried={this.tried} />
           <Won won={wonStatus} name={name} highScore={highScore} score={this.state.score} gameId={this.state.game.id} />
         </div>
       )

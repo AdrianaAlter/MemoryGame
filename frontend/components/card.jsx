@@ -9,7 +9,7 @@ class Card extends React.Component {
   }
 
   render(){
-    return <li className={"card " + this.props.theme + " " + this.props.status + " " + this.props.saved} onClick={this.select.bind(this)}>{this.props.card.picture}</li>
+    return <li className={this.props.className} onClick={this.select.bind(this)}>{this.props.card.picture}</li>
   }
 
 }

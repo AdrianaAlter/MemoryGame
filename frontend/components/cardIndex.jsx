@@ -11,11 +11,14 @@ class CardIndex extends React.Component {
     this.state = { cards: CardStore.all(), selected: CardStore.selected(), matched: CardStore.matched(), won: false };
     this.selectCard = this.selectCard.bind(this);
     this.makeCards = this.makeCards.bind(this);
+    this.flipDown = this.flipDown.bind(this);
+    this.match = this.match.bind(this);
+    // this.playSound = this.playSound.bind(this);
   }
 
   componentDidMount(){
     // if (!this.props.cards){
-      this.makeCards();
+    this.makeCards();
     // }
     // else {
     //   this.setState({ cards: this.props.cards });
@@ -56,40 +59,38 @@ class CardIndex extends React.Component {
   }
 
   selectCard(cardId){
-    if (!this.props.mute){
-      let flip = new Audio('assets/flip.wav');
-      flip.play();
-    }
+    this.props.playSound('flip.wav');
     this.props.isStarted();
     let card = {flipped: true};
     ApiUtil.updateCard(this.props.gameId, cardId, card);
   }
 
   checkSelected(){
-      let card = {};
-      let self = this;
-      let match = new Audio('assets/match.mp3');
-      let wrong = new Audio('assets/wrong.wav');
-      if (this.state.selected[0].picture == this.state.selected[1].picture){
-        if (!this.props.mute){
-          match.play();
-        }
-        card.matched = true;
-        card.flipped = false;
-        ApiUtil.updateCard(this.props.gameId, this.state.selected[0].id, card);
-        ApiUtil.updateCard(this.props.gameId, this.state.selected[1].id, card);
+      let [card1, card2] = this.state.selected;
+      if (card1.picture == card2.picture){
+        this.props.playSound('match.mp3');
+        this.match(this.props.gameId, card1, card2);
         this.checkWon();
       }
       else {
-        if (!this.props.mute){
-          wrong.play();
-        }
-        card.flipped = false;
-        setTimeout(function(){
-          ApiUtil.updateCard(self.props.gameId, self.state.selected[0].id, card);
-          ApiUtil.updateCard(self.props.gameId, self.state.selected[1].id, card);
-        }, 500);
+        this.props.playSound('wrong.wav');
+        this.flipDown(this.props.gameId, card1, card2);
       }
+  }
+
+  match(gameId, ...cards){
+    let updated = {flipped: false, matched: true}
+    cards.map(function(card){
+      ApiUtil.updateCard(gameId, card.id, updated);
+    });
+  }
+  flipDown(gameId, ...cards){
+    let updated = {flipped: false}
+    setTimeout(function(){
+      cards.map(function(card){
+        ApiUtil.updateCard(gameId, card.id, updated);
+      });
+    }, 500);
   }
 
   checkWon(){
@@ -112,7 +113,8 @@ class CardIndex extends React.Component {
         else {
           status = "";
         }
-        return <Card key={card.id} card={card} saved={this.props.saved} theme={this.props.theme} status={status} selectCard={this.selectCard} />
+        let className = `card ${this.props.theme} ${status}`;
+        return <Card key={card.id} card={card} className={className} selectCard={this.selectCard} />
       });
       return (<div>
                 <ul className="group" id="cards">{cardLis}</ul>

@@ -30727,6 +30727,7 @@
 	    _this.toggleMute = _this.toggleMute.bind(_this);
 	    _this.clearGame = _this.clearGame.bind(_this);
 	    _this.notGuest = _this.notGuest.bind(_this);
+	    _this.playSound = _this.playSound.bind(_this);
 	    return _this;
 	  }
 	
@@ -30764,10 +30765,7 @@
 	  }, {
 	    key: 'isWon',
 	    value: function isWon() {
-	      if (!this.state.mute) {
-	        var wonSound = new Audio('assets/won.wav');
-	        wonSound.play();
-	      }
+	      this.playSound('won.wav');
 	      this.setState({ won: true });
 	      this.score();
 	    }
@@ -30828,6 +30826,14 @@
 	      return this.state.user && this.state.user.user_name !== "guest";
 	    }
 	  }, {
+	    key: 'playSound',
+	    value: function playSound(sound) {
+	      if (!this.state.mute) {
+	        var audio = new Audio('assets/' + sound);
+	        audio.play();
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      if (this.notGuest()) {
@@ -30874,7 +30880,7 @@
 	              _react2.default.createElement('i', { className: muteIcon, onClick: this.toggleMute })
 	            )
 	          ),
-	          _react2.default.createElement(_cardIndex2.default, { mute: this.state.mute, cards: this.state.cards, pics: this.state.pics, theme: this.state.game.theme, saved: saved, level: this.state.game.level, gameId: this.state.game.id, isWon: this.isWon, isStarted: this.isStarted, tried: this.tried }),
+	          _react2.default.createElement(_cardIndex2.default, { playSound: this.playSound, mute: this.state.mute, cards: this.state.cards, pics: this.state.pics, theme: this.state.game.theme, saved: saved, level: this.state.game.level, gameId: this.state.game.id, isWon: this.isWon, isStarted: this.isStarted, tried: this.tried }),
 	          _react2.default.createElement(_won2.default, { won: wonStatus, name: name, highScore: highScore, score: this.state.score, gameId: this.state.game.id })
 	        );
 	      } else {
@@ -31013,6 +31019,8 @@
 	  value: true
 	});
 	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
@@ -31054,6 +31062,9 @@
 	    _this.state = { cards: _cardStore2.default.all(), selected: _cardStore2.default.selected(), matched: _cardStore2.default.matched(), won: false };
 	    _this.selectCard = _this.selectCard.bind(_this);
 	    _this.makeCards = _this.makeCards.bind(_this);
+	    _this.flipDown = _this.flipDown.bind(_this);
+	    _this.match = _this.match.bind(_this);
+	    // this.playSound = this.playSound.bind(this);
 	    return _this;
 	  }
 	
@@ -31110,10 +31121,7 @@
 	  }, {
 	    key: 'selectCard',
 	    value: function selectCard(cardId) {
-	      if (!this.props.mute) {
-	        var flip = new Audio('assets/flip.wav');
-	        flip.play();
-	      }
+	      this.props.playSound('flip.wav');
 	      this.props.isStarted();
 	      var card = { flipped: true };
 	      _apiUtil2.default.updateCard(this.props.gameId, cardId, card);
@@ -31121,29 +31129,45 @@
 	  }, {
 	    key: 'checkSelected',
 	    value: function checkSelected() {
-	      var card = {};
-	      var self = this;
-	      var match = new Audio('assets/match.mp3');
-	      var wrong = new Audio('assets/wrong.wav');
-	      if (this.state.selected[0].picture == this.state.selected[1].picture) {
-	        if (!this.props.mute) {
-	          match.play();
-	        }
-	        card.matched = true;
-	        card.flipped = false;
-	        _apiUtil2.default.updateCard(this.props.gameId, this.state.selected[0].id, card);
-	        _apiUtil2.default.updateCard(this.props.gameId, this.state.selected[1].id, card);
+	      var _state$selected = _slicedToArray(this.state.selected, 2),
+	          card1 = _state$selected[0],
+	          card2 = _state$selected[1];
+	
+	      if (card1.picture == card2.picture) {
+	        this.props.playSound('match.mp3');
+	        this.match(this.props.gameId, card1, card2);
 	        this.checkWon();
 	      } else {
-	        if (!this.props.mute) {
-	          wrong.play();
-	        }
-	        card.flipped = false;
-	        setTimeout(function () {
-	          _apiUtil2.default.updateCard(self.props.gameId, self.state.selected[0].id, card);
-	          _apiUtil2.default.updateCard(self.props.gameId, self.state.selected[1].id, card);
-	        }, 500);
+	        this.props.playSound('wrong.wav');
+	        this.flipDown(this.props.gameId, card1, card2);
 	      }
+	    }
+	  }, {
+	    key: 'match',
+	    value: function match(gameId) {
+	      var updated = { flipped: false, matched: true };
+	
+	      for (var _len = arguments.length, cards = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        cards[_key - 1] = arguments[_key];
+	      }
+	
+	      cards.map(function (card) {
+	        _apiUtil2.default.updateCard(gameId, card.id, updated);
+	      });
+	    }
+	  }, {
+	    key: 'flipDown',
+	    value: function flipDown(gameId) {
+	      for (var _len2 = arguments.length, cards = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+	        cards[_key2 - 1] = arguments[_key2];
+	      }
+	
+	      var updated = { flipped: false };
+	      setTimeout(function () {
+	        cards.map(function (card) {
+	          _apiUtil2.default.updateCard(gameId, card.id, updated);
+	        });
+	      }, 500);
 	    }
 	  }, {
 	    key: 'checkWon',
@@ -31168,7 +31192,8 @@
 	          } else {
 	            status = "";
 	          }
-	          return _react2.default.createElement(_card2.default, { key: card.id, card: card, saved: _this3.props.saved, theme: _this3.props.theme, status: status, selectCard: _this3.selectCard });
+	          var className = 'card ' + _this3.props.theme + ' ' + status;
+	          return _react2.default.createElement(_card2.default, { key: card.id, card: card, className: className, selectCard: _this3.selectCard });
 	        });
 	        return _react2.default.createElement(
 	          'div',
@@ -31247,7 +31272,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        "li",
-	        { className: "card " + this.props.theme + " " + this.props.status + " " + this.props.saved, onClick: this.select.bind(this) },
+	        { className: this.props.className, onClick: this.select.bind(this) },
 	        this.props.card.picture
 	      );
 	    }
