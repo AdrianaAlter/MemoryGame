@@ -68,7 +68,9 @@ class Game extends React.Component {
   }
 
   toggleMute(){
-    this.state.mute ? this.setState({ mute: false }) : this.setState({ mute: true });
+    var isMute = this.state.game.mute ? false : true;
+    let game = {mute: isMute};
+    ApiUtil.updateGame(this.state.game.id, game);
   }
 
   finalTime(time){
@@ -107,7 +109,7 @@ class Game extends React.Component {
     return (this.state.user && this.state.user.user_name !== "guest");
   }
   playSound(sound){
-    if (!this.state.mute){
+    if (!this.state.game.mute){
       let audio = new Audio(`assets/${sound}`);
       audio.play();
     }
@@ -118,8 +120,8 @@ class Game extends React.Component {
     }
     var gameContent;
     let name = this.state.user.user_name;
-    let muteIcon = this.state.mute ? "fa fa-volume-up fa-lg" : "fa fa-volume-off fa-lg";
     if (this.state.game && this.state.pics.length > 0){
+      let muteIcon = this.state.game.mute ? "fa fa-volume-up fa-lg" : "fa fa-volume-off fa-lg";
       let saved = this.state.game.saved ? "saved" : "";
       let wonStatus = this.state.won ? true : false;
       var timer;

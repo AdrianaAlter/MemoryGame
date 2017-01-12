@@ -6,6 +6,7 @@ class CreateGames < ActiveRecord::Migration
       t.string :theme
       t.boolean :saved, default: false
       t.boolean :started, default: false
+      t.boolean :mute, default: false
       t.integer :final_time
     end
   end

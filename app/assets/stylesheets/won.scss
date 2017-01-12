@@ -1,40 +1,48 @@
-$main: cadetblue;
-$contrast: transparentize(darken(cadetblue, 15%), .8);
-$trim: dimgray;
+@import 'variables';
+@import 'button';
 
 #won {
   margin: auto;
-  border: 1vh solid darkslategray;
-  border-radius: 2%;
+  color: $dark;
+  background: $neutral;
+  box-shadow: inset .25vw .25vw .3vw $trim, inset -.25vw -.25vw .3vw $trim;
   height: 100%;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  padding: 2% 0;
   h1 {
     flex: 1.5;
-    background: $main;
-    padding: 4% 0;
-    font-size: 9vh;
+    line-height: 200%;
+    padding: 2% 0;
+    box-sizing: padding-box;
+    font-size: 8vh;
   }
   h2 {
     text-align: center;
-    background: $trim;
-    color: blanchedalmond;
+    background: $main;
+    box-shadow: inset .25vw 0 .2vw $shadow, inset -.25vw 0 .2vw $shadow;
+    color: $neutral;
     flex: 1;
-    padding-top: 3%;
+    line-height: 200%;
+    padding: 1.5% 0;
+    box-sizing: padding-box;
     font-size: 5vh;
   }
   h3 {
-    background: lighten($trim, 20%);
     text-align: center;
     font-weight: normal;
-    flex: .5;
-    padding: 1% 0;
-    font-size: 3vh;
+    flex: .75;
+    box-sizing: padding-box;
+    background: $contrast;
+    box-shadow: inset .25vw 0 .1vw $shadow, inset -.25vw 0 .1vw $shadow;
+    padding: 1.5% 0;
+    line-height: 200%;
+    font-size: 3.5vh;
+    color: $dark;
   }
   section {
-    flex: 1;
-    background: $main;
+    flex: .75;
     width: 100%;
     margin: auto;
     text-align: center;
@@ -42,19 +50,13 @@ $trim: dimgray;
     font-size: 4vh;
     display: flex;
     justify-content: center;
-    box-shadow: .1vw .1vw .3vw darkslategray, -.1vw -.1vw .3vw darkslategray;
+    padding: 1% 0 0 0;
+    box-sizing: padding-box;
     button {
-      flex-basis: 25%;
-      font-size: 3vh;
+      @include button;
+      flex-basis: 20%;
       height: 100%;
-      background-color: $trim;
-      cursor: pointer;
-    }
-    button:first-child {
-      border-right: .1vh solid darken($trim, 30%);
-    }
-    button:hover {
-      background: darken($trim, 20%);
+      margin: 0 .5%;
     }
   }
 }

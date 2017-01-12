@@ -33,7 +33,7 @@ class Api::GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:level, :user_id, :theme, :saved, :started, :final_time)
+    params.require(:game).permit(:level, :user_id, :theme, :saved, :started, :mute, :final_time)
   end
 
 end

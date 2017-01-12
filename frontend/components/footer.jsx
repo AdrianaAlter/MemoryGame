@@ -37,8 +37,9 @@ class Footer extends React.Component {
   logOut(){
     // GameStore.clear();
     // if (this.state.game && !this.state.game.saved){
-    this.clearGame();
-    // }
+    if (this.state.game){
+      ApiUtil.deleteGame(this.state.game.id);
+    }
     ApiUtil.logOut();
     this.context.router.push("/login");
   }
@@ -64,8 +65,10 @@ class Footer extends React.Component {
   }
 
   setTheme(e){
-    var changed = new Audio('assets/changed.ogg');
-    changed.play();
+    if (!this.state.game.mute){
+      var changed = new Audio('assets/changed.ogg');
+      changed.play();
+    }
     var game = {};
     game.theme = e.currentTarget.innerText.toLowerCase().split(" ").join("");
     ApiUtil.updateGame(this.state.game.id, game);

@@ -41,14 +41,14 @@ class Leaderboard extends React.Component {
         background: 'blanchedalmond',
         boxShadow: '.25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray',
         margin: 'auto',
-        width: '40%',
+        width: '30%',
         borderColor: 'transparent',
         borderRadius: '2%'
       }
     };
     var scores = this.state.scores.map(({name, score}) => {
       let idx = this.state.scores.findIndex(x => x.name === name);
-      return <li key={idx}>{name}:   {score}</li>;
+      return <li key={idx}><h4>{name}</h4><h4>{score}</h4></li>;
     });
     return (
       <button>

@@ -1,6 +1,5 @@
-$main: cadetblue;
-$contrast: transparentize(darken(cadetblue, 25%), .5);
-$trim: dimgray;
+@import 'variables';
+@import 'button';
 
 footer {
   position: fixed;
@@ -15,7 +14,7 @@ footer {
     padding: 0 2%;
     flex-basis: 15%;
     height: 100%;
-    color: floralwhite;
+    color: $neutral;
     border-radius: 3%;
     text-align: center;
     cursor: pointer;
@@ -24,7 +23,7 @@ footer {
     position: relative;
   }
   button:hover {
-    background: darken($contrast, 20%);
+    background: $darkcontrast;
   }
   a {
     @extend button;
@@ -42,7 +41,7 @@ footer {
     padding: 0 2%;
     flex-basis: 15%;
     height: 100%;
-    color: floralwhite;
+    color: $neutral;
     border-radius: 3%;
     text-align: center;
     cursor: pointer;
@@ -62,7 +61,7 @@ footer {
     left: -.5%;
     width: 200%;
     background: $main;
-    box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
+    box-shadow: .25vw .25vw .3vw $shadow, -.1vw -.1vw .1vw $shadow;
     li {
       width: 100%;
       flex: 1;
@@ -83,43 +82,56 @@ footer {
 #leaderboard {
   height: 100%;
   display: flex;
-  background: $main;
+  background: $neutral;
+  box-shadow: inset .25vw .25vw .3vw $trim, inset -.25vw -.25vw .3vw $trim;
   flex-direction: column;
   justify-content: space-between;
+  color: $dark;
+  box-sizing: padding-box;
+  padding: 2%;
   button {
-    background: $trim;
-    padding: 1% 2%;
+    @include button;
     width: 20%;
-    border-radius: 3%;
-    text-align: center;
-    cursor: pointer;
-    font-size: 4vh;
     flex: .5;
-    margin: 0 auto 1% auto;
-  }
-  button:hover {
-    background: darken($trim, 20%);
   }
   h1 {
     flex: .5;
-    background: $contrast;
+    font-size: 4vh;
   }
   ul {
-    background: blanchedalmond;
+    background: $main;
+    border: .1vw solid $darktrim;
     flex: 6;
-    padding: 1% 0;
-    width: 60%;
+    width: 80%;
     margin: 1% auto;
     display: flex;
     flex-direction: column;
     li {
-      border-bottom: .1vw solid $trim;
-      color: darken($trim, 35%);
+      border-bottom: .1vw solid $darktrim;
       font-size: 3vh;
-      width: 95%;
+      width: 100%;
       margin: 0 auto;
-      padding: 1%;
+      padding: 0 3%;
       text-align: center;
+      display: flex;
+      justify-content: space-between;
+      h4 {
+        font-size: 3vh;
+        padding-left: 2%;
+        flex: 4;
+        text-align: left;
+      }
+      h4:last-child{
+        text-align: center;
+        flex: 1;
+        border-left: .1vw solid $darktrim;
+      }
+    }
+    li:nth-child(odd){
+      background: $main;
+    }
+    li:nth-child(even){
+      background: $contrast;
     }
     li:first-child {
       padding-top: 0;

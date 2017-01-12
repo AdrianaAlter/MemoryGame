@@ -1,18 +1,16 @@
-$main: cadetblue;
-$contrast: transparentize(darken(cadetblue, 15%), .8);
-$trim: dimgray;
+@import 'variables';
 
 #game {
   width: 92vw;
   height: 80vh;
   margin: 2vh auto;
-  background: cadetblue;
-  color: #262626;
+  background: $main;
+  color: $dark;
   border-radius: 1%;
   section {
     display: flex;
     justify-content: space-between;
-    background: white;
+    background: $neutral;
     width: 100%;
     height: 10%;
     margin: auto;
@@ -21,7 +19,7 @@ $trim: dimgray;
       box-sizing: padding-box;
       padding-top: 1%;
       flex-basis: 32%;
-      background: cadetblue;
+      background: $main;
     }
     div {
       @extend h1;
@@ -40,7 +38,7 @@ $trim: dimgray;
   justify-content: space-between;
   margin: auto;
   display: flex;
-  background: cadetblue;
+  background: $main;
 }
 
 #placeholder {
@@ -58,12 +56,13 @@ $trim: dimgray;
     margin: auto;
     padding: 16% 1%;
     font-size: 5vh;
-    background: darken($contrast, 20%);
-    box-shadow: inset .5vh .5vh .5vh darkslategray;
+    background: $darkcontrast;
+    box-shadow: inset .5vh .5vh .5vh $shadow;
   }
 }
 
 .card {
+  user-select: none;
   flex-basis: 11%;
   box-sizing: border-box;
   height: 30vh;
@@ -74,21 +73,21 @@ $trim: dimgray;
   text-align: center;
   font-size: 9vh;
   font-weight: bold;
-  background-color: #ffebcd;
+  background-color: $neutral;
   background-image: url("https://www.transparenttextures.com/patterns/vichy.png");
-  color: black;
+  color: transparent;
 }
 .card:hover {
-  box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
+  box-shadow: .25vw .25vw .3vw $shadow, -.1vw -.1vw .1vw $shadow;
 }
 .flipped, .matched {
   border: .75vw double #262626;
   color: #262626;
   background-image: none !important;
-  box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
+  box-shadow: .25vw .25vw .3vw $shadow, -.1vw -.1vw .1vw $shadow;
 }
 .matched {
-  background: transparentize(darken(#ffebcd, 10%), .2);
+  background: desaturate($neutral, 50%);
   cursor: default;
   box-shadow: none;
 }
@@ -105,7 +104,7 @@ $trim: dimgray;
 }
 .theme1.matched {
   @extend .flipped.theme1;
-  background-color: transparentize(darken(#003407, 10%), .2);
+  background-color: desaturate(#003407, 50%);
 }
 
 .theme2 {
@@ -118,7 +117,7 @@ $trim: dimgray;
 }
 .theme2.matched {
   @extend .flipped.theme2;
-  background-color: transparentize(darken(#0E1A40, 10%), .2);
+  background-color: desaturate(#0E1A40, 50%);
 }
 
 .theme3 {
@@ -131,11 +130,9 @@ $trim: dimgray;
 }
 .theme3.matched {
   @extend .flipped.theme3;
-  background-color: transparentize(darken(#740001, 10%), .2);
+  background-color: desaturate(#740001, 50%);
 }
-.saved {
-  border: 3px solid blue;
-}
+
 #timer {
   // height: 6vh;
   // margin-left: 4vw;
