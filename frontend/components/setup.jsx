@@ -34,16 +34,12 @@ class Setup extends React.Component {
   }
 
   setLevel(e){
-    var levels = {
-      "Easy": 0,
-      "Hard": 1
-    };
-    var level = e.currentTarget.children[0].innerHTML;
-
+    const levels = ["Easy", "Hard"];
+    var level = levels.indexOf(e.currentTarget.children[0].innerText);
     // if (levels[level]){
     // if(!this.state.user.game){
-      ApiUtil.getPictures(levels[level]);
-      this.newGame(levels[level]);
+      ApiUtil.getPictures(level);
+      this.newGame(level);
     // }
     // else {
     //   ApiUtil.getPictures(levels[level]);
@@ -53,12 +49,15 @@ class Setup extends React.Component {
     // this.loadGame();
   }
 
-  updateGame(level){
+  updateGame(num){
     var game = {};
-    game.level = level;
-    game.started = false;
-    game.won = false;
-    ApiUtil.updateGame(this.state.users.game.id, game);
+    var {level, started, won} = {level: num, started: false, won: false}
+    ApiUtil.updateGame(this.state.users.game.id, {level, started, won});
+
+    // game.level = level;
+    // game.started = false;
+    // game.won = false;
+    // ApiUtil.updateGame(this.state.users.game.id, game);
   }
 
   // loadGame(){
@@ -66,10 +65,8 @@ class Setup extends React.Component {
   // }
 
   newGame(level){
-    var game = {};
-    game.level = level;
-    game.user_id = this.state.user.id;
-    ApiUtil.createGame(game);
+    var game = {level: level, user_id: this.state.user.id};
+    ApiUtil.createGame(game: game);
     this.context.router.push("/game");
   }
 

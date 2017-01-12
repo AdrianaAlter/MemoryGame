@@ -1,11 +1,11 @@
-var Store = require('flux/utils').Store;
+const Store = require('flux/utils').Store;
 import SessionConstants from '../constants/sessionConstants.js';
 import Dispatcher from '../dispatcher/dispatcher.js';
 
-var SessionStore = new Store(Dispatcher);
+const SessionStore = new Store(Dispatcher);
 
-var _currentUser;
-var _currentUserFetched = false;
+let _currentUser;
+let _currentUserFetched = false;
 
 SessionStore.currentUser = function(){
   return _currentUser;

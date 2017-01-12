@@ -26541,6 +26541,10 @@
 	
 	var _leaderboard2 = _interopRequireDefault(_leaderboard);
 	
+	var _menu = __webpack_require__(285);
+	
+	var _menu2 = _interopRequireDefault(_menu);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26598,10 +26602,12 @@
 	  }, {
 	    key: 'clearGame',
 	    value: function clearGame() {
-	      if (this.state.game) {
-	        _apiUtil2.default.deleteGame(this.state.game.id);
-	      } else {
-	        this.context.router.push("/");
+	      if (this.context.router.location.pathname !== "/") {
+	        if (this.state.game) {
+	          _apiUtil2.default.deleteGame(this.state.game.id);
+	        } else {
+	          this.context.router.push("/");
+	        }
 	      }
 	    }
 	  }, {
@@ -26627,7 +26633,7 @@
 	      var changed = new Audio('assets/changed.ogg');
 	      changed.play();
 	      var game = {};
-	      game.theme = e.currentTarget.innerHTML.toLowerCase().split(" ").join("");
+	      game.theme = e.currentTarget.innerText.toLowerCase().split(" ").join("");
 	      _apiUtil2.default.updateGame(this.state.game.id, game);
 	    }
 	  }, {
@@ -26649,30 +26655,7 @@
 	        );
 	      }
 	      if (this.state.game) {
-	        var themes = _react2.default.createElement(
-	          'button',
-	          { onMouseOver: this.openMenu, onMouseLeave: this.closeMenu },
-	          'Themes',
-	          _react2.default.createElement(
-	            'ul',
-	            { className: this.state.menu },
-	            _react2.default.createElement(
-	              'li',
-	              { onClick: this.setTheme },
-	              'Theme 1'
-	            ),
-	            _react2.default.createElement(
-	              'li',
-	              { onClick: this.setTheme },
-	              'Theme 2'
-	            ),
-	            _react2.default.createElement(
-	              'li',
-	              { onClick: this.setTheme },
-	              'Theme 3'
-	            )
-	          )
-	        );
+	        var menu = _react2.default.createElement(_menu2.default, { setTheme: this.setTheme, openMenu: this.openMenu, closeMenu: this.closeMenu, display: this.state.menu });
 	      }
 	      return _react2.default.createElement(
 	        'footer',
@@ -26688,7 +26671,7 @@
 	          { onClick: this.clearGame },
 	          'New Game'
 	        ),
-	        themes,
+	        menu,
 	        welcome
 	      );
 	    }
@@ -26720,6 +26703,10 @@
 	var _gameActions = __webpack_require__(241);
 	
 	var _gameActions2 = _interopRequireDefault(_gameActions);
+	
+	var _pictureActions = __webpack_require__(286);
+	
+	var _pictureActions2 = _interopRequireDefault(_pictureActions);
 	
 	var _sessionActions = __webpack_require__(243);
 	
@@ -26833,7 +26820,7 @@
 	      url: "https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json",
 	      dataType: "json",
 	      success: function success(pictures) {
-	        _gameActions2.default.picturesReceived(pictures.levels[level].cards);
+	        _pictureActions2.default.picturesReceived(pictures.levels[level].cards);
 	      }
 	    });
 	  },
@@ -26972,12 +26959,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var CardActions = {
-	  picturesReceived: function picturesReceived(pictures) {
-	    _dispatcher2.default.dispatch({
-	      actionType: _cardConstants2.default.PICTURES_RECEIVED,
-	      pictures: pictures
-	    });
-	  },
 	  cardReceived: function cardReceived(cards) {
 	    _dispatcher2.default.dispatch({
 	      actionType: _cardConstants2.default.CARDS_RECEIVED,
@@ -26994,18 +26975,6 @@
 	    _dispatcher2.default.dispatch({
 	      actionType: _cardConstants2.default.UPDATED_CARD_RECEIVED,
 	      card: card
-	    });
-	  },
-	  selectCard: function selectCard(card) {
-	    _dispatcher2.default.dispatch({
-	      actionType: _cardConstants2.default.CARD_SELECTED,
-	      card: card
-	    });
-	  },
-	  markMatched: function markMatched(picture) {
-	    _dispatcher2.default.dispatch({
-	      actionType: _cardConstants2.default.PICTURE_MATCHED,
-	      picture: picture
 	    });
 	  },
 	  clear: function clear() {
@@ -27321,12 +27290,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var GameActions = {
-	  picturesReceived: function picturesReceived(pictures) {
-	    _dispatcher2.default.dispatch({
-	      actionType: _gameConstants2.default.PICTURES_RECEIVED,
-	      pictures: pictures
-	    });
-	  },
+	  // picturesReceived: function(pictures){
+	  //   Dispatcher.dispatch({
+	  //     actionType: GameConstants.PICTURES_RECEIVED,
+	  //     pictures: pictures
+	  //   });
+	  // },
 	  gameStarted: function gameStarted(game) {
 	    _dispatcher2.default.dispatch({
 	      actionType: _gameConstants2.default.GAME_STARTED,
@@ -27353,7 +27322,7 @@
 	  value: true
 	});
 	var GameConstants = {
-	  PICTURES_RECEIVED: "PICTURES_RECEIVED",
+	  // PICTURES_RECEIVED: "PICTURES_RECEIVED",
 	  GAME_STARTED: "GAME_STARTED",
 	  GAME_RECEIVED: "GAME_RECEIVED"
 	};
@@ -27491,27 +27460,24 @@
 	
 	var GameStore = new Store(_dispatcher2.default);
 	
-	var _game;
-	var _pictures = [];
+	var _game = void 0;
+	// let _pictures = [];
 	
 	GameStore.all = function () {
-	  // debugger
 	  return _game;
 	};
 	
-	GameStore.allPictures = function () {
-	  return _pictures;
-	};
+	// GameStore.allPictures = function(){
+	//   return _pictures;
+	// };
 	
 	GameStore.resetGame = function (game) {
-	  // debugger
 	  _game = game;
 	};
 	
-	GameStore.resetPictures = function (pictures) {
-	  // debugger
-	  _pictures = _.shuffle(pictures);
-	};
+	// GameStore.resetPictures = function(pictures){
+	//   _pictures = _.shuffle(pictures);
+	// };
 	
 	GameStore.clear = function () {
 	  _game = [];
@@ -27519,10 +27485,10 @@
 	
 	GameStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    case _gameConstants2.default.PICTURES_RECEIVED:
-	      GameStore.resetPictures(payload.pictures);
-	      GameStore.__emitChange();
-	      break;
+	    // case GameConstants.PICTURES_RECEIVED:
+	    //   GameStore.resetPictures(payload.pictures);
+	    //   GameStore.__emitChange();
+	    //   break;
 	    case _gameConstants2.default.GAME_STARTED:
 	      GameStore.resetGame(payload.game);
 	      GameStore.__emitChange();
@@ -28865,45 +28831,37 @@
 	
 	var CardStore = new Store(_dispatcher2.default);
 	
-	// var _pictures = [];
 	var _cards = [];
 	
 	CardStore.all = function () {
-	  // debugger
 	  return _cards;
 	};
-	// CardStore.allPictures = function(){
-	//   return _pictures;
-	// };
+	
 	CardStore.selected = function () {
 	  return _.where(_cards, { flipped: true });
 	};
+	
 	CardStore.matched = function () {
 	  return _.where(_cards, { matched: true });
 	};
-	CardStore.resetPictures = function (pictures) {
-	  _pictures = pictures;
-	};
+	
 	CardStore.addCard = function (card) {
 	  _cards.push(card);
 	};
+	
 	CardStore.resetCard = function (card) {
-	  for (var i = 0; i < _cards.length; i++) {
-	    if (_cards[i].id == card.id) {
-	      _cards[i] = card;
-	    }
-	  }
+	  var i = _cards.findIndex(function (x) {
+	    return x.id === card.id;
+	  });
+	  _cards[i] = card;
 	};
+	
 	CardStore.clear = function () {
 	  _cards = [];
 	};
 	
 	CardStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    // case CardConstants.PICTURES_RECEIVED:
-	    //   CardStore.resetPictures(payload.pictures);
-	    //   CardStore.__emitChange();
-	    //   break;
 	    case _cardConstants2.default.CARD_ADDED:
 	      CardStore.addCard(payload.card);
 	      CardStore.__emitChange();
@@ -28950,7 +28908,7 @@
 	
 	var UserStore = new Store(_dispatcher2.default);
 	var _users = [];
-	var _current;
+	var _current = void 0;
 	
 	UserStore.current = function () {
 	  return _current;
@@ -28962,11 +28920,10 @@
 	
 	UserStore.resetCurrent = function (user) {
 	  _current = user;
-	  for (var i = 0; i < _users.length; i++) {
-	    if (_users[i].id == user.id) {
-	      _users[i] = user;
-	    }
-	  }
+	  var i = _users.findIndex(function (x) {
+	    return x.id === user.id;
+	  });
+	  _users[i] = user;
 	};
 	
 	UserStore.resetUsers = function (users) {
@@ -28975,7 +28932,7 @@
 	
 	UserStore.highScores = function () {
 	  var scores = [];
-	  _users.map(function (user) {
+	  _.reject(_users, { user_name: 'guest' }).map(function (user) {
 	    scores.push({ name: user.user_name, score: user.high_score });
 	  });
 	  return _.sortBy(scores, 'score').reverse();
@@ -29021,7 +28978,7 @@
 	
 	var SessionStore = new Store(_dispatcher2.default);
 	
-	var _currentUser;
+	var _currentUser = void 0;
 	var _currentUserFetched = false;
 	
 	SessionStore.currentUser = function () {
@@ -29134,7 +29091,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var self = this;
+	      var _this2 = this;
+	
 	      var style = {
 	        overlay: {
 	          backgroundColor: '(105, 105, 105, 0.8)'
@@ -29148,16 +29106,20 @@
 	          borderRadius: '2%'
 	        }
 	      };
-	      var scores = this.state.scores.map(function (scoreObject) {
-	        if (scoreObject.name !== "guest") {
-	          return _react2.default.createElement(
-	            'li',
-	            { key: self.state.scores.indexOf(scoreObject) },
-	            scoreObject.name,
-	            ':   ',
-	            scoreObject.score
-	          );
-	        }
+	      var scores = this.state.scores.map(function (_ref) {
+	        var name = _ref.name,
+	            score = _ref.score;
+	
+	        var idx = _this2.state.scores.findIndex(function (x) {
+	          return x.name === name;
+	        });
+	        return _react2.default.createElement(
+	          'li',
+	          { key: idx },
+	          name,
+	          ':   ',
+	          score
+	        );
 	      });
 	      return _react2.default.createElement(
 	        'button',
@@ -30603,16 +30565,12 @@
 	  }, {
 	    key: 'setLevel',
 	    value: function setLevel(e) {
-	      var levels = {
-	        "Easy": 0,
-	        "Hard": 1
-	      };
-	      var level = e.currentTarget.children[0].innerHTML;
-	
+	      var levels = ["Easy", "Hard"];
+	      var level = levels.indexOf(e.currentTarget.children[0].innerText);
 	      // if (levels[level]){
 	      // if(!this.state.user.game){
-	      _apiUtil2.default.getPictures(levels[level]);
-	      this.newGame(levels[level]);
+	      _apiUtil2.default.getPictures(level);
+	      this.newGame(level);
 	      // }
 	      // else {
 	      //   ApiUtil.getPictures(levels[level]);
@@ -30623,12 +30581,19 @@
 	    }
 	  }, {
 	    key: 'updateGame',
-	    value: function updateGame(level) {
+	    value: function updateGame(num) {
 	      var game = {};
-	      game.level = level;
-	      game.started = false;
-	      game.won = false;
-	      _apiUtil2.default.updateGame(this.state.users.game.id, game);
+	      var _level$started$won = { level: num, started: false, won: false },
+	          level = _level$started$won.level,
+	          started = _level$started$won.started,
+	          won = _level$started$won.won;
+	
+	      _apiUtil2.default.updateGame(this.state.users.game.id, { level: level, started: started, won: won });
+	
+	      // game.level = level;
+	      // game.started = false;
+	      // game.won = false;
+	      // ApiUtil.updateGame(this.state.users.game.id, game);
 	    }
 	
 	    // loadGame(){
@@ -30638,9 +30603,7 @@
 	  }, {
 	    key: 'newGame',
 	    value: function newGame(level) {
-	      var game = {};
-	      game.level = level;
-	      game.user_id = this.state.user.id;
+	      var game = { level: level, user_id: this.state.user.id };
 	      _apiUtil2.default.createGame(game);
 	      this.context.router.push("/game");
 	    }
@@ -30733,6 +30696,10 @@
 	
 	var _sessionStore2 = _interopRequireDefault(_sessionStore);
 	
+	var _pictureStore = __webpack_require__(287);
+	
+	var _pictureStore2 = _interopRequireDefault(_pictureStore);
+	
 	var _reactRouter = __webpack_require__(178);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -30751,7 +30718,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this));
 	
-	    _this.state = { game: _gameStore2.default.all(), pics: _gameStore2.default.allPictures(), won: false, started: false, time: 0, score: 0, tries: 0, user: _sessionStore2.default.currentUser() };
+	    _this.state = { game: _gameStore2.default.all(), pics: _pictureStore2.default.all(), won: false, started: false, time: 0, score: 0, tries: 0, user: _sessionStore2.default.currentUser() };
 	    _this.isWon = _this.isWon.bind(_this);
 	    _this.isStarted = _this.isStarted.bind(_this);
 	    _this.finalTime = _this.finalTime.bind(_this);
@@ -30759,6 +30726,7 @@
 	    _this.tried = _this.tried.bind(_this);
 	    _this.toggleMute = _this.toggleMute.bind(_this);
 	    _this.clearGame = _this.clearGame.bind(_this);
+	    _this.notGuest = _this.notGuest.bind(_this);
 	    return _this;
 	  }
 	
@@ -30766,11 +30734,13 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      _apiUtil2.default.loadUserInfo(this.state.user.id);
+	
 	      // if (this.state.user.cards){
 	      //   this.setState({ cards: this.state.user.cards })
 	      // }
 	      // ApiUtil.getPictures(this.state.game[0].level);
-	      this.listener = _gameStore2.default.addListener(this._onChange.bind(this));
+	      this.listener1 = _gameStore2.default.addListener(this._onChange.bind(this));
+	      this.listener2 = _pictureStore2.default.addListener(this._onChange.bind(this));
 	
 	      // if (!this.state.game){
 	      //   this.context.router.push("/");
@@ -30783,12 +30753,13 @@
 	      //   ApiUtil.deleteGame(this.state.game[0].id);
 	      // }
 	      // ApiUtil.deleteGame(this.state.game.id);
-	      this.listener.remove();
+	      this.listener1.remove();
+	      this.listener2.remove();
 	    }
 	  }, {
 	    key: '_onChange',
 	    value: function _onChange() {
-	      this.setState({ game: _gameStore2.default.all(), user: _sessionStore2.default.currentUser(), pics: _gameStore2.default.allPictures(), mute: false });
+	      this.setState({ game: _gameStore2.default.all(), user: _sessionStore2.default.currentUser(), pics: _pictureStore2.default.all(), mute: false });
 	    }
 	  }, {
 	    key: 'isWon',
@@ -30830,8 +30801,11 @@
 	      var bonus = marker - this.state.time >= 0 ? marker - this.state.time : 0;
 	      var extraTries = this.state.tries - this.state.pics.length / 2;
 	      var score = bonus * 2 + 10 - extraTries;
+	      if (score < 0) {
+	        score = 0;
+	      }
 	      this.setState({ score: score });
-	      if (this.state.user.user_name !== "guest" && score > this.state.user.high_score) {
+	      if (this.notGuest() && score > this.state.user.high_score) {
 	        var user = {};
 	        user.high_score = score;
 	        _apiUtil2.default.updateUser(this.state.user.id, user);
@@ -30842,21 +30816,21 @@
 	    value: function tried() {
 	      var tries = this.state.tries + 1;
 	      this.setState({ tries: tries });
-	      this.setState({ tries: tries });
 	    }
 	  }, {
 	    key: 'clearGame',
 	    value: function clearGame() {
-	      if (this.state.game) {
-	        _apiUtil2.default.deleteGame(this.state.game.id);
-	      } else {
-	        this.context.router.push("/");
-	      }
+	      this.state.game ? _apiUtil2.default.deleteGame(this.state.game.id) : this.context.router.push("/");
+	    }
+	  }, {
+	    key: 'notGuest',
+	    value: function notGuest() {
+	      return this.state.user && this.state.user.user_name !== "guest";
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (this.state.user && this.state.user.user_name !== "guest") {
+	      if (this.notGuest()) {
 	        var highScore = this.state.user.high_score;
 	      }
 	      var gameContent;
@@ -31104,14 +31078,18 @@
 	  }, {
 	    key: 'makeCards',
 	    value: function makeCards() {
+	      var _this2 = this;
+	
 	      // debugger
 	      if (this.state.cards.length === 0) {
-	        //   debugger
-	        var gameId = this.props.gameId;
-	        // debugger
-	        this.props.pics.map(function (picture) {
-	          _apiUtil2.default.createCard(picture, gameId);
-	        });
+	        (function () {
+	          //   debugger
+	          var gameId = _this2.props.gameId;
+	          // debugger
+	          _this2.props.pics.map(function (picture) {
+	            _apiUtil2.default.createCard(picture, gameId);
+	          });
+	        })();
 	      }
 	      // else {
 	      //   debugger
@@ -31137,8 +31115,7 @@
 	        flip.play();
 	      }
 	      this.props.isStarted();
-	      var card = {};
-	      card.flipped = true;
+	      var card = { flipped: true };
 	      _apiUtil2.default.updateCard(this.props.gameId, cardId, card);
 	    }
 	  }, {
@@ -31178,6 +31155,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
 	      var self = this;
 	      if (this.state.cards.length > 0) {
 	        var cardLis = this.state.cards.map(function (card) {
@@ -31189,7 +31168,7 @@
 	          } else {
 	            status = "";
 	          }
-	          return _react2.default.createElement(_card2.default, { key: card.id, card: card, saved: self.props.saved, theme: self.props.theme, status: status, selectCard: self.selectCard });
+	          return _react2.default.createElement(_card2.default, { key: card.id, card: card, saved: _this3.props.saved, theme: _this3.props.theme, status: status, selectCard: _this3.selectCard });
 	        });
 	        return _react2.default.createElement(
 	          'div',
@@ -31831,6 +31810,163 @@
 	};
 	
 	exports.default = SignUp;
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Menu = function (_React$Component) {
+	  _inherits(Menu, _React$Component);
+	
+	  function Menu() {
+	    _classCallCheck(this, Menu);
+	
+	    return _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).apply(this, arguments));
+	  }
+	
+	  _createClass(Menu, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      var themes = [1, 2, 3].map(function (num) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: num, onClick: _this2.props.setTheme },
+	          'Theme ',
+	          num
+	        );
+	      });
+	      return _react2.default.createElement(
+	        'button',
+	        { onMouseOver: this.props.openMenu, onMouseLeave: this.props.closeMenu },
+	        'Themes',
+	        _react2.default.createElement(
+	          'ul',
+	          { className: this.props.display },
+	          themes
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Menu;
+	}(_react2.default.Component);
+	
+	exports.default = Menu;
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _dispatcher = __webpack_require__(238);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	var _pictureConstants = __webpack_require__(288);
+	
+	var _pictureConstants2 = _interopRequireDefault(_pictureConstants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var PictureActions = {
+	  picturesReceived: function picturesReceived(pictures) {
+	    _dispatcher2.default.dispatch({
+	      actionType: _pictureConstants2.default.PICTURES_RECEIVED,
+	      pictures: pictures
+	    });
+	  }
+	};
+	
+	exports.default = PictureActions;
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _dispatcher = __webpack_require__(238);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	var _pictureConstants = __webpack_require__(288);
+	
+	var _pictureConstants2 = _interopRequireDefault(_pictureConstants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Store = __webpack_require__(248).Store;
+	
+	
+	var PictureStore = new Store(_dispatcher2.default);
+	
+	var _pictures = [];
+	
+	PictureStore.all = function () {
+	  return _pictures;
+	};
+	
+	PictureStore.resetPictures = function (pictures) {
+	  _pictures = _.shuffle(pictures);
+	  // debugger
+	};
+	
+	PictureStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case _pictureConstants2.default.PICTURES_RECEIVED:
+	      PictureStore.resetPictures(payload.pictures);
+	      PictureStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	exports.default = PictureStore;
+
+/***/ },
+/* 288 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var PictureConstants = {
+	  PICTURES_RECEIVED: "PICTURES_RECEIVED"
+	};
+	
+	exports.default = PictureConstants;
 
 /***/ }
 /******/ ]);

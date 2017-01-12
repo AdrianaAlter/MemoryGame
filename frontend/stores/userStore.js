@@ -1,10 +1,10 @@
-var Store = require('flux/utils').Store;
+const Store = require('flux/utils').Store;
 import Dispatcher from '../dispatcher/dispatcher.js';
 import UserConstants from '../constants/userConstants.js';
 
-var UserStore = new Store(Dispatcher);
-var _users = [];
-var _current;
+const UserStore = new Store(Dispatcher);
+let _users = [];
+let _current;
 
 UserStore.current = function() {
   return _current;
@@ -16,11 +16,8 @@ UserStore.all = function(){
 
 UserStore.resetCurrent = function(user) {
   _current = user;
-  for (var i = 0; i < _users.length; i++){
-    if (_users[i].id == user.id){
-      _users[i] = user;
-    }
-  }
+  let i = _users.findIndex(x => x.id === user.id);
+  _users[i] = user;
 };
 
 UserStore.resetUsers = function(users){
@@ -28,8 +25,8 @@ UserStore.resetUsers = function(users){
 };
 
 UserStore.highScores = function(){
-  var scores = [];
-  _users.map(function(user){
+  let scores = [];
+  _.reject(_users, {user_name: 'guest'}).map(function(user){
     scores.push({ name: user.user_name, score: user.high_score });
   });
   return _.sortBy(scores, 'score').reverse();

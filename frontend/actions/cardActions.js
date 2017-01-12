@@ -1,13 +1,7 @@
 import CardConstants from '../constants/cardConstants.js';
 import Dispatcher from '../dispatcher/dispatcher.js';
 
-var CardActions = {
-  picturesReceived: function(pictures){
-    Dispatcher.dispatch({
-      actionType: CardConstants.PICTURES_RECEIVED,
-      pictures: pictures
-    });
-  },
+const CardActions = {
   cardReceived: function(cards){
     Dispatcher.dispatch({
       actionType: CardConstants.CARDS_RECEIVED,
@@ -26,18 +20,6 @@ var CardActions = {
       card: card
     });
   },
-  selectCard: function(card){
-    Dispatcher.dispatch({
-      actionType: CardConstants.CARD_SELECTED,
-      card: card
-    });
-  },
-  markMatched: function(picture){
-    Dispatcher.dispatch({
-      actionType: CardConstants.PICTURE_MATCHED,
-      picture: picture
-    });
-  },
   clear: function(){
     Dispatcher.dispatch({
       actionType: CardConstants.CLEAR
@@ -45,4 +27,4 @@ var CardActions = {
   }
 };
 
-export default CardActions
+export default CardActions;

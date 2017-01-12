@@ -1,4 +1,4 @@
-var UserConstants = {
+const UserConstants = {
   SINGLE_USER_RECEIVED: "SINGLE_USER_RECEIVED",
   ALL_USERS_RECEIVED: "ALL_USERS_RECEIVED"
 };

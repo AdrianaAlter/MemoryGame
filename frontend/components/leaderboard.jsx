@@ -33,8 +33,7 @@ class Leaderboard extends React.Component {
   }
 
   render(){
-    var self = this;
-    var style = {
+    const style = {
       overlay : {
         backgroundColor: '(105, 105, 105, 0.8)'
       },
@@ -47,10 +46,9 @@ class Leaderboard extends React.Component {
         borderRadius: '2%'
       }
     };
-    var scores = this.state.scores.map(function(scoreObject){
-      if (scoreObject.name !== "guest"){
-        return <li key={self.state.scores.indexOf(scoreObject)}>{scoreObject.name}:   {scoreObject.score}</li>
-      }
+    var scores = this.state.scores.map(({name, score}) => {
+      let idx = this.state.scores.findIndex(x => x.name === name);
+      return <li key={idx}>{name}:   {score}</li>;
     });
     return (
       <button>

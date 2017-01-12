@@ -25,7 +25,7 @@ class SignUp extends React.Component {
   }
 
   submitInfo(){
-   var router = this.context.router;
+   const router = this.context.router;
    ApiUtil.signUp(this.state, function () {
      router.push("/");
    });

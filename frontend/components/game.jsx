@@ -5,13 +5,14 @@ import Won from './won.jsx'
 import ApiUtil from '../util/apiUtil.js'
 import GameStore from '../stores/gameStore.js'
 import SessionStore from '../stores/sessionStore.js'
+import PictureStore from '../stores/pictureStore.js'
 import {Link} from 'react-router'
 
 class Game extends React.Component {
 
   constructor(){
     super();
-    this.state = { game: GameStore.all(), pics: GameStore.allPictures(), won: false, started: false, time: 0, score: 0, tries: 0, user: SessionStore.currentUser() };
+    this.state = { game: GameStore.all(), pics: PictureStore.all(), won: false, started: false, time: 0, score: 0, tries: 0, user: SessionStore.currentUser() };
     this.isWon = this.isWon.bind(this);
     this.isStarted = this.isStarted.bind(this);
     this.finalTime = this.finalTime.bind(this);
@@ -19,15 +20,18 @@ class Game extends React.Component {
     this.tried = this.tried.bind(this);
     this.toggleMute = this.toggleMute.bind(this);
     this.clearGame = this.clearGame.bind(this);
+    this.notGuest = this.notGuest.bind(this);
   }
 
   componentDidMount(){
     ApiUtil.loadUserInfo(this.state.user.id);
+
     // if (this.state.user.cards){
     //   this.setState({ cards: this.state.user.cards })
     // }
     // ApiUtil.getPictures(this.state.game[0].level);
-    this.listener = GameStore.addListener(this._onChange.bind(this));
+    this.listener1 = GameStore.addListener(this._onChange.bind(this));
+    this.listener2 = PictureStore.addListener(this._onChange.bind(this));
 
     // if (!this.state.game){
     //   this.context.router.push("/");
@@ -39,16 +43,17 @@ class Game extends React.Component {
     //   ApiUtil.deleteGame(this.state.game[0].id);
     // }
     // ApiUtil.deleteGame(this.state.game.id);
-    this.listener.remove();
+    this.listener1.remove();
+    this.listener2.remove();
   }
 
   _onChange(){
-    this.setState({ game: GameStore.all(), user: SessionStore.currentUser(), pics: GameStore.allPictures(), mute: false });
+    this.setState({ game: GameStore.all(), user: SessionStore.currentUser(), pics: PictureStore.all(), mute: false });
   }
 
   isWon(){
     if (!this.state.mute){
-      var wonSound = new Audio('assets/won.wav');
+      const wonSound = new Audio('assets/won.wav');
       wonSound.play();
     }
     this.setState({ won: true });
@@ -58,7 +63,7 @@ class Game extends React.Component {
   isStarted(){
     if (!this.state.started){
       this.setState({ started: true});
-      var game = {};
+      let game = {};
       game.started = true;
       ApiUtil.updateGame(this.state.game.id, game)
     }
@@ -70,49 +75,49 @@ class Game extends React.Component {
 
   finalTime(time){
     this.setState({ time: time });
-    var game = {};
+    let game = {};
     game.final_time = time;
     ApiUtil.updateGame(this.state.game.id, game);
   }
 
   score(){
-    var marker = (this.state.game.level + 1) * 60;
-    var bonus = (marker - this.state.time) >= 0 ? (marker - this.state.time) : 0;
-    var extraTries = this.state.tries - (this.state.pics.length / 2);
-    var score = ((bonus * 2) + 10) - extraTries;
+    let marker = (this.state.game.level + 1) * 60;
+    let bonus = (marker - this.state.time) >= 0 ? (marker - this.state.time) : 0;
+    let extraTries = this.state.tries - (this.state.pics.length / 2);
+    let score = ((bonus * 2) + 10) - extraTries;
+    if (score < 0){
+      score = 0;
+    }
     this.setState({ score: score });
-    if ((this.state.user.user_name !== "guest") && (score > this.state.user.high_score)){
-      var user = {};
+    if ((this.notGuest()) && (score > this.state.user.high_score)){
+      let user = {};
       user.high_score = score;
       ApiUtil.updateUser(this.state.user.id, user);
     }
   }
 
   tried(){
-    var tries = this.state.tries + 1
-    this.setState({ tries: tries })
+    let tries = this.state.tries + 1
     this.setState({ tries: tries })
   }
 
   clearGame(){
-    if (this.state.game){
-      ApiUtil.deleteGame(this.state.game.id);
-    }
-    else {
-      this.context.router.push("/");
-    }
+    this.state.game ? ApiUtil.deleteGame(this.state.game.id) : this.context.router.push("/");
   }
 
+  notGuest(){
+    return (this.state.user && this.state.user.user_name !== "guest");
+  }
   render(){
-    if (this.state.user && this.state.user.user_name !== "guest"){
+    if (this.notGuest()){
       var highScore = this.state.user.high_score;
     }
     var gameContent;
-    var name = this.state.user.user_name;
-    var muteIcon = this.state.mute ? "fa fa-volume-up fa-lg" : "fa fa-volume-off fa-lg";
+    let name = this.state.user.user_name;
+    let muteIcon = this.state.mute ? "fa fa-volume-up fa-lg" : "fa fa-volume-off fa-lg";
     if (this.state.game && this.state.pics.length > 0){
-      var saved = this.state.game.saved ? "saved" : "";
-      var wonStatus = this.state.won ? true : false;
+      let saved = this.state.game.saved ? "saved" : "";
+      let wonStatus = this.state.won ? true : false;
       var timer;
       if (!this.state.started){
         timer = <h1>Pick a card...</h1>

@@ -4,6 +4,7 @@ import GameStore from '../stores/gameStore'
 import UserStore from '../stores/userStore'
 import SessionStore from '../stores/sessionStore'
 import Leaderboard from './leaderboard'
+import Menu from './menu'
 
 class Footer extends React.Component {
 
@@ -43,11 +44,13 @@ class Footer extends React.Component {
   }
 
   clearGame(){
-    if (this.state.game){
-      ApiUtil.deleteGame(this.state.game.id);
-    }
-    else {
-      this.context.router.push("/");
+    if (this.context.router.location.pathname !== "/"){
+      if (this.state.game){
+        ApiUtil.deleteGame(this.state.game.id);
+      }
+      else {
+        this.context.router.push("/");
+      }
     }
   }
 
@@ -69,7 +72,7 @@ class Footer extends React.Component {
     var changed = new Audio('assets/changed.ogg');
     changed.play();
     var game = {};
-    game.theme = e.currentTarget.innerHTML.toLowerCase().split(" ").join("");
+    game.theme = e.currentTarget.innerText.toLowerCase().split(" ").join("");
     ApiUtil.updateGame(this.state.game.id, game);
   }
 
@@ -80,22 +83,14 @@ class Footer extends React.Component {
       var welcome = this.state.user.user_name == "guest" ? null : <button id="name-display">Welcome, {this.state.user.user_name}!</button>
     }
     if (this.state.game){
-      var themes = (
-        <button onMouseOver={this.openMenu} onMouseLeave={this.closeMenu}>Themes
-          <ul className={this.state.menu}>
-            <li onClick={this.setTheme}>Theme 1</li>
-            <li onClick={this.setTheme}>Theme 2</li>
-            <li onClick={this.setTheme}>Theme 3</li>
-          </ul>
-        </button>
-      )
+      var menu = <Menu setTheme={this.setTheme} openMenu={this.openMenu} closeMenu={this.closeMenu} display={this.state.menu} />;
     }
     return (
       <footer>
         <button onClick={this.logOut}>{buttonText}</button>
         <Leaderboard />
         <button onClick={this.clearGame}>New Game</button>
-        {themes}
+        {menu}
         {welcome}
       </footer>
     )

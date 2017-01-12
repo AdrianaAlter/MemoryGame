@@ -33,7 +33,7 @@ class CardIndex extends React.Component {
     // debugger
     if (this.state.cards.length === 0){
     //   debugger
-      var gameId = this.props.gameId;
+      let gameId = this.props.gameId;
       // debugger
       this.props.pics.map(function(picture){
         ApiUtil.createCard(picture, gameId);
@@ -57,20 +57,19 @@ class CardIndex extends React.Component {
 
   selectCard(cardId){
     if (!this.props.mute){
-      var flip = new Audio('assets/flip.wav');
+      let flip = new Audio('assets/flip.wav');
       flip.play();
     }
     this.props.isStarted();
-    var card = {};
-    card.flipped = true;
+    let card = {flipped: true};
     ApiUtil.updateCard(this.props.gameId, cardId, card);
   }
 
   checkSelected(){
-      var card = {};
-      var self = this;
-      var match = new Audio('assets/match.mp3');
-      var wrong = new Audio('assets/wrong.wav');
+      let card = {};
+      let self = this;
+      let match = new Audio('assets/match.mp3');
+      let wrong = new Audio('assets/wrong.wav');
       if (this.state.selected[0].picture == this.state.selected[1].picture){
         if (!this.props.mute){
           match.play();
@@ -100,10 +99,10 @@ class CardIndex extends React.Component {
   }
 
   render(){
-    var self = this;
+    let self = this;
     if (this.state.cards.length > 0){
-      var cardLis = this.state.cards.map(function(card){
-        var status;
+      let cardLis = this.state.cards.map((card) => {
+      var status;
         if (card.matched){
           status = "matched";
         }
@@ -113,7 +112,7 @@ class CardIndex extends React.Component {
         else {
           status = "";
         }
-        return <Card key={card.id} card={card} saved={self.props.saved} theme={self.props.theme} status={status} selectCard={self.selectCard} />
+        return <Card key={card.id} card={card} saved={this.props.saved} theme={this.props.theme} status={status} selectCard={this.selectCard} />
       });
       return (<div>
                 <ul className="group" id="cards">{cardLis}</ul>

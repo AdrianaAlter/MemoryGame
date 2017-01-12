@@ -1,7 +1,7 @@
 import UserConstants from '../constants/userConstants.js';
 import Dispatcher from '../dispatcher/dispatcher.js';
 
-var UserActions = {
+const UserActions = {
 
   singleUserReceived: function(user) {
     Dispatcher.dispatch({

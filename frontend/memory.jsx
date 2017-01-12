@@ -9,7 +9,7 @@ import SessionStore from './stores/sessionStore';
 import ApiUtil from './util/apiUtil';
 import Modal from 'react-modal';
 
-var routes = (
+const routes = (
   <Router history={hashHistory}>
     <Route path="/" component={App} onEnter={_mustLogIn}>
       <IndexRoute component={Setup} />

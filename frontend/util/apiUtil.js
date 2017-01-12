@@ -1,9 +1,10 @@
 import CardActions from '../actions/cardActions.js';
 import GameActions from '../actions/gameActions.js';
+import PictureActions from '../actions/pictureActions.js';
 import SessionActions from '../actions/sessionActions.js';
 import UserActions from '../actions/userActions.js';
 
-var ApiUtil = {
+const ApiUtil = {
 
   fetchCurrentUser: function(completion) {
     $.ajax({
@@ -106,7 +107,7 @@ var ApiUtil = {
       url: "https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json",
       dataType: "json",
       success: function(pictures){
-        GameActions.picturesReceived(pictures.levels[level].cards);
+        PictureActions.picturesReceived(pictures.levels[level].cards);
       }
     });
   },
