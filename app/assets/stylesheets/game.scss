@@ -81,7 +81,7 @@ $trim: dimgray;
 .card:hover {
   box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
 }
-.face-up, .matched {
+.flipped, .matched {
   border: .75vw double #262626;
   color: #262626;
   background-image: none !important;
@@ -99,12 +99,12 @@ $trim: dimgray;
   background-color: #003407;
   background-image: url("https://www.transparenttextures.com/patterns/light-wool.png");
 }
-.face-up.theme1 {
+.flipped.theme1 {
   color: #B1B1B1;
   border-color: #B1B1B1;
 }
 .theme1.matched {
-  @extend .face-up.theme1;
+  @extend .flipped.theme1;
   background-color: transparentize(darken(#003407, 10%), .2);
 }
 
@@ -112,12 +112,12 @@ $trim: dimgray;
   background-color: #0E1A40;
   background-image: url("https://www.transparenttextures.com/patterns/washi.png");
 }
-.theme2.face-up {
+.theme2.flipped {
   color: #8D6B2B;
   border-color: #8D6B2B;
 }
 .theme2.matched {
-  @extend .face-up.theme2;
+  @extend .flipped.theme2;
   background-color: transparentize(darken(#0E1A40, 10%), .2);
 }
 
@@ -125,12 +125,12 @@ $trim: dimgray;
   background-color: #740001;
   background-image: url("https://www.transparenttextures.com/patterns/swirl.png");
 }
-.face-up.theme3 {
+.flipped.theme3 {
   color: #93730E;
   border-color: #93730E;
 }
 .theme3.matched {
-  @extend .face-up.theme3;
+  @extend .flipped.theme3;
   background-color: transparentize(darken(#740001, 10%), .2);
 }
 .saved {

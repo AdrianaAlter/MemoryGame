@@ -26603,11 +26603,7 @@
 	    key: 'clearGame',
 	    value: function clearGame() {
 	      if (this.context.router.location.pathname !== "/") {
-	        if (this.state.game) {
-	          _apiUtil2.default.deleteGame(this.state.game.id);
-	        } else {
-	          this.context.router.push("/");
-	        }
+	        this.state.game ? _apiUtil2.default.deleteGame(this.state.game.id) : this.context.router.push("/");
 	      }
 	    }
 	  }, {
@@ -26741,7 +26737,7 @@
 	  loadUserInfo: function loadUserInfo(id) {
 	    $.ajax({
 	      type: "GET",
-	      url: "/api/users/" + id,
+	      url: '/api/users/' + id,
 	      dataType: "json",
 	      success: function success(user) {
 	        // debugger
@@ -26841,7 +26837,7 @@
 	  updateGame: function updateGame(id, game) {
 	    $.ajax({
 	      type: "PATCH",
-	      url: "/api/games/" + id,
+	      url: '/api/games/' + id,
 	      dataType: "json",
 	      data: { game: game },
 	      success: function success(game) {
@@ -26855,7 +26851,7 @@
 	  fetchGame: function fetchGame(gameId) {
 	    $.ajax({
 	      type: "GET",
-	      url: "/api/games/" + gameId,
+	      url: '/api/games/' + gameId,
 	      dataType: "json",
 	      success: function success(game) {
 	        _gameActions2.default.gameReceived(game);
@@ -26870,7 +26866,7 @@
 	    // debugger
 	    $.ajax({
 	      type: "DELETE",
-	      url: "/api/games/" + id,
+	      url: '/api/games/' + id,
 	      dataType: "json",
 	      success: function success() {
 	        window.location.href = "/";
@@ -26884,11 +26880,10 @@
 	  createCard: function createCard(picture, gameId) {
 	    $.ajax({
 	      type: "POST",
-	      url: "/api/games/" + gameId + "/cards",
+	      url: '/api/games/' + gameId + '/cards',
 	      dataType: "json",
 	      data: { picture: picture, gameId: gameId },
 	      success: function success(card) {
-	        // debugger
 	        _cardActions2.default.cardAdded(card);
 	      },
 	      error: function error() {
@@ -26900,7 +26895,7 @@
 	  updateCard: function updateCard(gameId, cardId, card) {
 	    $.ajax({
 	      type: "PATCH",
-	      url: "/api/games/" + gameId + "/cards/" + cardId,
+	      url: '/api/games/' + gameId + '/cards/' + cardId,
 	      data: { card: card },
 	      dataType: "json",
 	      success: function success(card) {
@@ -26911,7 +26906,7 @@
 	
 	  deleteCard: function deleteCard(gameId, id) {
 	    $.ajax({
-	      url: "api/games/" + gameId + "/cards/" + id,
+	      url: 'api/games/' + gameId + '/cards/' + id,
 	      type: "DELETE",
 	      success: function success() {
 	        // CardActions.receiveList(list);
@@ -26925,7 +26920,7 @@
 	  updateUser: function updateUser(userId, user) {
 	    $.ajax({
 	      type: "PATCH",
-	      url: "/api/users/" + userId,
+	      url: '/api/users/' + userId,
 	      data: { user: user },
 	      dataType: "json",
 	      success: function success(user) {
@@ -31064,7 +31059,6 @@
 	    _this.makeCards = _this.makeCards.bind(_this);
 	    _this.flipDown = _this.flipDown.bind(_this);
 	    _this.match = _this.match.bind(_this);
-	    // this.playSound = this.playSound.bind(this);
 	    return _this;
 	  }
 	
@@ -31181,44 +31175,43 @@
 	    value: function render() {
 	      var _this3 = this;
 	
-	      var self = this;
-	      if (this.state.cards.length > 0) {
-	        var cardLis = this.state.cards.map(function (card) {
-	          var status;
-	          if (card.matched) {
-	            status = "matched";
-	          } else if (card.flipped) {
-	            status = "face-up";
-	          } else {
-	            status = "";
-	          }
-	          var className = 'card ' + _this3.props.theme + ' ' + status;
-	          return _react2.default.createElement(_card2.default, { key: card.id, card: card, className: className, selectCard: _this3.selectCard });
-	        });
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'ul',
-	            { className: 'group', id: 'cards' },
-	            cardLis
-	          )
-	        );
-	      } else {
-	        return _react2.default.createElement(
+	      var content;
+	      if (_.isEmpty(this.state.cards)) {
+	        content = _react2.default.createElement(
 	          'div',
 	          null,
 	          'Loading...'
 	        );
 	      }
+	      var cardLis = this.state.cards.map(function (card) {
+	        var _Object$entries = Object.entries(card),
+	            _Object$entries2 = _slicedToArray(_Object$entries, 5),
+	            flipped = _Object$entries2[3],
+	            matched = _Object$entries2[4];
 	
-	      // if (this.props.pics.length > 0){
-	      //   this.makeCards();
-	      //   return <div></div>
-	      // }
-	      // else {
-	      //   return <div></div>
-	      // }
+	        var status;
+	        [flipped, matched].map(function (property) {
+	          var _property = _slicedToArray(property, 2),
+	              name = _property[0],
+	              value = _property[1];
+	
+	          if (value) {
+	            status = name;
+	          }
+	        });
+	        var className = 'card ' + _this3.props.theme + ' ' + status;
+	        return _react2.default.createElement(_card2.default, { key: card.id, card: card, className: className, selectCard: _this3.selectCard });
+	      });
+	      content = _react2.default.createElement(
+	        'ul',
+	        { className: 'group', id: 'cards' },
+	        cardLis
+	      );
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        content
+	      );
 	    }
 	  }]);
 	
@@ -31226,6 +31219,18 @@
 	}(_react2.default.Component);
 	
 	exports.default = CardIndex;
+	// }
+	// else {
+	//   return <div>Loading...</div>
+	// }
+	
+	// if (this.props.pics.length > 0){
+	//   this.makeCards();
+	//   return <div></div>
+	// }
+	// else {
+	//   return <div></div>
+	// }
 
 /***/ },
 /* 279 */

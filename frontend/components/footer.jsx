@@ -45,12 +45,7 @@ class Footer extends React.Component {
 
   clearGame(){
     if (this.context.router.location.pathname !== "/"){
-      if (this.state.game){
-        ApiUtil.deleteGame(this.state.game.id);
-      }
-      else {
-        this.context.router.push("/");
-      }
+      this.state.game ? ApiUtil.deleteGame(this.state.game.id) : this.context.router.push("/");
     }
   }
 

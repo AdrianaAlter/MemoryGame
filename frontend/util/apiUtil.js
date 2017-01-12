@@ -27,7 +27,7 @@ const ApiUtil = {
   loadUserInfo: function(id){
     $.ajax({
         type: "GET",
-        url: "/api/users/" + id,
+        url: `/api/users/${id}`,
         dataType: "json",
         success: function(user) {
           // debugger
@@ -128,7 +128,7 @@ const ApiUtil = {
   updateGame: function(id, game){
     $.ajax({
       type: "PATCH",
-      url: "/api/games/" + id,
+      url: `/api/games/${id}`,
       dataType: "json",
       data: { game: game },
       success: function(game){
@@ -142,7 +142,7 @@ const ApiUtil = {
   fetchGame: function(gameId){
     $.ajax({
       type: "GET",
-      url: "/api/games/" + gameId,
+      url: `/api/games/${gameId}`,
       dataType: "json",
       success: function(game){
         GameActions.gameReceived(game);
@@ -157,7 +157,7 @@ const ApiUtil = {
     // debugger
     $.ajax({
       type: "DELETE",
-      url: "/api/games/" + id,
+      url: `/api/games/${id}`,
       dataType: "json",
       success: function(){
         window.location.href = "/";
@@ -171,11 +171,10 @@ const ApiUtil = {
   createCard: function(picture, gameId){
     $.ajax({
       type: "POST",
-      url: "/api/games/" + gameId + "/cards",
+      url: `/api/games/${gameId}/cards`,
       dataType: "json",
       data: { picture: picture, gameId: gameId },
       success: function(card){
-        // debugger
         CardActions.cardAdded(card);
       },
       error: function(){
@@ -187,7 +186,7 @@ const ApiUtil = {
   updateCard: function(gameId, cardId, card){
     $.ajax({
       type: "PATCH",
-      url: "/api/games/" + gameId + "/cards/" + cardId,
+      url: `/api/games/${gameId}/cards/${cardId}`,
       data: { card: card },
       dataType: "json",
       success: function(card){
@@ -198,7 +197,7 @@ const ApiUtil = {
 
   deleteCard: function(gameId, id){
     $.ajax({
-      url: "api/games/" + gameId + "/cards/" + id,
+      url: `api/games/${gameId}/cards/${id}`,
       type: "DELETE",
       success: function(){
         // CardActions.receiveList(list);
@@ -212,7 +211,7 @@ const ApiUtil = {
   updateUser: function(userId, user){
     $.ajax({
       type: "PATCH",
-      url: "/api/users/" + userId,
+      url: `/api/users/${userId}`,
       data: { user: user },
       dataType: "json",
       success: function(user){

@@ -13,7 +13,6 @@ class CardIndex extends React.Component {
     this.makeCards = this.makeCards.bind(this);
     this.flipDown = this.flipDown.bind(this);
     this.match = this.match.bind(this);
-    // this.playSound = this.playSound.bind(this);
   }
 
   componentDidMount(){
@@ -100,39 +99,38 @@ class CardIndex extends React.Component {
   }
 
   render(){
-    let self = this;
-    if (this.state.cards.length > 0){
-      let cardLis = this.state.cards.map((card) => {
+    var content;
+    if (_.isEmpty(this.state.cards)){
+      content = <div>Loading...</div>
+    }
+    let cardLis = this.state.cards.map((card) => {
+      var [,,,flipped, matched] = Object.entries(card);
       var status;
-        if (card.matched){
-          status = "matched";
+      [flipped, matched].map(function(property){
+        var [name, value] = property;
+        if (value){
+           status = name;
         }
-        else if (card.flipped){
-          status = "face-up";
-        }
-        else {
-          status = "";
-        }
-        let className = `card ${this.props.theme} ${status}`;
-        return <Card key={card.id} card={card} className={className} selectCard={this.selectCard} />
       });
-      return (<div>
-                <ul className="group" id="cards">{cardLis}</ul>
-              </div>)
-    }
-    else {
-      return <div>Loading...</div>
-    }
-
-    // if (this.props.pics.length > 0){
-    //   this.makeCards();
-    //   return <div></div>
-    // }
-    // else {
-    //   return <div></div>
-    // }
+      let className = `card ${this.props.theme} ${status}`;
+      return <Card key={card.id} card={card} className={className} selectCard={this.selectCard} />
+    });
+    content = <ul className="group" id="cards">{cardLis}</ul>;
+    return <div>{content}</div>;
   }
 
 }
 
 export default CardIndex
+// }
+// else {
+//   return <div>Loading...</div>
+// }
+
+// if (this.props.pics.length > 0){
+//   this.makeCards();
+//   return <div></div>
+// }
+// else {
+//   return <div></div>
+// }
