@@ -1,3 +1,7 @@
+#The live app is <a href="https://memorycardgame.herokuapp.com/">here</a>
+
+----
+
 #Instructions
 
 * Run 'bundle install' and 'npm install'
