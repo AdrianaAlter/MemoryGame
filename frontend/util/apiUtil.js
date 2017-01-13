@@ -28,9 +28,6 @@ const ApiUtil = {
       dataType: "json",
       success: function(users){
         UserActions.allUsersReceived(users);
-      },
-      error: function(){
-        console.log('Error fetching all users');
       }
     });
   },
@@ -69,9 +66,6 @@ const ApiUtil = {
       dataType: "json",
       success: function () {
         SessionActions.logOut();
-      },
-      error: function(){
-        console.log('Error in ApiUtil logout');
       }
     });
   },

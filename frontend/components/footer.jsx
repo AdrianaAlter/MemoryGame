@@ -37,9 +37,11 @@ class Footer extends React.Component {
   logOut(){
     if (this.state.game){
       ApiUtil.deleteGame(this.state.game.id);
+      ApiUtil.logOut();
     }
-    ApiUtil.logOut();
-    this.context.router.push("/login");
+    else {
+      this.context.router.push("/login");
+    }
   }
 
   clearGame(){

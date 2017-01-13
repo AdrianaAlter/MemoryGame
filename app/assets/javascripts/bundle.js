@@ -26594,9 +26594,10 @@
 	    value: function logOut() {
 	      if (this.state.game) {
 	        _apiUtil2.default.deleteGame(this.state.game.id);
+	        _apiUtil2.default.logOut();
+	      } else {
+	        this.context.router.push("/login");
 	      }
-	      _apiUtil2.default.logOut();
-	      this.context.router.push("/login");
 	    }
 	  }, {
 	    key: 'clearGame',
@@ -26743,9 +26744,6 @@
 	      dataType: "json",
 	      success: function success(users) {
 	        _userActions2.default.allUsersReceived(users);
-	      },
-	      error: function error() {
-	        console.log('Error fetching all users');
 	      }
 	    });
 	  },
@@ -26784,9 +26782,6 @@
 	      dataType: "json",
 	      success: function success() {
 	        _sessionActions2.default.logOut();
-	      },
-	      error: function error() {
-	        console.log('Error in ApiUtil logout');
 	      }
 	    });
 	  },
