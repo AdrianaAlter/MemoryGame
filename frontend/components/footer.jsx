@@ -12,7 +12,6 @@ class Footer extends React.Component {
     super();
     this.state = { game: GameStore.all(), user: SessionStore.currentUser(), menu: "hidden" };
     this.clearGame = this.clearGame.bind(this);
-    this.saveGame = this.saveGame.bind(this);
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
     this.setTheme = this.setTheme.bind(this);
@@ -50,12 +49,6 @@ class Footer extends React.Component {
     }
   }
 
-  saveGame(){
-    var game = {};
-    game.saved = true;
-    ApiUtil.updateGame(this.state.game.id, game);
-  }
-
   openMenu(){
     this.setState({ menu: "menu" });
   }
@@ -78,7 +71,6 @@ class Footer extends React.Component {
     let {game, user} = this.state;
     if (user){
       var buttonText = user.user_name == "guest" ? "Sign Up" : "Log Out";
-      var save = user.user_name == "guest" ? null : <button onClick={this.saveGame}>Save Game</button>;
       var welcome = user.user_name == "guest" ? null : <button id="name-display">Welcome, {user.user_name}!</button>
     }
     if (game){

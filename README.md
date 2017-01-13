@@ -16,3 +16,7 @@
 * Sound effects and mute button
 * Choice of three different styles for cards
 * Scoring system involving number of attempts in addition to time spent solving
+
+----
+
+##If you'd like to try out the user accounts without signing up, there's a sample account--user name: "Sample User"; password: "sample".

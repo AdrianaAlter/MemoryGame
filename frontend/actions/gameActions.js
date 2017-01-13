@@ -16,7 +16,7 @@ const GameActions = {
       game: game
     });
   }
-  
+
 };
 
-export default GameActions
+export default GameActions;

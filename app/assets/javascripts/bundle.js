@@ -26563,7 +26563,6 @@
 	
 	    _this.state = { game: _gameStore2.default.all(), user: _sessionStore2.default.currentUser(), menu: "hidden" };
 	    _this.clearGame = _this.clearGame.bind(_this);
-	    _this.saveGame = _this.saveGame.bind(_this);
 	    _this.openMenu = _this.openMenu.bind(_this);
 	    _this.closeMenu = _this.closeMenu.bind(_this);
 	    _this.setTheme = _this.setTheme.bind(_this);
@@ -26607,13 +26606,6 @@
 	      }
 	    }
 	  }, {
-	    key: 'saveGame',
-	    value: function saveGame() {
-	      var game = {};
-	      game.saved = true;
-	      _apiUtil2.default.updateGame(this.state.game.id, game);
-	    }
-	  }, {
 	    key: 'openMenu',
 	    value: function openMenu() {
 	      this.setState({ menu: "menu" });
@@ -26643,11 +26635,6 @@
 	
 	      if (user) {
 	        var buttonText = user.user_name == "guest" ? "Sign Up" : "Log Out";
-	        var save = user.user_name == "guest" ? null : _react2.default.createElement(
-	          'button',
-	          { onClick: this.saveGame },
-	          'Save Game'
-	        );
 	        var welcome = user.user_name == "guest" ? null : _react2.default.createElement(
 	          'button',
 	          { id: 'name-display' },
@@ -26894,18 +26881,21 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var CardActions = {
+	
 	  cardAdded: function cardAdded(card) {
 	    _dispatcher2.default.dispatch({
 	      actionType: _cardConstants2.default.CARD_ADDED,
 	      card: card
 	    });
 	  },
+	
 	  updatedCardReceived: function updatedCardReceived(card) {
 	    _dispatcher2.default.dispatch({
 	      actionType: _cardConstants2.default.UPDATED_CARD_RECEIVED,
 	      card: card
 	    });
 	  }
+	
 	};
 	
 	exports.default = CardActions;
