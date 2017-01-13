@@ -2,17 +2,15 @@
 
 @mixin button {
   background: $trim;
-  color: $neutral;
-  padding: 1% 2%;
   border-radius: 3%;
-  text-align: center;
+  color: $neutral;
   cursor: pointer;
   font-size: 3vh;
   margin: 0 auto 1% auto;
+  padding: 1% 2%;
+  text-align: center;
   transition: background .5s;
   &:hover {
     background: $dark;
   }
-}
-button:hover {
 }

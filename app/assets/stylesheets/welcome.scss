@@ -4,45 +4,44 @@
 #welcome {
   color: #191919;
   h1 {
-    text-align: center;
     padding: 3vh;
+    text-align: center;
   }
   div {
-    list-style: none;
-    padding: 2vw;
-    width: 60vw;
+    background: $main;
+    display: flex;
+    flex-wrap: wrap;
     height: 70vh;
     justify-content: space-around;
-    flex-wrap: wrap;
+    list-style: none;
     margin: auto;
-    display: flex;
-    background: $main;
-
+    padding: 2vw;
+    width: 60vw;
     form {
-      flex-basis: 48.5%;
       background: transparentize(darken($main, 15%), .5);
-      padding: 3%;
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      flex-direction: column;
-      box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
       border: .1vw solid $trim;
       border-radius: 3%;
+      box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
+      display: flex;
+      flex-basis: 48.5%;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+      padding: 3%;
       text-align: center;
       transition: background 1s, color 1s;
       h1 {
-        width: 100%;
-        font-size: 6vh;
-        padding-top: 10%;
-        line-height: 255%;
-        font-weight: normal;
         cursor: pointer;
+        font-size: 6vh;
+        font-weight: normal;
+        line-height: 255%;
+        padding-top: 10%;
+        width: 100%;
       }
       h2 {
+        flex: 1;
         font-size: 4vh;
         margin-bottom: 1vh;
-        flex: 1;
       }
       p {
         cursor: pointer;
@@ -50,13 +49,13 @@
         margin-top: 5%;
       }
       input {
-        font-size: 3vh;
-        flex: 1;
         background: floralwhite;
         border-radius: 3%;
-        text-align: left;
-        padding: 0 2.5%;
+        font-size: 3vh;
+        flex: 1;
         margin-bottom: 1vh;
+        padding: 0 2.5%;
+        text-align: left;
         &:hover {
           background: lighten($trim, 50%);
         }
@@ -69,8 +68,8 @@
         border: .1vw solid red;
       }
       section {
-        flex: 1;
         display: flex;
+        flex: 1;
         flex-direction: row;
         justify-content: space-between;
         button {
@@ -91,11 +90,6 @@
       form {
         width: 100%;
       }
-
     }
-
-
   }
-
-
 }

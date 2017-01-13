@@ -14,28 +14,31 @@
  *= require_self
  */
 * {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  outline: 0;
   background: transparent;
+  background-size: contain;
+  border: 0;
   box-sizing: border-box;
+  font-family: 'PT Serif', serif;
+  list-style: none;
+  margin: 0;
+  outline: 0;
+  padding: 0;
   text-align: inherit;
   text-decoration: inherit;
   vertical-align: inherit;
-  background-size: contain;
-  list-style: none;
-  font-family: 'PT Serif', serif; }
+}
 
 .group:after {
-  content: "";
   clear: both;
+  content: "";
   position: absolute; }
 
 .hidden {
-  display: none; }
+  display: none;
+}
 
 h1 {
-  text-align: center; }
+  text-align: center;
+}
 
 /*# sourceMappingURL=application.css.map */

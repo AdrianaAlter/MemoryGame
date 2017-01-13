@@ -1,25 +1,25 @@
 @import 'variables';
 
 #game {
-  width: 92vw;
-  height: 80vh;
-  margin: 2vh auto;
   background: $main;
   border-radius: 1%;
   color: $neutral;
+  height: 80vh;
+  margin: 2vh auto;
+  width: 92vw;
   section {
-    display: flex;
-    justify-content: space-between;
-    background: white;
-    width: 100%;
-    height: 10%;
-    margin: auto;
+    background: floralwhite;
     border-bottom: .1vh solid $darktrim;
+    display: flex;
+    height: 10%;
+    justify-content: space-between;
+    margin: auto;
+    width: 100%;
     h1 {
-      box-sizing: padding-box;
-      padding-top: 1%;
-      flex-basis: 32%;
       background: #487779;
+      box-sizing: padding-box;
+      flex-basis: 32%;
+      padding-top: 1%;
     }
     h1:last-child:hover {
       cursor: pointer;
@@ -32,64 +32,64 @@
 }
 
 #cards {
-  list-style: none;
-  padding: 2vw;
-  width: 100%;
-  height: 90%;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: auto;
   display: flex;
+  flex-wrap: wrap;
+  height: 90%;
+  justify-content: space-between;
+  list-style: none;
+  margin: auto;
+  padding: 2vw;
   background: $main;
+  width: 100%;
 }
 #placeholder {
-  width: 100%;
-  height: 100%;
   flex-direction: column;
   display: flex;
+  height: 100%;
   justify-content: center;
+  width: 100%;
   h1 {
-    box-sizing: padding-box;
-    cursor: pointer;
-    text-align: center;
-    width: 35%;
-    margin: auto;
-    padding: 15% 1%;
-    font-size: 5vh;
     background: #487779;
     box-shadow: inset .5vh .5vh .5vh $shadow;
+    box-sizing: padding-box;
+    cursor: pointer;
+    font-size: 5vh;
+    margin: auto;
+    padding: 15% 1%;
+    text-align: center;
+    width: 35%;
   }
 }
 
 .card {
-  user-select: none;
-  flex-basis: 11%;
-  box-sizing: border-box;
-  height: 30vh;
-  margin: 0 .25vw 1.5vw .25vw;
-  border-radius: 4%;
-  padding: 6vh 1vw 1vh 1vw;
-  cursor: pointer;
-  text-align: center;
-  font-size: 9vh;
-  font-weight: bold;
   background-color: $neutral;
   background-image: url("https://www.transparenttextures.com/patterns/vichy.png");
+  border-radius: 4%;
+  box-sizing: border-box;
   color: transparent;
+  cursor: pointer;
+  font-size: 9vh;
+  font-weight: bold;
+  flex-basis: 11%;
+  height: 30vh;
+  margin: 0 .25vw 1.5vw .25vw;
+  padding: 6vh 1vw 1vh 1vw;
+  text-align: center;
+  user-select: none;
 }
 .card:hover {
   box-shadow: .25vw .25vw .3vw $shadow, -.1vw -.1vw .1vw $shadow;
 }
 .flipped, .matched {
-  border: .75vw double $dark;
-  color: $dark;
   background-image: none !important;
+  border: .75vw double $dark;
   box-shadow: .25vw .25vw .3vw $shadow, -.1vw -.1vw .1vw $shadow;
+  color: $dark;
 }
 .matched {
   background: desaturate($neutral, 50%);
-  cursor: default;
   box-shadow: none;
+  cursor: default;
 }
 .matched:hover {
   box-shadow: none;
@@ -99,8 +99,8 @@
   background-image: url("https://www.transparenttextures.com/patterns/light-wool.png");
 }
 .flipped.theme1 {
-  color: #B1B1B1;
   border-color: #B1B1B1;
+  color: #B1B1B1;
 }
 .theme1.matched {
   @extend .flipped.theme1;
@@ -112,8 +112,8 @@
   background-image: url("https://www.transparenttextures.com/patterns/washi.png");
 }
 .theme2.flipped {
-  color: #8D6B2B;
   border-color: #8D6B2B;
+  color: #8D6B2B;
 }
 .theme2.matched {
   @extend .flipped.theme2;
@@ -124,8 +124,8 @@
   background-image: url("https://www.transparenttextures.com/patterns/swirl.png");
 }
 .flipped.theme3 {
-  color: #93730E;
   border-color: #93730E;
+  color: #93730E;
 }
 .theme3.matched {
   @extend .flipped.theme3;

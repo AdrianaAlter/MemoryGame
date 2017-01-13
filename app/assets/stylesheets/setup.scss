@@ -5,31 +5,31 @@
     padding: 3vh;
   }
   section {
-    list-style: none;
-    padding: 2vw;
     background: $main;
-    margin: auto;
+    display: flex;
+    flex-direction: column;
     height: 70vh;
     justify-content: center;
-    flex-direction: column;
+    list-style: none;
+    margin: auto;
+    padding: 2vw;
     width: 60vw;
-    display: flex;
   }
   button {
     background: transparentize(darken($main, 15%), .5);
-    padding: 4%;
-    flex-basis: 33%;
-    color: $dark;
-    width: 66%;
-    margin: .5% auto;
-    box-shadow: .2vw .2vw .2vw darkslategray, -.1vw -.1vw .1vw darkslategray;
     border: .1vw solid $trim;
     border-radius: 3%;
-    text-align: center;
+    box-shadow: .2vw .2vw .2vw darkslategray, -.1vw -.1vw .1vw darkslategray;
+    color: $dark;
     cursor: pointer;
+    flex-basis: 33%;
     font-size: 4vh;
     font-weight: normal;
+    margin: .5% auto;
+    padding: 4%;
+    text-align: center;
     transition: background 1s;
+    width: 66%;
     &:hover {
       background: $contrast;
     }

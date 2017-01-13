@@ -1,57 +1,57 @@
-@import 'variables';
 @import 'button';
+@import 'variables';
 
 #won {
-  margin: auto;
-  color: $dark;
   background: $neutral;
   box-shadow: inset .25vw .25vw .3vw $trim, inset -.25vw -.25vw .3vw $trim;
-  height: 100%;
+  color: $dark;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  margin: auto;
   padding: 2% 0;
   h1 {
+    box-sizing: padding-box;
     flex: 1.5;
+    font-size: 8vh;
     line-height: 200%;
     padding: 2% 0;
-    box-sizing: padding-box;
-    font-size: 8vh;
   }
   h2 {
-    text-align: center;
     background: $main;
     box-shadow: inset .25vw 0 .2vw $shadow, inset -.25vw 0 .2vw $shadow;
+    box-sizing: padding-box;
     color: $neutral;
     flex: 1;
+    font-size: 5vh;
     line-height: 200%;
     padding: 1.5% 0;
-    box-sizing: padding-box;
-    font-size: 5vh;
+    text-align: center;
   }
   h3 {
-    text-align: center;
-    font-weight: normal;
-    flex: .75;
-    box-sizing: padding-box;
     background: $contrast;
     box-shadow: inset .25vw 0 .1vw $shadow, inset -.25vw 0 .1vw $shadow;
-    padding: 1.5% 0;
-    line-height: 200%;
-    font-size: 3.5vh;
+    box-sizing: padding-box;
     color: $dark;
+    flex: .75;
+    font-size: 3.5vh;
+    font-weight: normal;
+    line-height: 200%;
+    padding: 1.5% 0;
+    text-align: center;
   }
   section {
-    flex: .75;
-    width: 100%;
-    margin: auto;
-    text-align: center;
-    cursor: pointer;
-    font-size: 4vh;
-    display: flex;
-    justify-content: center;
-    padding: 1% 0 0 0;
     box-sizing: padding-box;
+    cursor: pointer;
+    display: flex;
+    flex: .75;
+    font-size: 4vh;
+    justify-content: center;
+    margin: auto;
+    padding: 1% 0 0 0;
+    text-align: center;
+    width: 100%;
     button {
       @include button;
       flex-basis: 20%;
