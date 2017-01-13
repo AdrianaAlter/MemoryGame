@@ -1,0 +1,674 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  background: transparent;
+  box-sizing: border-box;
+  text-align: inherit;
+  text-decoration: inherit;
+  vertical-align: inherit;
+  background-size: contain;
+  list-style: none;
+  font-family: 'PT Serif', serif; }
+
+.group:after {
+  content: "";
+  clear: both;
+  position: absolute; }
+
+.hidden {
+  display: none; }
+
+h1 {
+  text-align: center; }
+
+/*# sourceMappingURL=application.css.map */
+/* line 4, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  height: 10vh;
+  padding: 2vh;
+  background: cadetblue;
+  width: 100%;
+}
+/* line 12, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer button, footer a, footer div {
+  background: dimgray;
+  color: blanchedalmond;
+  padding: 1% 2%;
+  border-radius: 3%;
+  text-align: center;
+  cursor: pointer;
+  font-size: 3vh;
+  margin: 0 auto 1% auto;
+  transition: background .5s;
+  background: #487779;
+  padding: 0 2%;
+  flex-basis: 15%;
+  height: 100%;
+  margin: 0 .5% 0 0;
+  position: relative;
+}
+/* line 13, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/_button.scss */
+footer button:hover, footer a:hover, footer div:hover {
+  background: #262626;
+}
+/* line 20, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer button:hover, footer a:hover, footer div:hover {
+  background: #355859;
+}
+/* line 27, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer #name-display {
+  background: transparent;
+  flex: 3;
+  color: #262626;
+  box-shadow: inset 0.1vw 0.1vw 0.2vw #2b4849, inset -0.1vw -0.1vw 0.2vw #2b4849;
+  cursor: default;
+}
+/* line 33, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer #name-display:hover {
+  background: transparent;
+}
+/* line 39, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer div button, footer div a, footer div div {
+  width: 100%;
+  padding: 0 2%;
+}
+/* line 45, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer .menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  width: 100%;
+  top: -200%;
+  background: cadetblue;
+  box-shadow: 0.25vw 0.25vw 0.3vw #2b4849, -0.1vw -0.1vw 0.1vw #2b4849;
+}
+/* line 54, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer .menu li {
+  width: 100%;
+  flex: 1;
+  font-size: 2.5vh;
+  font-weight: bold;
+  padding: 1% 0;
+  border-bottom: 0.1vw solid #487779;
+  background: cadetblue;
+}
+/* line 63, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer .menu li:first-child:hover {
+  color: #003407;
+  background: #B1B1B1;
+}
+/* line 67, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer .menu li:nth-child(2):hover {
+  color: #0E1A40;
+  background: #8D6B2B;
+}
+/* line 71, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+footer .menu li:last-child:hover {
+  color: #740001;
+  background: #93730E;
+}
+
+/* line 78, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard {
+  height: 100%;
+  display: flex;
+  background: blanchedalmond;
+  box-shadow: inset 0.25vw 0.25vw 0.3vw dimgray, inset -0.25vw -0.25vw 0.3vw dimgray;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #262626;
+  box-sizing: padding-box;
+  padding: 2%;
+}
+/* line 88, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard button, #leaderboard footer a, footer #leaderboard a, #leaderboard footer div, footer #leaderboard div {
+  background: dimgray;
+  color: blanchedalmond;
+  padding: 1% 2%;
+  border-radius: 3%;
+  text-align: center;
+  cursor: pointer;
+  font-size: 3vh;
+  margin: 0 auto 1% auto;
+  transition: background .5s;
+  width: 20%;
+  flex: .5;
+}
+/* line 13, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/_button.scss */
+#leaderboard button:hover, #leaderboard footer a:hover, footer #leaderboard a:hover, #leaderboard footer div:hover, footer #leaderboard div:hover {
+  background: #262626;
+}
+/* line 93, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard h1 {
+  flex: .5;
+  font-size: 4vh;
+}
+/* line 97, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard ul {
+  background: cadetblue;
+  border: 0.1vw solid #434343;
+  flex: 6;
+  width: 80%;
+  margin: 1% auto;
+  display: flex;
+  flex-direction: column;
+}
+/* line 105, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard ul li {
+  border-bottom: 0.1vw solid #434343;
+  font-size: 3vh;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 3%;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+/* line 114, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard ul li h4 {
+  font-size: 3vh;
+  padding-left: 2%;
+  text-align: left;
+}
+/* line 119, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard ul li h4:first-child {
+  border-right: 0.1vw solid #434343;
+  padding-left: 0;
+  flex: .5;
+  color: blanchedalmond;
+}
+/* line 125, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard ul li h4:nth-child(2) {
+  flex: 4;
+}
+/* line 128, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard ul li h4:last-child {
+  text-align: center;
+  flex: 1;
+  border-left: 0.1vw solid #434343;
+}
+/* line 134, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard ul li:nth-child(odd) {
+  background: cadetblue;
+}
+/* line 137, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard ul li:nth-child(even) {
+  background: #487779;
+}
+/* line 140, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/footer.scss */
+#leaderboard ul li:first-child {
+  padding-top: 0;
+}
+/* line 3, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+#game {
+  width: 92vw;
+  height: 80vh;
+  margin: 2vh auto;
+  background: cadetblue;
+  border-radius: 1%;
+  color: blanchedalmond;
+}
+/* line 10, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+#game section {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  width: 100%;
+  height: 10%;
+  margin: auto;
+  border-bottom: 0.1vh solid #434343;
+}
+/* line 18, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+#game section h1, #game section div {
+  box-sizing: padding-box;
+  padding-top: 1%;
+  flex-basis: 32%;
+  background: #487779;
+}
+/* line 24, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+#game section h1:last-child:hover, #game section div:last-child:hover {
+  cursor: pointer;
+  text-shadow: 0.3vw 0.3vw 0.2vw #2b4849;
+}
+
+/* line 34, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+#cards {
+  list-style: none;
+  padding: 2vw;
+  width: 100%;
+  height: 90%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: auto;
+  display: flex;
+  background: cadetblue;
+}
+
+/* line 45, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+#placeholder {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+}
+/* line 51, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+#placeholder h1, #placeholder #game section div, #game section #placeholder div {
+  box-sizing: padding-box;
+  cursor: pointer;
+  text-align: center;
+  width: 35%;
+  margin: auto;
+  padding: 15% 1%;
+  font-size: 5vh;
+  background: #487779;
+  box-shadow: inset 0.5vh 0.5vh 0.5vh #2b4849;
+}
+
+/* line 64, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.card {
+  user-select: none;
+  flex-basis: 11%;
+  box-sizing: border-box;
+  height: 30vh;
+  margin: 0 .25vw 1.5vw .25vw;
+  border-radius: 4%;
+  padding: 6vh 1vw 1vh 1vw;
+  cursor: pointer;
+  text-align: center;
+  font-size: 9vh;
+  font-weight: bold;
+  background-color: blanchedalmond;
+  background-image: url("https://www.transparenttextures.com/patterns/vichy.png");
+  color: transparent;
+}
+
+/* line 80, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.card:hover {
+  box-shadow: 0.25vw 0.25vw 0.3vw #2b4849, -0.1vw -0.1vw 0.1vw #2b4849;
+}
+
+/* line 83, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.flipped, .matched {
+  border: 0.75vw double #262626;
+  color: #262626;
+  background-image: none !important;
+  box-shadow: 0.25vw 0.25vw 0.3vw #2b4849, -0.1vw -0.1vw 0.1vw #2b4849;
+}
+
+/* line 89, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.matched {
+  background: #f3e9da;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* line 94, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.matched:hover {
+  box-shadow: none;
+}
+
+/* line 97, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.theme1 {
+  background-color: #003407;
+  background-image: url("https://www.transparenttextures.com/patterns/light-wool.png");
+}
+
+/* line 101, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.flipped.theme1, .theme1.matched {
+  color: #B1B1B1;
+  border-color: #B1B1B1;
+}
+
+/* line 105, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.theme1.matched {
+  background-color: #0d2711;
+}
+
+/* line 110, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.theme2 {
+  background-color: #0E1A40;
+  background-image: url("https://www.transparenttextures.com/patterns/washi.png");
+}
+
+/* line 114, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.theme2.flipped, .theme2.matched {
+  color: #8D6B2B;
+  border-color: #8D6B2B;
+}
+
+/* line 118, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.theme2.matched {
+  background-color: #22242d;
+}
+
+/* line 122, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.theme3 {
+  background-color: #740001;
+  background-image: url("https://www.transparenttextures.com/patterns/swirl.png");
+}
+
+/* line 126, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.flipped.theme3, .theme3.matched {
+  color: #93730E;
+  border-color: #93730E;
+}
+
+/* line 130, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/game.scss */
+.theme3.matched {
+  background-color: #571d1e;
+}
+/* line 4, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/setup.scss */
+#setup h1 {
+  padding: 3vh;
+}
+/* line 7, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/setup.scss */
+#setup section {
+  list-style: none;
+  padding: 2vw;
+  background: cadetblue;
+  margin: auto;
+  height: 70vh;
+  justify-content: center;
+  flex-direction: column;
+  width: 60vw;
+  display: flex;
+}
+/* line 18, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/setup.scss */
+#setup button {
+  background: rgba(67, 111, 112, 0.5);
+  padding: 4%;
+  flex-basis: 33%;
+  color: #262626;
+  width: 66%;
+  margin: .5% auto;
+  box-shadow: .2vw .2vw .2vw darkslategray, -.1vw -.1vw .1vw darkslategray;
+  border: 0.1vw solid dimgray;
+  border-radius: 3%;
+  text-align: center;
+  cursor: pointer;
+  font-size: 4vh;
+  font-weight: normal;
+  transition: background 1s;
+}
+/* line 33, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/setup.scss */
+#setup button:hover {
+  background: #487779;
+}
+
+/* line 39, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/setup.scss */
+.hidden {
+  display: none;
+}
+/* line 4, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome {
+  color: #191919;
+}
+/* line 6, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome h1 {
+  text-align: center;
+  padding: 3vh;
+}
+/* line 10, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div {
+  list-style: none;
+  padding: 2vw;
+  width: 60vw;
+  height: 70vh;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: auto;
+  display: flex;
+  background: cadetblue;
+}
+/* line 21, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form {
+  flex-basis: 48.5%;
+  background: rgba(67, 111, 112, 0.5);
+  padding: 3%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  box-shadow: .25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray;
+  border: 0.1vw solid dimgray;
+  border-radius: 3%;
+  text-align: center;
+  transition: background 1s, color 1s;
+}
+/* line 34, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form h1 {
+  width: 100%;
+  font-size: 6vh;
+  padding-top: 10%;
+  line-height: 255%;
+  font-weight: normal;
+  cursor: pointer;
+}
+/* line 42, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form h2 {
+  font-size: 4vh;
+  margin-bottom: 1vh;
+  flex: 1;
+}
+/* line 47, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form p {
+  cursor: pointer;
+  flex: 1.5;
+  margin-top: 5%;
+}
+/* line 52, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form input {
+  font-size: 3vh;
+  flex: 1;
+  background: floralwhite;
+  border-radius: 3%;
+  text-align: left;
+  padding: 0 2.5%;
+  margin-bottom: 1vh;
+}
+/* line 60, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form input:hover {
+  background: #e9e9e9;
+}
+/* line 63, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form input:focus {
+  background: white;
+  box-shadow: inset 0.1vw 0.1vw 0.1vw dimgray;
+}
+/* line 68, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form .warning {
+  border: .1vw solid red;
+}
+/* line 71, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form section {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+/* line 76, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form section button {
+  background: dimgray;
+  color: blanchedalmond;
+  padding: 1% 2%;
+  border-radius: 3%;
+  text-align: center;
+  cursor: pointer;
+  font-size: 3vh;
+  margin: 0 auto 1% auto;
+  transition: background .5s;
+  flex-basis: 49%;
+  margin: 0;
+}
+/* line 13, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/_button.scss */
+#welcome div form section button:hover {
+  background: #262626;
+}
+/* line 82, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div form:hover {
+  background: #487779;
+}
+/* line 86, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div section {
+  display: flex;
+  flex-basis: 48.5%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+/* line 91, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/welcome.scss */
+#welcome div section form {
+  width: 100%;
+}
+/* line 4, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/won.scss */
+#won {
+  margin: auto;
+  color: #262626;
+  background: blanchedalmond;
+  box-shadow: inset 0.25vw 0.25vw 0.3vw dimgray, inset -0.25vw -0.25vw 0.3vw dimgray;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 2% 0;
+}
+/* line 14, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/won.scss */
+#won h1 {
+  flex: 1.5;
+  line-height: 200%;
+  padding: 2% 0;
+  box-sizing: padding-box;
+  font-size: 8vh;
+}
+/* line 21, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/won.scss */
+#won h2 {
+  text-align: center;
+  background: cadetblue;
+  box-shadow: inset 0.25vw 0 0.2vw #2b4849, inset -0.25vw 0 0.2vw #2b4849;
+  color: blanchedalmond;
+  flex: 1;
+  line-height: 200%;
+  padding: 1.5% 0;
+  box-sizing: padding-box;
+  font-size: 5vh;
+}
+/* line 32, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/won.scss */
+#won h3 {
+  text-align: center;
+  font-weight: normal;
+  flex: .75;
+  box-sizing: padding-box;
+  background: #487779;
+  box-shadow: inset 0.25vw 0 0.1vw #2b4849, inset -0.25vw 0 0.1vw #2b4849;
+  padding: 1.5% 0;
+  line-height: 200%;
+  font-size: 3.5vh;
+  color: #262626;
+}
+/* line 44, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/won.scss */
+#won section {
+  flex: .75;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  cursor: pointer;
+  font-size: 4vh;
+  display: flex;
+  justify-content: center;
+  padding: 1% 0 0 0;
+  box-sizing: padding-box;
+}
+/* line 55, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/won.scss */
+#won section button {
+  background: dimgray;
+  color: blanchedalmond;
+  padding: 1% 2%;
+  border-radius: 3%;
+  text-align: center;
+  cursor: pointer;
+  font-size: 3vh;
+  margin: 0 auto 1% auto;
+  transition: background .5s;
+  flex-basis: 20%;
+  height: 100%;
+  margin: 0 .5%;
+}
+/* line 13, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/_button.scss */
+#won section button:hover {
+  background: #262626;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+/* line 17, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/application.scss */
+html {
+  background-color: blanchedalmond;
+}
+
+/* line 20, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/application.scss */
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  background: transparent;
+  box-sizing: border-box;
+  text-align: inherit;
+  text-decoration: inherit;
+  vertical-align: inherit;
+  background-size: contain;
+  list-style: none;
+  font-family: 'PT Serif', serif;
+  color: #262626;
+}
+
+/* line 36, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/application.scss */
+.group:after {
+  content: "";
+  clear: both;
+  position: absolute;
+}
+
+/* line 41, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/application.scss */
+.hidden {
+  display: none;
+}
+
+/* line 44, /home/adriana/Desktop/MemoryGame/app/assets/stylesheets/application.scss */
+h1 {
+  text-align: center;
+}
