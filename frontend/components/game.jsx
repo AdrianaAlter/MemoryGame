@@ -130,7 +130,7 @@ class Game extends React.Component {
             <h1 onClick={this.toggleMute}><i className={muteIcon}></i></h1>
           </section>
           <CardIndex playSound={this.playSound} mute={this.state.mute} pics={this.state.pics} theme={this.state.game.theme} gameId={this.state.game.id} isWon={this.isWon} isStarted={this.isStarted} tried={this.tried} />
-          <Won won={wonStatus} highScore={highScore} score={this.state.score} gameId={this.state.game.id} name={user.name} />
+          <Won won={wonStatus} highScore={highScore} score={this.state.score} gameId={this.state.game.id} name={user.user_name} />
         </div>
       )
     }

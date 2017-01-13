@@ -31063,7 +31063,7 @@
 	            )
 	          ),
 	          _react2.default.createElement(_cardIndex2.default, { playSound: this.playSound, mute: this.state.mute, pics: this.state.pics, theme: this.state.game.theme, gameId: this.state.game.id, isWon: this.isWon, isStarted: this.isStarted, tried: this.tried }),
-	          _react2.default.createElement(_won2.default, { won: wonStatus, highScore: highScore, score: this.state.score, gameId: this.state.game.id, name: user.name })
+	          _react2.default.createElement(_won2.default, { won: wonStatus, highScore: highScore, score: this.state.score, gameId: this.state.game.id, name: user.user_name })
 	        );
 	      } else {
 	        return _react2.default.createElement(
@@ -31601,6 +31601,7 @@
 	        };
 	      }
 	      var highScore;
+	      // debugger
 	      if (this.props.highScore && this.props.score > this.props.highScore) {
 	        highScore = _react2.default.createElement(
 	          'h3',

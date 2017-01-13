@@ -52,6 +52,7 @@ class Won extends React.Component{
         };
     }
     var highScore;
+    // debugger
     if (this.props.highScore && this.props.score > this.props.highScore){
       highScore = <h3>Congratulations!  You have a new high score.</h3>;
     }
