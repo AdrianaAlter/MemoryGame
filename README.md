@@ -1,4 +1,4 @@
-#The live app is <a href="https://memorycardgame.herokuapp.com/">here</a>
+#The live app is <a href="https://memorycardgame.herokuapp.com/">here</a>!
 
 ----
 

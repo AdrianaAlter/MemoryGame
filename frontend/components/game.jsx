@@ -90,7 +90,9 @@ class Game extends React.Component {
     if (this.state.game){
       ApiUtil.deleteGame(this.state.game.id);
     }
-    this.context.router.push("/");
+    else {
+      this.context.router.push("/");
+    }
   }
 
   notGuest(){

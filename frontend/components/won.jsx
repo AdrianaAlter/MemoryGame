@@ -17,7 +17,6 @@ class Won extends React.Component{
   clearGame(){
     this.toggle();
     ApiUtil.deleteGame(this.props.gameId);
-    this.context.router.push("/");
   }
 
   toggle(){
