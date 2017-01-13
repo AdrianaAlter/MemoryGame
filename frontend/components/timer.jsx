@@ -35,7 +35,6 @@ class TimerContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.finalTime(this.state.secondsElapsed)
     clearInterval(this.interval)
   }
 
@@ -46,6 +45,7 @@ class TimerContainer extends React.Component {
   }
 
   render() {
+    if (this.props.won) { this.props.finalTime(this.state.secondsElapsed) }
     return (
       <Timer time={this.state.secondsElapsed} />
     )

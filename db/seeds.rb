@@ -1,5 +1,5 @@
 User.destroy_all
 Game.destroy_all
 Card.destroy_all
-user = User.create(user_name: 'Sennacy the Great', password: 'sennacy')
+user = User.create(user_name: 'Sample User', password: 'sample')
 guest = User.create(user_name: 'guest', password: 'guest')

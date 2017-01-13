@@ -1,8 +1,10 @@
 class Api::UsersController < ApplicationController
+
   def index
     @users = User.all
     render :index
   end
+
   def create
     @user = User.new(user_name: params[:user_name], password: params[:password], high_score: '0')
     if @user.save
@@ -16,7 +18,7 @@ class Api::UsersController < ApplicationController
     @user.update(user_params)
     render :show
   end
-  
+
   def show
     @user = User.find(params[:id])
     render :show

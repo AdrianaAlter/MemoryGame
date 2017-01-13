@@ -5,11 +5,12 @@ class LogIn extends React.Component {
 
   constructor(){
     super();
-    this.state = {user_name: "", password: "", display: "button"};
+    this.state = {user_name: "", password: "", display: "button", blank: false};
     this.toggleDisplay = this.toggleDisplay.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
     this.submitInfo = this.submitInfo.bind(this);
+    this.checkBlank = this.checkBlank.bind(this);
   }
 
   toggleDisplay(){
@@ -24,6 +25,15 @@ class LogIn extends React.Component {
     this.setState({password: e.currentTarget.value});
   }
 
+  checkBlank(){
+    if (!(this.state.user_name && this.state.password)){
+      this.setState({ blank: true});
+    }
+    else {
+      this.submitInfo();
+    }
+  }
+
   submitInfo(){
     var router = this.context.router;
     ApiUtil.logIn(this.state, function(){
@@ -33,6 +43,7 @@ class LogIn extends React.Component {
   }
 
   render(){
+    let warning = this.state.blank ? "warning" : "";
     if (this.state.display == "button"){
       return <form onClick={this.toggleDisplay}><h1>Log In</h1></form>
     }
@@ -40,10 +51,10 @@ class LogIn extends React.Component {
       return(
         <form>
           <h2>Log In</h2>
-          <input type="text" placeholder="User Name" onChange={this.updateName}></input>
-          <input type="password" placeholder="Password" onChange={this.updatePassword}></input>
+          <input className={warning} type="text" placeholder="User Name" onChange={this.updateName}></input>
+          <input className={warning} type="password" placeholder="Password" onChange={this.updatePassword}></input>
           <section>
-            <button onClick={this.submitInfo}>Submit</button>
+            <button onClick={this.checkBlank}>Submit</button>
             <button onClick={this.toggleDisplay}>Cancel</button>
           </section>
         </form>

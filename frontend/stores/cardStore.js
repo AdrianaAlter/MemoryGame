@@ -27,10 +27,6 @@ CardStore.resetCard = function(card){
   _cards[i] = card;
 };
 
-CardStore.clear = function(){
-  _cards = [];
-};
-
 CardStore.__onDispatch = function(payload) {
   switch (payload.actionType) {
     case CardConstants.CARD_ADDED:
@@ -39,14 +35,6 @@ CardStore.__onDispatch = function(payload) {
       break;
     case CardConstants.UPDATED_CARD_RECEIVED:
       CardStore.resetCard(payload.card);
-      CardStore.__emitChange();
-      break;
-    case CardConstants.CARDS_RECEIVED:
-      CardStore.resetCards(payload.cards);
-      CardStore.__emitChange();
-      break;
-    case CardConstants.CARD_SELECTED:
-      CardStore.selectCard(payload.card);
       CardStore.__emitChange();
       break;
   }

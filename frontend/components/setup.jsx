@@ -11,15 +11,10 @@ class Setup extends React.Component {
     this.state = { user: SessionStore.currentUser(), game: GameStore.all() };
     this.newGame = this.newGame.bind(this);
     this.setLevel = this.setLevel.bind(this);
-    // this.loadGame = this.loadGame.bind(this);
     this.updateGame = this.updateGame.bind(this);
   }
 
   componentDidMount(){
-    // if (this.state.game){
-    //   ApiUtil.loadUserInfo(this.state.user.id);
-    // }
-
     this.listener1 = SessionStore.addListener(this._onChange.bind(this));
     this.listener2 = GameStore.addListener(this._onChange.bind(this));
   }
@@ -30,39 +25,21 @@ class Setup extends React.Component {
   }
 
   _onChange(){
-    this.setState({ user: UserStore.current(), game: GameStore.all() });
+    this.setState({ user: SessionStore.currentUser(), game: GameStore.all() });
   }
 
   setLevel(e){
     const levels = ["Easy", "Hard"];
     var level = levels.indexOf(e.currentTarget.children[0].innerText);
-    // if (levels[level]){
-    // if(!this.state.user.game){
-      ApiUtil.getPictures(level);
-      this.newGame(level);
-    // }
-    // else {
-    //   ApiUtil.getPictures(levels[level]);
-    //   this.updateGame(levels[level]);
-    // }
-    // }
-    // this.loadGame();
+    ApiUtil.getPictures(level);
+    this.newGame(level);
   }
 
   updateGame(num){
     var game = {};
     var {level, started, won} = {level: num, started: false, won: false}
     ApiUtil.updateGame(this.state.users.game.id, {level, started, won});
-
-    // game.level = level;
-    // game.started = false;
-    // game.won = false;
-    // ApiUtil.updateGame(this.state.users.game.id, game);
   }
-
-  // loadGame(){
-  //   debugger
-  // }
 
   newGame(level){
     var game = {level: level, user_id: this.state.user.id};
@@ -71,9 +48,6 @@ class Setup extends React.Component {
   }
 
   render(){
-    // if ((this.state.user) && (this.state.user.user_name !== "guest") && (this.state.user.games) && (this.state.user.games.length > 0) && (this.state.user.games.cards)){
-    //   var saved = <button onClick={this.setLevel}><h2>Resume Saved Game</h2></button>;
-    // }
     return (
       <div id="setup" className={this.state.display}>
         <h1>Choose a level to get started!</h1>

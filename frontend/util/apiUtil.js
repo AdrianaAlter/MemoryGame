@@ -6,52 +6,33 @@ import UserActions from '../actions/userActions.js';
 
 const ApiUtil = {
 
-  fetchCurrentUser: function(completion) {
+  fetchCurrentUser: function(completion){
     $.ajax({
         type: "GET",
         url: "/api/session",
         dataType: "json",
-        success: function(currentUser) {
+        success: function(currentUser){
           SessionActions.currentUserReceived(currentUser);
           UserActions.singleUserReceived(currentUser);
         },
-        error: function () {
-          console.log('Error fetching current user');
-        },
-        complete: function () {
+        complete: function(){
           completion && completion();
         }
       });
   },
 
-  loadUserInfo: function(id){
-    $.ajax({
-        type: "GET",
-        url: `/api/users/${id}`,
-        dataType: "json",
-        success: function(user) {
-          // debugger
-          UserActions.singleUserReceived(user);
-          SessionActions.currentUserReceived(user)
-        },
-        error: function () {
-          console.log('Error fetching user info');
-        }
-      });
-  },
-
-  fetchAllUsers: function() {
-    $.ajax({
-        type: "GET",
-        url: "/api/users",
-        dataType: "json",
-        success: function(users) {
-          UserActions.allUsersReceived(users);
-        },
-        error: function () {
-          console.log('Error fetching all users');
-        }
-      });
+  fetchAllUsers: function(){
+  $.ajax({
+      type: "GET",
+      url: "/api/users",
+      dataType: "json",
+      success: function(users){
+        UserActions.allUsersReceived(users);
+      },
+      error: function(){
+        console.log('Error fetching all users');
+      }
+    });
   },
 
   logIn: function(userInfo, callback){
@@ -60,12 +41,10 @@ const ApiUtil = {
       url: "/api/session",
       dataType: "json",
       data: userInfo,
-      success: function (currentUser) {
+      success: function(currentUser){
         SessionActions.currentUserReceived(currentUser);
         UserActions.singleUserReceived(currentUser);
         callback && callback();
-      },
-      error: function () {
       }
     });
   },
@@ -79,9 +58,6 @@ const ApiUtil = {
       success: function(currentUser){
         SessionActions.currentUserReceived(currentUser);
         callback && callback();
-      },
-      error: function () {
-        console.log('Error in ApiUtil sign up');
       }
     });
   },
@@ -93,7 +69,6 @@ const ApiUtil = {
       dataType: "json",
       success: function () {
         SessionActions.logOut();
-        // GameActions.gameReceived([]);
       },
       error: function(){
         console.log('Error in ApiUtil logout');
@@ -111,6 +86,7 @@ const ApiUtil = {
       }
     });
   },
+
   createGame: function(game){
     $.ajax({
       type: "POST",
@@ -119,12 +95,10 @@ const ApiUtil = {
       data: { game: game },
       success: function(game){
         GameActions.gameStarted(game);
-      },
-      error: function(){
-        console.log("util createGame problem");
       }
     });
   },
+
   updateGame: function(id, game){
     $.ajax({
       type: "PATCH",
@@ -133,40 +107,20 @@ const ApiUtil = {
       data: { game: game },
       success: function(game){
         GameActions.gameReceived(game);
-      },
-      error: function(){
-        console.log("util updateGame problem");
-      }
-    });
-  },
-  fetchGame: function(gameId){
-    $.ajax({
-      type: "GET",
-      url: `/api/games/${gameId}`,
-      dataType: "json",
-      success: function(game){
-        GameActions.gameReceived(game);
-      },
-      error: function(){
-        console.log("util updateGame problem");
       }
     });
   },
 
   deleteGame: function(id){
-    // debugger
     $.ajax({
       type: "DELETE",
       url: `/api/games/${id}`,
       dataType: "json",
       success: function(){
         window.location.href = "/";
-      },
-      error: function(){
-        console.log('Error in ApiUtil deleteGame');
       }
-  });
-},
+    });
+  },
 
   createCard: function(picture, gameId){
     $.ajax({
@@ -176,9 +130,6 @@ const ApiUtil = {
       data: { picture: picture, gameId: gameId },
       success: function(card){
         CardActions.cardAdded(card);
-      },
-      error: function(){
-        console.log("util createCard problem");
       }
     });
   },
@@ -195,19 +146,6 @@ const ApiUtil = {
     });
   },
 
-  deleteCard: function(gameId, id){
-    $.ajax({
-      url: `api/games/${gameId}/cards/${id}`,
-      type: "DELETE",
-      success: function(){
-        // CardActions.receiveList(list);
-      },
-      error: function () {
-        console.log("Error in ApiUtil deleteCard function");
-      }
-    });
-  },
-
   updateUser: function(userId, user){
     $.ajax({
       type: "PATCH",
@@ -215,11 +153,12 @@ const ApiUtil = {
       data: { user: user },
       dataType: "json",
       success: function(user){
-        SessionActions.currentUserReceived(user)
+        SessionActions.currentUserReceived(user);
         UserActions.singleUserReceived(user);
       }
     });
   }
+
 };
 
 export default ApiUtil;

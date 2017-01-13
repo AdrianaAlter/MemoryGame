@@ -16,37 +16,21 @@ class CardIndex extends React.Component {
   }
 
   componentDidMount(){
-    // if (!this.props.cards){
     this.makeCards();
-    // }
-    // else {
-    //   this.setState({ cards: this.props.cards });
-    // }
     this.listener = CardStore.addListener(this._onChange.bind(this));
-    // this.listener2 = GameStore.addListener(this.makeCards);
   }
 
   componentWillUnmount(){
     this.listener.remove();
-    // this.listener2.remove();
   }
 
   makeCards(){
-    // debugger
     if (this.state.cards.length === 0){
-    //   debugger
       let gameId = this.props.gameId;
-      // debugger
       this.props.pics.map(function(picture){
         ApiUtil.createCard(picture, gameId);
       });
     }
-    // else {
-    //   debugger
-    //   CardStore.clear();
-
-      //  ApiUtil.deleteGame(this.props.gameId);
-    // }
   }
 
   _onChange(){
@@ -122,15 +106,3 @@ class CardIndex extends React.Component {
 }
 
 export default CardIndex
-// }
-// else {
-//   return <div>Loading...</div>
-// }
-
-// if (this.props.pics.length > 0){
-//   this.makeCards();
-//   return <div></div>
-// }
-// else {
-//   return <div></div>
-// }

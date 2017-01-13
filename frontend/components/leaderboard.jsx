@@ -48,7 +48,7 @@ class Leaderboard extends React.Component {
     };
     var scores = this.state.scores.map(({name, score}) => {
       let idx = this.state.scores.findIndex(x => x.name === name);
-      return <li key={idx}><h4>{name}</h4><h4>{score}</h4></li>;
+      return <li key={idx}><h4>{idx + 1}</h4><h4>{name}</h4><h4>{score}</h4></li>;
     });
     return (
       <button>

@@ -1,10 +1,5 @@
 class Api::CardsController < ApplicationController
 
-  def index
-    @cards = current_user.cards
-    render :index
-  end
-
   def create
     @card = Card.new(picture: params[:picture], game_id: params[:gameId])
     if @card.save

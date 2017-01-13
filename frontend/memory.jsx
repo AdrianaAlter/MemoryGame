@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory, hashHistory, IndexRoute, Link } from 'react-router';
+import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import App from './components/app.jsx';
 import Welcome from './components/welcome.jsx';
 import Game from './components/game.jsx';

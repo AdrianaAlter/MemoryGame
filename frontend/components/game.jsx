@@ -25,25 +25,11 @@ class Game extends React.Component {
   }
 
   componentDidMount(){
-    ApiUtil.loadUserInfo(this.state.user.id);
-
-    // if (this.state.user.cards){
-    //   this.setState({ cards: this.state.user.cards })
-    // }
-    // ApiUtil.getPictures(this.state.game[0].level);
     this.listener1 = GameStore.addListener(this._onChange.bind(this));
     this.listener2 = PictureStore.addListener(this._onChange.bind(this));
-
-    // if (!this.state.game){
-    //   this.context.router.push("/");
-    // }
   }
 
   componentWillUnmount(){
-    // if (this.state.game[0] && !this.state.game[0].saved){
-    //   ApiUtil.deleteGame(this.state.game[0].id);
-    // }
-    // ApiUtil.deleteGame(this.state.game.id);
     this.listener1.remove();
     this.listener2.remove();
   }
@@ -90,8 +76,7 @@ class Game extends React.Component {
     }
     this.setState({ score: score });
     if ((this.notGuest()) && (score > this.state.user.high_score)){
-      let user = {};
-      user.high_score = score;
+      let user = {high_score: score};
       ApiUtil.updateUser(this.state.user.id, user);
     }
   }
@@ -102,57 +87,58 @@ class Game extends React.Component {
   }
 
   clearGame(){
-    this.state.game ? ApiUtil.deleteGame(this.state.game.id) : this.context.router.push("/");
+    if (this.state.game){
+      ApiUtil.deleteGame(this.state.game.id);
+    }
+    this.context.router.push("/");
   }
 
   notGuest(){
     return (this.state.user && this.state.user.user_name !== "guest");
   }
+
   playSound(sound){
     if (!this.state.game.mute){
       let audio = new Audio(`assets/${sound}`);
       audio.play();
     }
   }
+
   render(){
-    if (this.notGuest()){
-      var highScore = this.state.user.high_score;
-    }
-    var gameContent;
-    let name = this.state.user.user_name;
-    if (this.state.game && this.state.pics.length > 0){
-      let muteIcon = this.state.game.mute ? "fa fa-volume-up fa-lg" : "fa fa-volume-off fa-lg";
-      let saved = this.state.game.saved ? "saved" : "";
-      let wonStatus = this.state.won ? true : false;
+    let {game, pics, won, started, time, score, tries, user} = this.state;
+    if (this.notGuest()){ var highScore = user.high_score; }
+    if (game && pics.length > 0){
+      let muteIcon = game.mute ? "fa fa-volume-up fa-lg" : "fa fa-volume-off fa-lg";
+      let wonStatus = won ? true : false;
       var timer;
-      if (!this.state.started){
+      if (!started){
         timer = <h1>Pick a card...</h1>
       }
-      else if (this.state.won){
+      else if (won){
         timer = <h1>Done!</h1>
       }
       else {
-        timer = <Timer finalTime={this.finalTime}/>
+        timer = <Timer won={won} finalTime={this.finalTime}/>
       }
-      gameContent = (
+      return (
         <div id="game">
           <section>
-            <h1>Tries: {this.state.tries}</h1>
+            <h1>Tries: {tries}</h1>
             {timer}
             <h1 onClick={this.toggleMute}><i className={muteIcon}></i></h1>
           </section>
-          <CardIndex playSound={this.playSound} mute={this.state.mute} cards={this.state.cards} pics={this.state.pics} theme={this.state.game.theme} saved={saved} level={this.state.game.level} gameId={this.state.game.id} isWon={this.isWon} isStarted={this.isStarted} tried={this.tried} />
-          <Won won={wonStatus} name={name} highScore={highScore} score={this.state.score} gameId={this.state.game.id} />
+          <CardIndex playSound={this.playSound} mute={this.state.mute} pics={this.state.pics} theme={this.state.game.theme} gameId={this.state.game.id} isWon={this.isWon} isStarted={this.isStarted} tried={this.tried} />
+          <Won won={wonStatus} highScore={highScore} score={this.state.score} gameId={this.state.game.id} name={user.name} />
         </div>
       )
     }
     else {
-      gameContent = <div id="game"><div id="placeholder" onClick={this.clearGame}><h1>New Game</h1></div></div>
+      return <div id="game"><div id="placeholder" onClick={this.clearGame}><h1>New Game</h1></div></div>
     }
-    return gameContent;
-
   }
+
 }
+
 Game.contextTypes = {
   router: React.PropTypes.object.isRequired
 }

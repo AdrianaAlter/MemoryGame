@@ -35,8 +35,6 @@ class Footer extends React.Component {
   }
 
   logOut(){
-    // GameStore.clear();
-    // if (this.state.game && !this.state.game.saved){
     if (this.state.game){
       ApiUtil.deleteGame(this.state.game.id);
     }
@@ -75,12 +73,13 @@ class Footer extends React.Component {
   }
 
   render(){
-    if (this.state.user){
-      var buttonText = this.state.user.user_name == "guest" ? "Sign Up" : "Log Out";
-      var save = this.state.user.user_name == "guest" ? null : <button onClick={this.saveGame}>Save Game</button>;
-      var welcome = this.state.user.user_name == "guest" ? null : <button id="name-display">Welcome, {this.state.user.user_name}!</button>
+    let {game, user} = this.state;
+    if (user){
+      var buttonText = user.user_name == "guest" ? "Sign Up" : "Log Out";
+      var save = user.user_name == "guest" ? null : <button onClick={this.saveGame}>Save Game</button>;
+      var welcome = user.user_name == "guest" ? null : <button id="name-display">Welcome, {user.user_name}!</button>
     }
-    if (this.state.game){
+    if (game){
       var menu = <Menu setTheme={this.setTheme} openMenu={this.openMenu} closeMenu={this.closeMenu} display={this.state.menu} />;
     }
     return (

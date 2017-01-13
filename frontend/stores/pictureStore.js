@@ -12,7 +12,6 @@ PictureStore.all = function(){
 
 PictureStore.resetPictures = function(pictures){
   _pictures = _.shuffle(pictures);
-  // debugger
 };
 
 PictureStore.__onDispatch = function(payload){

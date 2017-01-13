@@ -1,4 +1,5 @@
 class Api::SessionsController < ApplicationController
+
   def create
     @user = User.find_by_user_name(params[:user_name], params[:password])
     if @user
@@ -20,4 +21,5 @@ class Api::SessionsController < ApplicationController
     log_out
     render json: {}
   end
+  
 end

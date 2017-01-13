@@ -57,13 +57,16 @@
         text-align: left;
         padding: 0 2.5%;
         margin-bottom: 1vh;
+        &:hover {
+          background: lighten($trim, 50%);
+        }
+        &:focus {
+          background: lighten($trim, 70%);
+          box-shadow: inset .1vw .1vw .1vw $trim;
+        }
       }
-      input:hover {
-        background: lighten($trim, 50%);
-      }
-      input:focus {
-        background: lighten($trim, 70%);
-        box-shadow: inset .1vw .1vw .1vw $trim;
+      .warning {
+        border: .1vw solid red;
       }
       section {
         flex: 1;

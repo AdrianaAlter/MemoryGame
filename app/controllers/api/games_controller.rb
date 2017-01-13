@@ -1,20 +1,10 @@
 class Api::GamesController < ApplicationController
 
-  def index
-    @games = current_user.games
-    render :index
-  end
-
   def create
     @game = Game.new(game_params)
     if @game.save
       render :show
     end
-  end
-
-  def show
-    @game = Game.find(params[:id])
-    render :show
   end
 
   def update
@@ -26,8 +16,7 @@ class Api::GamesController < ApplicationController
   def destroy
     @game = Game.find(params[:id])
     @game.destroy
-    @games = Game.all
-    render :index
+    render json: {}
   end
 
   private

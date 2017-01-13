@@ -17,6 +17,7 @@ class Won extends React.Component{
   clearGame(){
     this.toggle();
     ApiUtil.deleteGame(this.props.gameId);
+    this.context.router.push("/");
   }
 
   toggle(){
@@ -58,7 +59,7 @@ class Won extends React.Component{
     else if (this.props.highScore){
       highScore = <h3>Your high score is {this.props.highScore}.</h3>;
     }
-    else if (this.props.name == "guest"){
+    else if (this.props.name === "guest"){
       highScore = <h3>To track your high score, sign up or log in!</h3>;
     }
     return (
@@ -77,6 +78,10 @@ class Won extends React.Component{
       </div>
     )
   }
+}
+
+Won.contextTypes = {
+  router: React.PropTypes.object.isRequired
 }
 
 export default Won;

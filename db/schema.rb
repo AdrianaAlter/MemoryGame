@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 20170106165003) do
     t.integer "user_id"
     t.integer "level"
     t.string  "theme"
-    t.boolean "saved",      default: false
     t.boolean "started",    default: false
     t.boolean "mute",       default: false
     t.integer "final_time"
