@@ -14,6 +14,7 @@ class Footer extends React.Component {
     this.clearGame = this.clearGame.bind(this);
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
+    this.toggle = this.toggle.bind(this);
     this.setTheme = this.setTheme.bind(this);
     this.logOut = this.logOut.bind(this);
   }
@@ -57,6 +58,10 @@ class Footer extends React.Component {
     this.setState({ menu: "hidden" });
   }
 
+  toggle(){
+    this.state.menu == "menu" ? this.setState({ menu: "hidden" }) : this.setState({ menu:  "menu" });
+  }
+
   setTheme(e){
     if (!this.state.game.mute){
       var changed = new Audio('assets/changed.ogg');
@@ -74,7 +79,7 @@ class Footer extends React.Component {
       var welcome = user.user_name == "guest" ? null : <button id="name-display">Welcome, {user.user_name}!</button>
     }
     if (game){
-      var menu = <Menu setTheme={this.setTheme} openMenu={this.openMenu} closeMenu={this.closeMenu} display={this.state.menu} />;
+      var menu = <Menu setTheme={this.setTheme} toggle={this.toggle} openMenu={this.openMenu} closeMenu={this.closeMenu} display={this.state.menu} />;
     }
     return (
       <footer>

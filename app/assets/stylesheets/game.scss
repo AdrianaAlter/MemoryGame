@@ -19,6 +19,7 @@
       background: #487779;
       box-sizing: padding-box;
       flex-basis: 32%;
+      font-size: 3vh;
       padding-top: 1%;
     }
     h1:last-child:hover {
@@ -68,9 +69,11 @@
   box-sizing: border-box;
   color: transparent;
   cursor: pointer;
-  font-size: 9vh;
+  font-size: 5vw;
   font-weight: bold;
+  flex: 1;
   flex-basis: 11%;
+  width: 11%;
   height: 30vh;
   margin: 0 .25vw 1.5vw .25vw;
   padding: 6vh 1vw 1vh 1vw;

@@ -12,11 +12,15 @@ footer {
   button {
     @include button;
     background: $contrast;
-    flex-basis: 15%;
+    flex-basis: 12%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    font-size: 1.5vw;
     height: 100%;
     margin: 0 .5% 0 0;
     padding: 0 2%;
     position: relative;
+    width: 12%;
     &:hover {
       background: $darkcontrast;
     }
@@ -30,6 +34,7 @@ footer {
     color: $dark;
     cursor: default;
     flex: 3;
+    font-size: 1.5vw;
     &:hover {
       background: transparent;
     }
