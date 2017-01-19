@@ -7,7 +7,7 @@ footer {
   display: flex;
   height: 10vh;
   padding: 2vh;
-  position: fixed;
+  position: absolute;
   width: 100%;
   @media #{$phone} {
     padding: 1vh;
