@@ -10,8 +10,8 @@ footer {
   position: absolute;
   width: 100%;
   @media #{$phone} {
-    padding: 1vh;
     flex-wrap: wrap;
+    padding: 1vh;
   }
   button {
     @include button;
@@ -27,10 +27,10 @@ footer {
     width: 12%;
     @media #{$phone} {
       flex-basis: 24%;
+      flex-grow: 0;
       font-size: 3.7vw;
       margin: .5%;
       padding: 0;
-      flex-grow: 0;
     }
     &:hover {
       background: $darkcontrast;
