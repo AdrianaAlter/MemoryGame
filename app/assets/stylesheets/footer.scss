@@ -9,6 +9,10 @@ footer {
   padding: 2vh;
   position: fixed;
   width: 100%;
+  @media #{$phone} {
+    padding: 1vh;
+    flex-wrap: wrap;
+  }
   button {
     @include button;
     background: $contrast;
@@ -21,6 +25,13 @@ footer {
     padding: 0 2%;
     position: relative;
     width: 12%;
+    @media #{$phone} {
+      flex-basis: 24%;
+      font-size: 3.7vw;
+      margin: .5%;
+      padding: 0;
+      flex-grow: 0;
+    }
     &:hover {
       background: $darkcontrast;
     }
@@ -56,6 +67,9 @@ footer {
     position: absolute;
     top: -200%;
     width: 100%;
+    @media #{$phone} {
+      top: -140%;
+    }
     li {
       background: $main;
       border-bottom: .1vw solid $contrast;
@@ -94,6 +108,10 @@ footer {
     @include button;
     flex: .5;
     width: 20%;
+    @media #{$phone} {
+      font-size: 7vw;
+      width: 90%;
+    }
   }
   h1 {
     flex: .5;
@@ -107,6 +125,9 @@ footer {
     flex-direction: column;
     margin: 1% auto;
     width: 80%;
+    @media #{$phone} {
+      width: 90%;
+    }
     li {
       border-bottom: .1vw solid $darktrim;
       display: flex;
@@ -120,6 +141,9 @@ footer {
         font-size: 3vh;
         padding-left: 2%;
         text-align: left;
+        @media #{$phone} {
+          font-size: 4vw;
+        }
       }
       h4:first-child {
         border-right: .1vw solid $darktrim;

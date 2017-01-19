@@ -21,6 +21,10 @@
       flex-basis: 32%;
       font-size: 3vh;
       padding-top: 1%;
+      @media #{$phone} {
+        font-size: 4.5vw;
+        padding-top: 4%;
+      }
     }
     h1:last-child:hover {
       cursor: pointer;
@@ -59,6 +63,10 @@
     padding: 15% 1%;
     text-align: center;
     width: 35%;
+    @media #{$phone} {
+      font-size: 12vw;
+      width: 80%;
+    }
   }
 }
 
@@ -79,6 +87,13 @@
   padding: 6vh 1vw 1vh 1vw;
   text-align: center;
   user-select: none;
+  @media #{$phone} {
+    flex-basis: 20%;
+    font-size: 15vw;
+    padding-top: 3vh;
+    height: 18vh;
+    width: 20%;
+  }
 }
 .card:hover {
   box-shadow: .25vw .25vw .3vw $shadow, -.1vw -.1vw .1vw $shadow;

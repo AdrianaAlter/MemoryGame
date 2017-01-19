@@ -41,7 +41,7 @@ class Leaderboard extends React.Component {
         background: 'blanchedalmond',
         boxShadow: '.25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray',
         margin: 'auto',
-        width: '30%',
+        width: '70%',
         borderColor: 'transparent',
         borderRadius: '2%'
       }

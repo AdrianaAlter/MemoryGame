@@ -43,7 +43,7 @@ class Won extends React.Component{
           content : {
             background: 'blanchedalmond',
             boxShadow: '.25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray',
-            width: '50%',
+            width: '80%',
             height: '60%',
             margin: 'auto',
             borderColor: 'transparent',
@@ -52,7 +52,6 @@ class Won extends React.Component{
         };
     }
     var highScore;
-    // debugger
     if (this.props.highScore && this.props.score > this.props.highScore){
       highScore = <h3>Congratulations!  You have a new high score.</h3>;
     }

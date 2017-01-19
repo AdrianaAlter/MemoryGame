@@ -29104,7 +29104,7 @@
 	          background: 'blanchedalmond',
 	          boxShadow: '.25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray',
 	          margin: 'auto',
-	          width: '30%',
+	          width: '70%',
 	          borderColor: 'transparent',
 	          borderRadius: '2%'
 	        }
@@ -31732,7 +31732,7 @@
 	          content: {
 	            background: 'blanchedalmond',
 	            boxShadow: '.25vw .25vw .3vw darkslategray, -.1vw -.1vw .1vw darkslategray',
-	            width: '50%',
+	            width: '80%',
 	            height: '60%',
 	            margin: 'auto',
 	            borderColor: 'transparent',
@@ -31741,7 +31741,6 @@
 	        };
 	      }
 	      var highScore;
-	      // debugger
 	      if (this.props.highScore && this.props.score > this.props.highScore) {
 	        highScore = _react2.default.createElement(
 	          'h3',
