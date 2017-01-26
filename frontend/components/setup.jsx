@@ -3,7 +3,10 @@ import ApiUtil from '../util/apiUtil'
 import UserStore from '../stores/userStore'
 import GameStore from '../stores/gameStore'
 import SessionStore from '../stores/sessionStore'
-
+const PICS = {
+  0: [ "♉", "♘", "♉", "♫", "♫", "✨", "♘", "✨" ],
+  1: ["❅", "⚔", "♘", "♉", "⚛", "♖", "✨", "❅", "♫", "♫", "⚛", "✨", "♉", "⚔", "♖", "♘"]
+};
 class Setup extends React.Component {
 
   constructor(){
@@ -31,7 +34,8 @@ class Setup extends React.Component {
   setLevel(e){
     const levels = ["Easy", "Hard"];
     var level = levels.indexOf(e.currentTarget.children[0].innerText);
-    ApiUtil.getPictures(level);
+    debugger
+    ApiUtil.getPictures(PICS[level]);
     this.newGame(level);
   }
 

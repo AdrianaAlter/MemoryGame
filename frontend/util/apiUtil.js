@@ -70,17 +70,10 @@ const ApiUtil = {
     });
   },
 
-  getPictures: function(level){
-    $.ajax({
-      type: "GET",
-      url: "https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json",
-      dataType: "json",
-      success: function(pictures){
-        PictureActions.picturesReceived(pictures.levels[level].cards);
-      }
-    });
+  getPictures: function(pics){
+     PictureActions.picturesReceived(pics);
   },
-
+  
   createGame: function(game){
     $.ajax({
       type: "POST",

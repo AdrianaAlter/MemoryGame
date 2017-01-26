@@ -26913,15 +26913,8 @@
 	    });
 	  },
 	
-	  getPictures: function getPictures(level) {
-	    $.ajax({
-	      type: "GET",
-	      url: "https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json",
-	      dataType: "json",
-	      success: function success(pictures) {
-	        _pictureActions2.default.picturesReceived(pictures.levels[level].cards);
-	      }
-	    });
+	  getPictures: function getPictures(pics) {
+	    _pictureActions2.default.picturesReceived(pics);
 	  },
 	
 	  createGame: function createGame(game) {
@@ -31898,6 +31891,11 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	var PICS = {
+	  0: ["♉", "♘", "♉", "♫", "♫", "✨", "♘", "✨"],
+	  1: ["❅", "⚔", "♘", "♉", "⚛", "♖", "✨", "❅", "♫", "♫", "⚛", "✨", "♉", "⚔", "♖", "♘"]
+	};
+	
 	var Setup = function (_React$Component) {
 	  _inherits(Setup, _React$Component);
 	
@@ -31935,7 +31933,8 @@
 	    value: function setLevel(e) {
 	      var levels = ["Easy", "Hard"];
 	      var level = levels.indexOf(e.currentTarget.children[0].innerText);
-	      _apiUtil2.default.getPictures(level);
+	      debugger;
+	      _apiUtil2.default.getPictures(PICS[level]);
 	      this.newGame(level);
 	    }
 	  }, {

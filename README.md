@@ -1,22 +1,20 @@
-#The live app is <a href="https://memorycardgame.herokuapp.com/">here</a>!
+#<a href="https://memorycardgame.herokuapp.com/">Memory</a>
 
-----
+<a href="https://memorycardgame.herokuapp.com/"><img src="./app/assets/images/easy.png"></img>
 
-#Instructions
+## Memory is a full-stack Rails/React game.  
 
-* Run 'bundle install' and 'npm install'
-* Run 'rails server' and 'webpack --watch' in separate tabs
+<a href="https://memorycardgame.herokuapp.com/"><img src="./app/assets/images/hard.png"></img>
 
-----
+##Features include:
 
-#Special Features
-
-* Optional user accounts for keeping track of high scores
+* Fully responsive design, using Flexbox and media queries
+* Optional user accounts for tracking high scores
 * Leaderboard
 * Sound effects and mute button
-* Choice of three different styles for cards
-* Scoring system involving number of attempts in addition to time spent solving
+* Choice of two levels of difficulty, and three different card styles
+* Timer
 
-----
+<a href="https://memorycardgame.herokuapp.com/"><img src="./app/assets/images/won.png"></img>
 
-##If you'd like to try out the user accounts without signing up, there's a sample account--user name: "Sample User"; password: "sample".
+<a href="https://memorycardgame.herokuapp.com/"><img src="./app/assets/images/welcome.png"></img>
